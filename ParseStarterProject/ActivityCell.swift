@@ -10,11 +10,19 @@ import UIKit
 
 class ActivityCell: UITableViewCell {
     
+    //MainViewController
     @IBOutlet var dateLabel: UILabel!
     
     @IBOutlet var descriptionLabel: UILabel!
     
     @IBOutlet var scoreLabel: UILabel!
+    
+    //ActivityTableController
+    @IBOutlet var tableDateLabel: UILabel!
+    
+    @IBOutlet var tableDescriptionLabel: UILabel!
+    
+    @IBOutlet var tableScoreLabel: UILabel!
     
     func setCell(date: NSDate, description: String, score: Int) {
         
@@ -28,6 +36,21 @@ class ActivityCell: UITableViewCell {
         self.descriptionLabel.text = description
         
         self.scoreLabel.text = "+\(score)"
+        
+    }
+    
+    func setTableCell(date: NSDate, description: String, score: Int) {
+        
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "M/d"
+        
+        let dateString = formatter.stringFromDate(date)
+        
+        self.tableDateLabel.text = dateString
+        
+        self.tableDescriptionLabel.text = description
+        
+        self.tableScoreLabel.text = "+\(score)"
         
     }
     

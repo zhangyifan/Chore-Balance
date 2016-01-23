@@ -463,13 +463,52 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="2bz-qU-YwD">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cell2" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell2" id="2bz-qU-YwD" customClass="ActivityCell" customModule="Chore_Balance" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2bz-qU-YwD" id="Brv-aj-pnO">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="+5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MLf-sJ-6QB">
+                                            <rect key="frame" x="346" y="8" width="21" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="21" id="I28-Ar-4GS"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Geoff did Laundry" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sX7-rL-p75">
+                                            <rect key="frame" x="69" y="8" width="231" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="1/9" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hoH-vO-Giy">
+                                            <rect key="frame" x="8" y="8" width="53" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="53" id="9Ta-p1-r6Q"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="sX7-rL-p75" firstAttribute="leading" secondItem="hoH-vO-Giy" secondAttribute="trailing" constant="8" id="2b7-a4-z11"/>
+                                        <constraint firstItem="sX7-rL-p75" firstAttribute="centerY" secondItem="Brv-aj-pnO" secondAttribute="centerY" id="9Hx-ak-Sqw"/>
+                                        <constraint firstItem="hoH-vO-Giy" firstAttribute="leading" secondItem="Brv-aj-pnO" secondAttribute="leadingMargin" id="Um9-Hu-oYn"/>
+                                        <constraint firstItem="MLf-sJ-6QB" firstAttribute="centerY" secondItem="Brv-aj-pnO" secondAttribute="centerY" id="iFp-rK-1Rm"/>
+                                        <constraint firstItem="hoH-vO-Giy" firstAttribute="centerY" secondItem="Brv-aj-pnO" secondAttribute="centerY" id="mGN-aC-KDD"/>
+                                        <constraint firstItem="MLf-sJ-6QB" firstAttribute="trailing" secondItem="Brv-aj-pnO" secondAttribute="trailingMargin" id="nmv-7u-7FE"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="tableDateLabel" destination="hoH-vO-Giy" id="s2E-qW-vt2"/>
+                                    <outlet property="tableDescriptionLabel" destination="sX7-rL-p75" id="0Kt-QQ-DCS"/>
+                                    <outlet property="tableScoreLabel" destination="MLf-sJ-6QB" id="OvD-FU-6Mh"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

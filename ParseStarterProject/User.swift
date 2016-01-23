@@ -81,20 +81,12 @@ class User: PFUser {
         
         scoresQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
             
-            if activities != nil {
+            if let foundActivities = activities as? [Activity] {
                 
                 //sum up scores
-                for activity in activities! {
+                for activity in foundActivities {
                     
-                    //let foundActivity = Activity(user: activity["user"] as! PFUser, chore: activity["chore"] as! PFObject, scoreStamp: activity["scoreStamp"] as! Int, completedAt: activity["completedAt"] as! NSDate)
-                    
-                    let foundActivity = activity as? Activity
-                    
-                    if let scoreInt = foundActivity!.scoreStamp as? Int {
-                        
-                        score += scoreInt
-                        
-                    }
+                    score += activity.scoreStamp
                     
                 }
                 

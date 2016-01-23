@@ -46,71 +46,65 @@ class MembersTableViewController: UITableViewController {
     class func getSortedUsers(closure: ([String]?, [Int]?, NSError?) -> Void) {
 
         var nameScores = [String:Int]()
-        
-        //Can I get currentUser as a User rather than PFUser?
-        
-        //It's the queries that are the problem.  They keep returning PFObjects.
-        
-        //User.currentUser is a PFUser and that makes its household a PFObject.  Need to correct this logic.  TODO.
+
         if let household = (User.currentUser()?.household)! as? Household {
         
-        household.getUsers() {(users: [PFObject]?, error: NSError?) -> Void in
+            household.getUsers() {(users: [PFObject]?, error: NSError?) -> Void in
             
-            if error == nil {
+                if error == nil {
 
-                //For every user in household, sum up scores
-                //In the future set monthly, weekly time limits TODO
-                for user in users! {
+                    //For every user in household, sum up scores
+                    //In the future set monthly, weekly time limits TODO
+                    for user in users! {
                     
-                    let parseUser = user as! User
-                    
-                    //let parseHousehold = parseUser["household"] as! Household
-                    
-                    //let customUser = User(name: parseUser.username!, password: "randomPassword", household: Household(name: parseHousehold["name"] as! String))
-                    
-                    parseUser.getScore() {(score: Int?, error: NSError?) -> Void in
-                        
-                        if error == nil {
+                        if let parseUser = user as? User {
                             
-                            //Do stuff when we get scores
-                            nameScores[parseUser.username!] = score
-                            
-                            //Check to see if we got all scores - if so, sort and display.
-                            if nameScores.count == users!.count {
+                            parseUser.getScore() {(score: Int?, scoreError: NSError?) -> Void in
                                 
-                                var sortedNames = [String]()
-                                var sortedScores = [Int]()
-                                
-                                for (name,score) in (Array(nameScores).sort{$0.1 > $1.1}) {
+                                if scoreError == nil {
                                     
-                                    sortedNames.append(name)
+                                    //Do stuff when we get scores
+                                    nameScores[parseUser.username!] = score
                                     
-                                    sortedScores.append(score)
+                                    //Check to see if we got all scores - if so, sort and display.
+                                    if nameScores.count == users!.count {
+                                        
+                                        var sortedNames = [String]()
+                                        var sortedScores = [Int]()
+                                        
+                                        for (name,score) in (Array(nameScores).sort{$0.1 > $1.1}) {
+                                            
+                                            sortedNames.append(name)
+                                            
+                                            sortedScores.append(score)
+                                            
+                                        }
+                                        
+                                        closure(sortedNames, sortedScores, nil)
+                                        
+                                    }
+                                    
+                                } else {
+                                    
+                                    closure(nil, nil, scoreError!)
                                     
                                 }
-                                
-                                closure(sortedNames, sortedScores, nil)
-                                
                             }
                             
                         } else {
                             
-                            
-                            
+                            print("User downcast failed")
+                                
                         }
-                        
-                
                     }
-                    
+                
+                } else {
+                
+                    closure(nil, nil, error!)
+                
                 }
-                
-            } else {
-                
-                closure(nil, nil, error!)
-                
-            }
             
-        }
+            }
         } else {
             
             print("household downcast fail")

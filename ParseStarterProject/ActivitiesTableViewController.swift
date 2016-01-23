@@ -11,14 +11,93 @@ import Parse
 
 class ActivitiesTableViewController: UITableViewController {
 
+    var activityList = [Activity]()
+    
+    var refresher: UIRefreshControl!
+    
+    func refresh() {
+        
+        ActivitiesTableViewController.getActivities() {(activities: [Activity]?, error: NSError?)-> Void in
+            
+            if error == nil {
+                
+                self.activityList = activities!
+                
+                self.tableView.reloadData()
+                
+                self.refresher.endRefreshing()
+                
+            } else {
+                
+                UserViewController.displayAlert("Couldn't find activities", message: error!.description, view: self)
+                
+                self.refresher.endRefreshing()
+                
+            }
+            
+        }
+    }
+    
+    //Search Parse for recent activities
+    class func getActivities(closure: ([Activity]?, NSError?) -> Void) {
+        
+        let usersQuery = User.query()!
+        
+        usersQuery.whereKey("household", equalTo: User.currentUser()!["household"])
+        
+        let activitiesQuery = Activity.query()!
+        
+        activitiesQuery.whereKey("user", matchesQuery: usersQuery)
+        
+        /*I think this is not needed anymore
+        activitiesQuery.orderByDescending("completedAt")
+        
+        activitiesQuery.includeKey("chore")
+        
+        activitiesQuery.includeKey("user")*/
+        
+        activitiesQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
+            
+            if error == nil {
+                
+                if let foundActivities = activities as? [Activity] {
+                    
+                    closure(foundActivities, nil)
+                    
+                } else {
+                    
+                    print("Couldn't downcast activities")
+                }
+                
+            } else {
+                
+                closure(nil, error)
+                
+            }
+            
+            
+        })
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        refresher = UIRefreshControl()
+        //refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(refresher)
+        
+    }
+    
+    //Unhide Navigation Controller Back button
+    override func viewWillAppear(animated: Bool) {
+        
+        self.navigationItem.hidesBackButton = false
+        
+        self.navigationController?.navigationBarHidden = false
+        
+        refresh()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,12 +109,34 @@ class ActivitiesTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return activityList.count
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell: ActivityCell = tableView.dequeueReusableCellWithIdentifier("cell2", forIndexPath: indexPath) as! ActivityCell
+        
+        let activity = activityList[indexPath.row]
+        
+        let completedDate = activity.completedAt
+        
+        let choreName = activity.chore["name"] as! String
+        
+        let userName = activity.user["username"] as! String
+        
+        let description = userName + " did " + choreName
+        
+        let score = activity.scoreStamp
+        
+        cell.setTableCell(completedDate, description: description, score: score)
+        
+        return cell
+    
     }
 
     /*

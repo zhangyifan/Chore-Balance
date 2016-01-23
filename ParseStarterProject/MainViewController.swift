@@ -14,7 +14,7 @@ import Parse
 
 //List of users in household.  Maybe cache in the future?  TODO
 var userList = [User]()
-var activityList = [Activity]()
+
 var choreArray = [Chore]()
 
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -31,7 +31,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var secondLabel: UILabel!
     
     //Activities section
-
+    var activityList = [Activity]()
     
 
     //Refresh function
@@ -83,18 +83,30 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             
             //********ACTIVITY FEED SECTION**************
-            MainViewController.getActivities(self, refreshControl: refreshControl) {()-> Void in
+            ActivitiesTableViewController.getActivities() {(activities: [Activity]?, error: NSError?)-> Void in
                 
-                self.activityTableView.reloadData()
-
+                if error == nil {
+                    
+                    self.activityList = activities!
+                    
+                    self.activityTableView.reloadData()
+                    
+                } else {
+                    
+                    UserViewController.displayAlert("Couldn't find activities", message: error!.description, view: self)
+                    
+                    refreshControl.endRefreshing()
+                    
+                }
+                
             }
             
             //********CHORES SECTION**************
-            MainViewController.getChores({ () -> Void in
+            /*MainViewController.getChores({ () -> Void in
                 
                 self.toDoTableView.reloadData()
                 
-            })
+            })*/
             
         } else {
             
@@ -110,52 +122,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     
     
-    //Search Parse for recent activities
-    class func getActivities(view: UIViewController, refreshControl: UIRefreshControl, closure: () -> Void) {
-
-        let usersQuery = User.query()!
-        
-        usersQuery.whereKey("household", equalTo: PFUser.currentUser()!["household"])
-        
-        let activitiesQuery = Activity.query()!
-        
-        activitiesQuery.whereKey("user", matchesQuery: usersQuery)
-        
-        /*I think this is not needed anymore
-        activitiesQuery.orderByDescending("completedAt")
-        
-        activitiesQuery.includeKey("chore")
-        
-        activitiesQuery.includeKey("user")*/
-        
-        activitiesQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
-            
-            activityList.removeAll(keepCapacity: true)
-            
-            if error == nil {
-                
-                for activity in activities! {
-                    
-                    activityList.append(activity as! Activity)
-                    
-                }
-        
-                closure()
-                
-            } else {
-                
-                UserViewController.displayAlert("Couldn't find activities", message: error!.description, view: view)
-                    
-                refreshControl.endRefreshing()
-                
-            }
-            
-            
-        })
-    }
+    
     
     //Use activityList and remove duplicate Chores.  TODO: In the future, check that activityList has been refreshed recently.
-    class func getChores(closure: () -> Void) {
+    /*class func getChores(closure: () -> Void) {
         
         //TODO THIS DOESN'T WORK IF NO ACTIVITIES HAVE BEEN DONE.  NEED TO REDO
         choreArray.removeAll(keepCapacity: true)
@@ -180,7 +150,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         closure()
         
-    }
+    }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -281,13 +251,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             self.performSegueWithIdentifier("showChores", sender: self)
             
-            
         }
         
         if tableView == self.activityTableView {
             
-            
-            
+            self.performSegueWithIdentifier("showActivityFeed", sender: self)
             
         }
         
