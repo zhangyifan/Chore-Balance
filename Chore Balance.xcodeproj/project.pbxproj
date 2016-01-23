@@ -59,6 +59,7 @@
 		E3C2099B1C4EA34100661460 /* ChoresTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoresTableViewController.swift; sourceTree = "<group>"; };
 		E3C2099D1C4EA38200661460 /* ActivitiesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesTableViewController.swift; sourceTree = "<group>"; };
 		E3C209A11C4F169400661460 /* ToDoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoCell.swift; sourceTree = "<group>"; };
+		E3CC055A1C53EE7E00AEC89C /* Chore-Balance-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Chore-Balance-Bridging-Header.h"; sourceTree = "<group>"; };
 		E3D119291C4F20C30078BC2F /* ActivityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +110,7 @@
 		81BA81471A49DA1800E65899 /* Chore Balance */ = {
 			isa = PBXGroup;
 			children = (
+				E3CC055A1C53EE7E00AEC89C /* Chore-Balance-Bridging-Header.h */,
 				814C3AC61B69877600E307BB /* Main.storyboard */,
 				E35E49101C4FE164009EA4EA /* Delegate */,
 				E35E490F1C4FE142009EA4EA /* Controller */,

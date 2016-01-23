@@ -58,7 +58,7 @@ class Household: PFObject, PFSubclassing {
     }
     
     //Update userList with all users in current user's household
-    func getUsers(closure: (NSError?) -> Void) {
+    func getUsers(closure: ([PFObject]?, NSError?) -> Void) {
         
         let usersQuery = User.query()
         
@@ -66,29 +66,7 @@ class Household: PFObject, PFSubclassing {
         
         usersQuery!.findObjectsInBackgroundWithBlock({ (users, error) -> Void in
             
-            if users != nil {
-                
-                //Clear userList
-                userList.removeAll(keepCapacity: true)
-                
-                //For every user in household, sum up scores
-                //In the future set monthly, weekly limits
-                for user in users! {
-                    
-                    let parseUser = user as! PFUser
-                    
-                    let customUser = User(name: parseUser.username!, password: "randomPassword", household: parseUser["household"] as! PFObject)
-                    
-                    userList.append(customUser)
-                    
-                    customUser.getScore()
-                }
-                
-            } else {
-                
-                closure(error)
-                
-            }
+            closure(users, error)
         })
     }
     

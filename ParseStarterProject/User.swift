@@ -9,6 +9,8 @@
 import UIKit
 import Parse
 
+//REMEMBER: For custom subclasses, must also create Briding Header and import subclasses, then register all subclasses in AppDelegate to be able to downcast.
+
 class User: PFUser {
     
     //Set up class to work with Parse
@@ -21,19 +23,19 @@ class User: PFUser {
     
     //Attributes
     
-    @NSManaged var household: PFObject?
+    @NSManaged var household: Household?
     
     //Set up what querying User does
     override class func query() -> PFQuery? {
         //1
         let query = PFUser.query()
         //2
-        query!.includeKey("household")
+        //query!.includeKey("household")
         return query
     }
     
     //Initialize
-    init(name: String, password: String, household: PFObject?) {
+    init(name: String, password: String, household: Household?) {
         super.init()
         
         //Remember username and password are super PFUser variables, not subclassable
@@ -68,12 +70,8 @@ class User: PFUser {
         })
         
     }
-    
-
-    
-    func getScore() {
-        
-        var nameScores = [String:Int]() //"Dictionary with Name: Score"
+ 
+    func getScore(closure: (Int?, NSError?) -> Void) {
         
         var score = 0
         
@@ -88,9 +86,11 @@ class User: PFUser {
                 //sum up scores
                 for activity in activities! {
                     
-                    let foundActivity = Activity(user: activity["user"] as! PFUser, chore: activity["chore"] as! PFObject, scoreStamp: activity["scoreStamp"] as! Int, completedAt: activity["completedAt"] as! NSDate)
+                    //let foundActivity = Activity(user: activity["user"] as! PFUser, chore: activity["chore"] as! PFObject, scoreStamp: activity["scoreStamp"] as! Int, completedAt: activity["completedAt"] as! NSDate)
                     
-                    if let scoreInt = foundActivity.scoreStamp as? Int {
+                    let foundActivity = activity as? Activity
+                    
+                    if let scoreInt = foundActivity!.scoreStamp as? Int {
                         
                         score += scoreInt
                         
@@ -98,109 +98,14 @@ class User: PFUser {
                     
                 }
                 
-                nameScores[self.username!] = score
-                
-            } /*else {
-                
-                UserViewController.displayAlert("Error with calculating scores", message: error!.description, view: view)
-                
-                refreshControl.endRefreshing()
-                
-            }*/
-        })
-    }
-    
-    //Search Parse for leaderboard for household
-    class func getSortedMembers(view: UIViewController, refreshControl: UIRefreshControl, closure: ([String],[Int]) -> Void) {
-        
-        //Unsorted household members
-        var nameScores = [String:Int]() //"Dictionary with Name: Score"
-        
-        let usersQuery = User.query()
-        
-        usersQuery!.whereKey("household", equalTo: User.currentUser()!.household!)
-        
-        usersQuery!.findObjectsInBackgroundWithBlock({ (users, error) -> Void in
-            
-            if users != nil {
-                
-                //Clear userList
-                userList.removeAll(keepCapacity: true)
-                
-                //For every user in household, sum up scores
-                //In the future set monthly, weekly limits
-                for user in users! {
-                    
-                    let parseUser = user as! PFUser
-                    
-                    let customUser = User(name: parseUser.username!, password: "randomPassword", household: parseUser["household"] as? PFObject)
-                    
-                    userList.append(customUser)
-                    
-                    var score = 0
-                    
-                    let scoresQuery = Activity.query()!
-                    
-                    scoresQuery.whereKey("user", equalTo: parseUser)
-                    
-                    scoresQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
-                        
-                        if activities != nil {
-                            
-                            //sum up scores
-                            for activity in activities! {
-                                
-                                let foundActivity = Activity(user: activity["user"] as! PFUser, chore: activity["chore"] as! PFObject, scoreStamp: activity["scoreStamp"] as! Int, completedAt: activity["completedAt"] as! NSDate)
-                                
-                                if let scoreInt = foundActivity.scoreStamp as? Int {
-                                    
-                                    score += scoreInt
-                                    
-                                }
-                                
-                            }
-                            
-                            nameScores[customUser.username!] = score
-                            
-                            //Sort for leaderboard
-                            var sortedNames = [String]()
-                            var sortedScores = [Int]()
-                            
-                            for (name,score) in (Array(nameScores).sort{$0.1 > $1.1}) {
-                                
-                                sortedNames.append(name)
-                                
-                                sortedScores.append(score)
-                                
-                            }
-                            
-                            //Does this for every user.  Figure out some way to be more efficient?
-                            closure(sortedNames,sortedScores)
-                            
-                        } else {
-                            
-                            UserViewController.displayAlert("Error with calculating scores", message: error!.description, view: view)
-                            
-                            refreshControl.endRefreshing()
-                            
-                        }
-                        
-                    })
-                    
-                }
-                
-                
+                closure(score, nil)
                 
             } else {
                 
-                UserViewController.displayAlert("Couldn't find people in your household", message: error!.description, view: view)
-                
-                refreshControl.endRefreshing()
+                closure(nil, error!)
                 
             }
-            
         })
-        
     }
     
 }

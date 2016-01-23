@@ -52,33 +52,32 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             //********CURRENT SCORES SECTION**************
             
-            //Find all users in same household
-            
-            User().getHouseholdUsers({ (error) -> Void in
+            //Find all sorted users in the same household
+            MembersTableViewController.getSortedUsers() {(names: [String]?, scores: [Int]?, error: NSError?) -> Void in
                 
-                UserViewController.displayAlert("Couldn't find people in your household", message: error!.description, view: self)
-                
-                refreshControl.endRefreshing()
-                
-            })
-            
-            print(userList)
-                
-            User.getSortedMembers(self, refreshControl: refreshControl) {(sortedNames, sortedScores) -> Void in
-                
-                if sortedNames.count > 0 && sortedScores.count > 0 {
+                if error == nil {
                     
-                    self.winnerLabel.text = sortedNames[0] + " - \(sortedScores[0])"
-                    
-                    if sortedNames.count > 1 && sortedScores.count > 1 {
+                    if names!.count > 0 && scores!.count > 0 {
                         
-                        self.secondLabel.text = sortedNames[1] + " - \(sortedScores[1])"
+                        self.winnerLabel.text = names![0] + " - \(scores![0])"
+                        
+                        if names!.count > 1 && scores!.count > 1 {
+                            
+                            self.secondLabel.text = names![1] + " - \(scores![1])"
+                            
+                        }
                         
                     }
                     
+                    refreshControl.endRefreshing()
+                    
+                } else {
+                    
+                    UserViewController.displayAlert("Couldn't load household members", message: error!.description, view: self)
+                    
+                    refreshControl.endRefreshing()
+                    
                 }
-                
-                refreshControl.endRefreshing()
                 
             }
             

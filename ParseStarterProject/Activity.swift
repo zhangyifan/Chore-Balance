@@ -24,9 +24,9 @@ class Activity: PFObject, PFSubclassing {
     }
     
     //Attributes
-    @NSManaged var user: PFUser
+    @NSManaged var user: User
     
-    @NSManaged var chore: PFObject
+    @NSManaged var chore: Chore
     
     @NSManaged var scoreStamp: Int
     
@@ -46,7 +46,7 @@ class Activity: PFObject, PFSubclassing {
     }
     
     //Initialize
-    init(user: PFUser, chore: PFObject, scoreStamp: Int, completedAt: NSDate) {
+    init(user: User, chore: Chore, scoreStamp: Int, completedAt: NSDate) {
         super.init()
         
         self.user = user
@@ -60,7 +60,7 @@ class Activity: PFObject, PFSubclassing {
         super.init()
     }
     
-    func create (user: PFUser, chore: PFObject, scoreStamp: Int, completedAt: NSDate) {
+    func create (user: User, chore: Chore, scoreStamp: Int, completedAt: NSDate) {
         
         let activity = Activity(user: user, chore: chore, scoreStamp: scoreStamp, completedAt: completedAt)
         

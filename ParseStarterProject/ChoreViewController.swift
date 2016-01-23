@@ -55,8 +55,8 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
                     if error == nil {
                         
                         //Add this as an activity - comment this out later if not needed.  For sample data, double to test weeding out duplicate chores.
-                        Activity(user: PFUser.currentUser()!, chore: chore, scoreStamp: chore.score, completedAt: NSDate())
-                        Activity(user: PFUser.currentUser()!, chore: chore, scoreStamp: chore.score, completedAt: NSDate())
+                        Activity(user: User.currentUser()!, chore: chore, scoreStamp: chore.score, completedAt: NSDate())
+                        Activity(user: User.currentUser()!, chore: chore, scoreStamp: chore.score, completedAt: NSDate())
                         
                         self.performSegueWithIdentifier("choreSaved", sender: self)
                         
