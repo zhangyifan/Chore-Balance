@@ -10,11 +10,22 @@ import UIKit
 
 class ToDoCell: UITableViewCell {
 
+    //Main
     @IBOutlet var choreLabel: UILabel!
     
     @IBOutlet var lastDoneLabel: UILabel!
     
     @IBAction func DoButton(sender: AnyObject) {
+    }
+    
+    //ChoreTableViewController 
+    @IBOutlet var choreNameLabel: UILabel!
+    
+    @IBOutlet var scoreLabel: UILabel!
+    
+    @IBOutlet var tableLastDoneLabel: UILabel!
+    
+    @IBAction func tableDoButton(sender: AnyObject) {
     }
     
     func setCell(description: String, score: Int, lastDone: NSDate?) {
@@ -35,6 +46,28 @@ class ToDoCell: UITableViewCell {
             lastDoneLabel.text = "last " + dateString
         }
   
+    }
+    
+    func setTableCell(description: String, score: Int, lastDone: NSDate?) {
+        
+        choreNameLabel.text = description
+        
+        scoreLabel.text = "\(score)"
+        
+        if lastDone == nil {
+            
+            tableLastDoneLabel.text = "Never"
+            
+        } else {
+            
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "M/d"
+            
+            let dateString = formatter.stringFromDate(lastDone!)
+            
+            tableLastDoneLabel.text = "last " + dateString
+        }
+        
     }
     
     override func awakeFromNib() {

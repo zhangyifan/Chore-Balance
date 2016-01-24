@@ -25,7 +25,43 @@ class ChoresTableViewController: UITableViewController {
                     
                     self.choreList = chores!
                     
-                    self.tableView.reloadData()
+                    var foundDates = 0
+                    
+                    for chore in chores! {
+                        
+                        chore.getLastDone() {(activity: Activity?, error: NSError?) -> Void in
+                            
+                            if error == nil {
+                                
+                                foundDates++
+                                
+                                //Check to see if all dates have been loaded
+                                if foundDates == chores?.count {
+                                    
+                                    //Sort so that the ones never done are first
+                                    self.choreList.sortInPlace({ (item1, item2) -> Bool in
+                                        let t1 = item1.lastDone ?? NSDate.distantPast()
+                                        let t2 = item2.lastDone ?? NSDate.distantPast()
+                                        return t1.compare(t2) == NSComparisonResult.OrderedAscending
+                                        
+                                    })
+                                    
+                                    self.tableView.reloadData()
+                                    
+                                }
+                                
+                            } else {
+                                
+                                UserViewController.displayAlert("Couldn't find last done date", message: error!.description, view: self)
+                                
+                                self.refresher.endRefreshing()
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                    
                     
                 } else {
                     
@@ -48,11 +84,10 @@ class ChoresTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        refresher = UIRefreshControl()
+        //refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(refresher)
     }
     
     //Unhide Navigation Controller Back button
@@ -61,6 +96,8 @@ class ChoresTableViewController: UITableViewController {
         self.navigationItem.hidesBackButton = false
         
         self.navigationController?.navigationBarHidden = false
+        
+        refresh()
         
     }
 
@@ -82,27 +119,17 @@ class ChoresTableViewController: UITableViewController {
     }
     
     //TODO Modify this cell (maybe new custom cell) to let user EDIT CHORES HERE.  NAME, SCORE, or DELETE ENTIRELY
-    /*override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell: ToDoCell = tableView.dequeueReusableCellWithIdentifier("cell2", forIndexPath: indexPath) as! ActivityCell
+        let cell: ToDoCell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! ToDoCell
         
-        let activity = activityList[indexPath.row]
+        let chore = choreList[indexPath.row]
         
-        let completedDate = activity.completedAt
-        
-        let choreName = activity.chore["name"] as! String
-        
-        let userName = activity.user["username"] as! String
-        
-        let description = userName + " did " + choreName
-        
-        let score = activity.scoreStamp
-        
-        cell.setTableCell(completedDate, description: description, score: score)
+        cell.setTableCell(chore.name, score: chore.score, lastDone: chore.lastDone)
         
         return cell
         
-    }*/
+    }
 
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

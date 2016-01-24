@@ -536,13 +536,67 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="o2O-FU-z1f">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cell3" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell3" id="o2O-FU-z1f" customClass="ToDoCell" customModule="Chore_Balance" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="o2O-FU-z1f" id="0O5-y2-ohk">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chore name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UYO-E0-GjP">
+                                            <rect key="frame" x="8" y="11" width="170" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="170" id="3Il-Jy-38U"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OCr-BX-SxK">
+                                            <rect key="frame" x="186" y="11" width="45" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="45" id="Jv5-7H-Tvg"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last done" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBe-oU-ahm">
+                                            <rect key="frame" x="239" y="11" width="76" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="76" id="wBv-y7-wUh"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oxg-uo-i2V">
+                                            <rect key="frame" x="330" y="7" width="37" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="37" id="5eX-Nu-33f"/>
+                                            </constraints>
+                                            <state key="normal" title="Do it!"/>
+                                            <connections>
+                                                <action selector="tableDoButton:" destination="o2O-FU-z1f" eventType="touchUpInside" id="IZt-F1-N0p"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="UYO-E0-GjP" firstAttribute="leading" secondItem="0O5-y2-ohk" secondAttribute="leading" constant="8" id="0l3-tb-3HN"/>
+                                        <constraint firstItem="UYO-E0-GjP" firstAttribute="centerY" secondItem="0O5-y2-ohk" secondAttribute="centerY" id="GCy-Dx-9ux"/>
+                                        <constraint firstItem="WBe-oU-ahm" firstAttribute="leading" secondItem="OCr-BX-SxK" secondAttribute="trailing" constant="8" id="Mb2-3m-ldM"/>
+                                        <constraint firstItem="oxg-uo-i2V" firstAttribute="centerY" secondItem="0O5-y2-ohk" secondAttribute="centerY" id="UdF-mJ-XpQ"/>
+                                        <constraint firstItem="OCr-BX-SxK" firstAttribute="centerY" secondItem="0O5-y2-ohk" secondAttribute="centerY" id="V0X-85-a7s"/>
+                                        <constraint firstItem="WBe-oU-ahm" firstAttribute="centerY" secondItem="0O5-y2-ohk" secondAttribute="centerY" id="XS3-Qj-BIq"/>
+                                        <constraint firstItem="OCr-BX-SxK" firstAttribute="leading" secondItem="UYO-E0-GjP" secondAttribute="trailing" constant="8" id="Y5T-kK-IlG"/>
+                                        <constraint firstItem="oxg-uo-i2V" firstAttribute="trailing" secondItem="0O5-y2-ohk" secondAttribute="trailingMargin" id="w8g-9C-5sG"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="choreNameLabel" destination="UYO-E0-GjP" id="77i-Ty-PpN"/>
+                                    <outlet property="scoreLabel" destination="OCr-BX-SxK" id="GMa-te-S42"/>
+                                    <outlet property="tableLastDoneLabel" destination="WBe-oU-ahm" id="9t9-cp-sfe"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -915,6 +969,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="TDQ-Fo-48E"/>
-        <segue reference="Rac-0d-avx"/>
+        <segue reference="AP1-bB-wOJ"/>
     </inferredMetricsTieBreakers>
 </document>
