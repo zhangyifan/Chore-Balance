@@ -17,17 +17,24 @@ class ToDoCell: UITableViewCell {
     @IBAction func DoButton(sender: AnyObject) {
     }
     
-    func setCell(description: String, score: Int, lastDone: NSDate) {
+    func setCell(description: String, score: Int, lastDone: NSDate?) {
         
         choreLabel.text = description + " - \(score)"
         
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "M/d"
-        
-        let dateString = formatter.stringFromDate(lastDone)
-        
-        lastDoneLabel.text = "last " + dateString
-        
+        if lastDone == nil {
+            
+            lastDoneLabel.text = "Never"
+            
+        } else {
+            
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "M/d"
+            
+            let dateString = formatter.stringFromDate(lastDone!)
+            
+            lastDoneLabel.text = "last " + dateString
+        }
+  
     }
     
     override func awakeFromNib() {

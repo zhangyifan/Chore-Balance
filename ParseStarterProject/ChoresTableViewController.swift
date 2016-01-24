@@ -11,7 +11,39 @@ import Parse
 
 class ChoresTableViewController: UITableViewController {
 
-    //TODO - NEED TO BE ABLE TO EDIT CHORES HERE.  NAME, SCORE, or DELETE ENTIRELY
+    var choreList = [Chore]()
+    
+    var refresher: UIRefreshControl!
+    
+    func refresh() {
+        
+        if let household = User.currentUser()!.household! as? Household {
+            
+            household.getChores() { (chores: [Chore]?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    self.choreList = chores!
+                    
+                    self.tableView.reloadData()
+                    
+                } else {
+                    
+                    UserViewController.displayAlert("Couldn't find chores", message: error!.description, view: self)
+                    
+                    self.refresher.endRefreshing()
+                    
+                }
+            }
+            
+        } else {
+            
+            //Handle if user has null household TODO
+            print("User has no household")
+            
+        }
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,13 +73,36 @@ class ChoresTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return choreList.count
     }
+    
+    //TODO Modify this cell (maybe new custom cell) to let user EDIT CHORES HERE.  NAME, SCORE, or DELETE ENTIRELY
+    /*override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell: ToDoCell = tableView.dequeueReusableCellWithIdentifier("cell2", forIndexPath: indexPath) as! ActivityCell
+        
+        let activity = activityList[indexPath.row]
+        
+        let completedDate = activity.completedAt
+        
+        let choreName = activity.chore["name"] as! String
+        
+        let userName = activity.user["username"] as! String
+        
+        let description = userName + " did " + choreName
+        
+        let score = activity.scoreStamp
+        
+        cell.setTableCell(completedDate, description: description, score: score)
+        
+        return cell
+        
+    }*/
 
     /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

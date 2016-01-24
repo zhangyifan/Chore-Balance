@@ -17,66 +17,35 @@ class ActivitiesTableViewController: UITableViewController {
     
     func refresh() {
         
-        ActivitiesTableViewController.getActivities() {(activities: [Activity]?, error: NSError?)-> Void in
+        if let household = User.currentUser()!.household! as? Household {
             
-            if error == nil {
+            household.getActivities() {(activities: [Activity]?, error: NSError?)-> Void in
                 
-                self.activityList = activities!
-                
-                self.tableView.reloadData()
-                
-                self.refresher.endRefreshing()
-                
-            } else {
-                
-                UserViewController.displayAlert("Couldn't find activities", message: error!.description, view: self)
-                
-                self.refresher.endRefreshing()
-                
-            }
-            
-        }
-    }
-    
-    //Search Parse for recent activities
-    class func getActivities(closure: ([Activity]?, NSError?) -> Void) {
-        
-        let usersQuery = User.query()!
-        
-        usersQuery.whereKey("household", equalTo: User.currentUser()!["household"])
-        
-        let activitiesQuery = Activity.query()!
-        
-        activitiesQuery.whereKey("user", matchesQuery: usersQuery)
-        
-        /*I think this is not needed anymore
-        activitiesQuery.orderByDescending("completedAt")
-        
-        activitiesQuery.includeKey("chore")
-        
-        activitiesQuery.includeKey("user")*/
-        
-        activitiesQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
-            
-            if error == nil {
-                
-                if let foundActivities = activities as? [Activity] {
+                if error == nil {
                     
-                    closure(foundActivities, nil)
+                    self.activityList = activities!
+                    
+                    self.tableView.reloadData()
+                    
+                    self.refresher.endRefreshing()
                     
                 } else {
                     
-                    print("Couldn't downcast activities")
+                    UserViewController.displayAlert("Couldn't find activities", message: error!.description, view: self)
+                    
+                    self.refresher.endRefreshing()
+                    
                 }
-                
-            } else {
-                
-                closure(nil, error)
                 
             }
             
+        } else {
             
-        })
+            //Handle if user has null household TODO
+            print("User has no household")
+            
+        }
+        
     }
     
     override func viewDidLoad() {

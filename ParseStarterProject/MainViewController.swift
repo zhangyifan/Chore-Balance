@@ -12,10 +12,8 @@ import Parse
 //TODO - SETTINGS?  Just have logout right now but in the future we will want a settings page.
 //TODO - Cache leaderboard?  Check for refresh time?
 
-//List of users in household.  Maybe cache in the future?  TODO
+//List of users in household.  Maybe cache in the future?  TODO GET RID OF THIS?
 var userList = [User]()
-
-var choreArray = [Chore]()
 
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -33,6 +31,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Activities section
     var activityList = [Activity]()
     
+    //Chores section
+    var choreList = [Chore]()
 
     //Refresh function
     var lastRefreshTime = NSDate()
@@ -81,32 +81,86 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 
             }
             
-            
-            //********ACTIVITY FEED SECTION**************
-            ActivitiesTableViewController.getActivities() {(activities: [Activity]?, error: NSError?)-> Void in
+            if let household = User.currentUser()!.household! as? Household {
                 
-                if error == nil {
+                //********ACTIVITY FEED SECTION**************
+                household.getActivities() {(activities: [Activity]?, error: NSError?)-> Void in
+                
+                    if error == nil {
                     
-                    self.activityList = activities!
+                        self.activityList = activities!
                     
-                    self.activityTableView.reloadData()
+                        self.activityTableView.reloadData()
                     
-                } else {
+                    } else {
                     
-                    UserViewController.displayAlert("Couldn't find activities", message: error!.description, view: self)
+                        UserViewController.displayAlert("Couldn't find activities", message: error!.description, view: self)
                     
-                    refreshControl.endRefreshing()
+                        refreshControl.endRefreshing()
                     
+                    }
                 }
                 
+                //********CHORES SECTION**************
+                household.getChores() { (chores: [Chore]?, error: NSError?) -> Void in
+                    
+                    if error == nil {
+                        
+                        self.choreList = chores!
+                        
+                        var foundDates = 0
+                        
+                        for chore in chores! {
+                            
+                            chore.getLastDone() {(activity: Activity?, error: NSError?) -> Void in
+                                
+                                if error == nil {
+                                    
+                                    foundDates++
+  
+                                    //Check to see if all dates have been loaded
+                                    if foundDates == chores?.count {
+                                        
+                                        //Sort so that the ones never done are first
+                                        self.choreList.sortInPlace({ (item1, item2) -> Bool in
+                                            let t1 = item1.lastDone ?? NSDate.distantPast()
+                                            let t2 = item2.lastDone ?? NSDate.distantPast()
+                                            return t1.compare(t2) == NSComparisonResult.OrderedAscending
+                                            
+                                        })
+                                        
+                                        self.toDoTableView.reloadData()
+                                        
+                                    }
+                                    
+                                } else {
+                                    
+                                    UserViewController.displayAlert("Couldn't find last done date", message: error!.description, view: self)
+                                    
+                                    refreshControl.endRefreshing()
+                                }
+
+                            }
+                            
+                        }
+                        
+                        
+                        
+                    } else {
+                        
+                        UserViewController.displayAlert("Couldn't find chores", message: error!.description, view: self)
+                        
+                        refreshControl.endRefreshing()
+    
+                    }
+                }
+                
+            } else {
+                
+                //Handle if user has no household TODO
+                print("User has no household")
+                
             }
-            
-            //********CHORES SECTION**************
-            /*MainViewController.getChores({ () -> Void in
-                
-                self.toDoTableView.reloadData()
-                
-            })*/
             
         } else {
             
@@ -119,38 +173,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         
     }
-    
-    
-    
-    
-    
-    //Use activityList and remove duplicate Chores.  TODO: In the future, check that activityList has been refreshed recently.
-    /*class func getChores(closure: () -> Void) {
-        
-        //TODO THIS DOESN'T WORK IF NO ACTIVITIES HAVE BEEN DONE.  NEED TO REDO
-        choreArray.removeAll(keepCapacity: true)
-
-        for activity in activityList {
-            
-            choreArray.append(activity.chore as! Chore)
-            
-        }
-        
-        //Remove duplicate chores
-        let choreSet = NSOrderedSet(array: choreArray)
-        
-        //Turn Set back into array
-        choreArray.removeAll(keepCapacity: true)
-    
-        for object in choreSet {
-            
-            choreArray.append(object as! Chore)
-            
-        }
-        
-        closure()
-        
-    }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,9 +190,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Hide Navigation Controller Back button
     override func viewWillAppear(animated: Bool) {
         
-        self.navigationItem.hidesBackButton = true
+        /*self.navigationItem.hidesBackButton = true
         
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.navigationBarHidden = true*/
         
         //Check if data has been reloaded recently, and if so reload it. TODO
         handleRefresh(refreshControl)
@@ -184,7 +206,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         if tableView == self.toDoTableView {
             
             //Calculate rows of Chores
-            count = choreArray.count
+            count = choreList.count
             
         }
         
@@ -205,18 +227,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             let toDoCell: ToDoCell = tableView.dequeueReusableCellWithIdentifier("cell1", forIndexPath: indexPath) as! ToDoCell
             
-            let chore = choreArray[indexPath.row]
+            let chore = choreList[indexPath.row]
             
-            let choreName = chore.name
-            
-            let choreScore = chore.score
-            
-            let lastDoneDate = chore.getLastDone(self)
-            
-            toDoCell.setCell(choreName, score: choreScore, lastDone: lastDoneDate)
+            toDoCell.setCell(chore.name, score: chore.score, lastDone: chore.lastDone)
             
             cell = toDoCell
-            
             
         }
         

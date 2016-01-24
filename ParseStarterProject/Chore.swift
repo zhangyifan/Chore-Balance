@@ -28,7 +28,9 @@ class Chore: PFObject, PFSubclassing {
     
     @NSManaged var score: Int
     
-    @NSManaged var household: PFObject
+    @NSManaged var household: Household
+    
+    @NSManaged var lastDone: NSDate?
     
     //Set up what querying Chores does
     override class func query() -> PFQuery? {
@@ -40,12 +42,13 @@ class Chore: PFObject, PFSubclassing {
     }
     
     //Initialize
-    init(name: String, score: Int, household: PFObject) {
+    init(name: String, score: Int, household: Household, lastDone: NSDate?) {
         super.init()
         
         self.name = name
         self.score = score
         self.household = household
+        self.lastDone = lastDone
         
     }
     
@@ -53,9 +56,9 @@ class Chore: PFObject, PFSubclassing {
         super.init()
     }
     
-    func create(name: String, score: Int, household: PFObject, closure: (NSError?, Chore) -> Void) {
+    func create(name: String, score: Int, household: Household, lastDone: NSDate?, closure: (NSError?, Chore) -> Void) {
         
-        let chore = Chore(name: name, score: score, household: household)
+        let chore = Chore(name: name, score: score, household: household, lastDone: lastDone)
         
         chore.saveInBackgroundWithBlock({ (success, error) -> Void in
             
@@ -65,30 +68,37 @@ class Chore: PFObject, PFSubclassing {
         
     }
     
-    func getLastDone(view: UIViewController) -> NSDate {
-        
-        var lastDone: NSDate? = nil
+    func getLastDone(closure: (Activity?, NSError?) -> Void) {
         
         let activityQuery = Activity.query()!
-        
+    
         activityQuery.whereKey("chore", equalTo: self)
         
-        do {
+        activityQuery.getFirstObjectInBackgroundWithBlock() { (activity, error) -> Void in
             
-            if let foundActivity = try? activityQuery.getFirstObject() {
+            //Finds a last done activity
+            if let foundActivity = activity as? Activity {
                 
-                lastDone = foundActivity["completedAt"] as! NSDate
+                self.lastDone = foundActivity.completedAt
                 
-            } 
-            
-            
-        } catch {
-            
-            UserViewController.displayAlert("Couldn't find activities", message: error as! String, view: view)
+                closure(foundActivity, nil)
+                
+            //No error but does not find a last done activity
+            } else if error?.code == 101 {
+                
+                self.lastDone = nil
+                
+                closure(nil, nil)
+                
+            //Error
+            } else {
+                
+                closure(nil, error)
+                
+            }
             
         }
 
-        return lastDone!
     }
     
 }

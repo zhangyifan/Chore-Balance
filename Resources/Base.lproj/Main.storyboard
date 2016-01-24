@@ -383,7 +383,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="PPc-uc-8sa">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="LQ9-X2-6bY"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="9Rw-r5-bln"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="9Rw-r5-bln">
+                            <connections>
+                                <segue destination="8s9-XT-yKu" kind="show" id="Rac-0d-avx"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
@@ -911,6 +915,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="TDQ-Fo-48E"/>
-        <segue reference="AP1-bB-wOJ"/>
+        <segue reference="Rac-0d-avx"/>
     </inferredMetricsTieBreakers>
 </document>

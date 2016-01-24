@@ -50,7 +50,7 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
                     break;
                 }
                 
-                Chore().create(choreNameField.text!, score: score, household: PFUser.currentUser()!["household"] as! PFObject) {(error, chore) -> Void in
+                Chore().create(choreNameField.text!, score: score, household: User.currentUser()!.household! as! Household, lastDone: nil) {(error, chore) -> Void in
                     
                     if error == nil {
                         
