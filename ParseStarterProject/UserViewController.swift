@@ -32,18 +32,13 @@ class UserViewController: UIViewController {
     //This function used across the app
     class func displayAlert(title: String, message: String, view: UIViewController) {
         
-        if #available(iOS 8.0, *) {
-            let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action) -> Void in
             
-            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action) -> Void in
-
-            }))
-            
-            view.presentViewController(alert, animated: true, completion: nil)
-            
-        } else {
-            // Fallback on earlier versions TODO
-        }
+        }))
+        
+        view.presentViewController(alert, animated: true, completion: nil)
         
     }
     
@@ -67,7 +62,6 @@ class UserViewController: UIViewController {
             UIApplication.sharedApplication().beginIgnoringInteractionEvents()
             
             //Signup mode
-            //TODO How to use User class along with Parse?
             if signUpActive == true {
                 
                 User().signUp(username.text!, password: password.text!) {(error: NSError?)-> Void in
@@ -124,23 +118,15 @@ class UserViewController: UIViewController {
         
         if signUpActive == true {
             
-            //Switch screen to login mode
-            mainButtonText.setTitle("Log In", forState: UIControlState.Normal)
-            registeredText.text = "Don't have an account?"
-            smallButtonText.setTitle("Signup", forState: UIControlState.Normal)
-            
             signUpActive = false
             
         } else {
             
-            //Switch screen to signup mode
-            mainButtonText.setTitle("Sign Up", forState: UIControlState.Normal)
-            registeredText.text = "Already have an account?"
-            smallButtonText.setTitle("Login", forState: UIControlState.Normal)
-            
             signUpActive = true
             
         }
+        
+        setLabels()
         
     }
     override func viewDidLoad() {
@@ -167,9 +153,38 @@ class UserViewController: UIViewController {
         } 
         
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        setLabels()
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setLabels() {
+        
+        print(signUpActive)
+        
+        if signUpActive == true {
+            
+            //Set screen into signup mode
+            mainButtonText.setTitle("Sign Up", forState: UIControlState.Normal)
+            registeredText.text = "Already have an account?"
+            smallButtonText.setTitle("Login", forState: UIControlState.Normal)
+            
+        } else {
+            
+            //Set screen into login mode
+            mainButtonText.setTitle("Log In", forState: UIControlState.Normal)
+            registeredText.text = "Don't have an account?"
+            smallButtonText.setTitle("Signup", forState: UIControlState.Normal)
+
+            
+        }
+        
     }
 }

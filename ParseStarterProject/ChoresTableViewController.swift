@@ -48,6 +48,8 @@ class ChoresTableViewController: UITableViewController {
                                     
                                     self.tableView.reloadData()
                                     
+                                    self.refresher.endRefreshing()
+                                    
                                 }
                                 
                             } else {
@@ -78,6 +80,11 @@ class ChoresTableViewController: UITableViewController {
             print("User has no household")
             
         }
+        
+    }
+    
+    @IBAction func doButtonPressed(sender: AnyObject) {
+        
         
     }
     
@@ -127,19 +134,66 @@ class ChoresTableViewController: UITableViewController {
         
         cell.setTableCell(chore.name, score: chore.score, lastDone: chore.lastDone)
         
+        cell.tableDoButtonOutlet.tag = indexPath.row
+        
+        cell.tableDoButtonOutlet.addTarget(self, action: Selector("addActivity:"), forControlEvents: UIControlEvents.TouchUpInside)
+        
         return cell
         
     }
-
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
-        return cell
+    
+    //Do a chore
+    @IBAction func addActivity (sender: UIButton) {
+        
+        let chore = choreList[sender.tag]
+        
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "M/d"
+        
+        let dateString = formatter.stringFromDate(NSDate())
+        
+        let addActivityAlert = UIAlertController(title: "Just making sure", message: "\(User.currentUser()!.username!) did \(chore.name) on \(dateString). This will add \(chore.score) points to their score.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        addActivityAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+            
+            //Nothing happens
+            
+        }))
+        
+        addActivityAlert.addAction(UIAlertAction(title: "Yup! Save it", style: .Default, handler: { (action: UIAlertAction!) in
+            
+            Activity().create(User.currentUser()!, chore: chore, scoreStamp: chore.score, completedAt: NSDate()) { (error, household) -> Void in
+                
+                if error == nil {
+                    
+                    chore.updateLastDone() {(error) -> Void in
+                        
+                        if error != nil {
+                            
+                            UserViewController.displayAlert("Chore last done date failed to update", message: error!.description, view: self)
+                            
+                        } else {
+                            
+                            self.refresh()
+                            
+                            //Do I need this too?  self.toDoTableView.reloadData()
+                            
+                        }
+                    }
+                    
+                } else {
+                    
+                    UserViewController.displayAlert("Activity failed to save", message: error!.description, view: self)
+                    
+                }
+                
+            }
+                        
+        }))
+        
+        presentViewController(addActivityAlert, animated: true, completion: nil)
+        
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
@@ -176,14 +230,16 @@ class ChoresTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+
+        
     }
-    */
+    
 
 }

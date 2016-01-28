@@ -134,7 +134,7 @@ class HouseholdViewController: UIViewController {
         
     }
     
-    //A function to add household to a user, once they create/join it
+    //A function to add household to a user, once they create/join it.  Maybe should move it to User object?  TODO
     func updateUserHousehold(household: Household, user: PFUser) {
         
         user["household"] = household

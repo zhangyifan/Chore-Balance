@@ -15,6 +15,8 @@ class ToDoCell: UITableViewCell {
     
     @IBOutlet var lastDoneLabel: UILabel!
     
+    @IBOutlet var doButtonOutlet: UIButton!
+    
     @IBAction func DoButton(sender: AnyObject) {
     }
     
@@ -25,9 +27,11 @@ class ToDoCell: UITableViewCell {
     
     @IBOutlet var tableLastDoneLabel: UILabel!
     
+    @IBOutlet var tableDoButtonOutlet: UIButton!
+    
     @IBAction func tableDoButton(sender: AnyObject) {
     }
-    
+  
     func setCell(description: String, score: Int, lastDone: NSDate?) {
         
         choreLabel.text = description + " - \(score)"

@@ -60,6 +60,12 @@ class Chore: PFObject, PFSubclassing {
         
         let chore = Chore(name: name, score: score, household: household, lastDone: lastDone)
         
+        let acl = PFACL()
+        acl.publicReadAccess = true
+        acl.publicWriteAccess = true
+        
+        chore.ACL = acl
+        
         chore.saveInBackgroundWithBlock({ (success, error) -> Void in
             
             closure(error, chore)
@@ -84,7 +90,7 @@ class Chore: PFObject, PFSubclassing {
                 closure(foundActivity, nil)
                 
             //No error but does not find a last done activity
-            } else if error?.code == 101 {
+            } else if error?.localizedDescription == "No results matched the query." {
                 
                 self.lastDone = nil
                 
@@ -99,6 +105,24 @@ class Chore: PFObject, PFSubclassing {
             
         }
 
+    }
+    
+    func updateLastDone(closure: (NSError?) -> Void) {
+        
+        self.saveInBackgroundWithBlock { (success, error) -> Void in
+            
+            if error != nil {
+                
+                closure(error)
+                
+            } else {
+                
+                closure(nil)
+                
+            }
+            
+        }
+        
     }
     
 }

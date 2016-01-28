@@ -59,13 +59,16 @@ class Activity: PFObject, PFSubclassing {
     override init() {
         super.init()
     }
-    
-    func create (user: User, chore: Chore, scoreStamp: Int, completedAt: NSDate) {
+
+    func create (user: User, chore: Chore, scoreStamp: Int, completedAt: NSDate, closure: (NSError?, Activity) -> Void) {
         
         let activity = Activity(user: user, chore: chore, scoreStamp: scoreStamp, completedAt: completedAt)
+
+        activity.saveInBackgroundWithBlock { (success, error) -> Void in
+            
+            closure(error, activity)
+
+        }
         
-        activity.saveInBackground()
-        
-    }
-    
+    }    
 }

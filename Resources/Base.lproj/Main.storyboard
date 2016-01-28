@@ -11,7 +11,7 @@
         <!--User View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="UserViewController" customModule="Chore_Balance" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="UserViewController" storyboardIdentifier="UserViewController" id="BYZ-38-t0r" customClass="UserViewController" customModule="Chore_Balance" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -335,6 +335,7 @@
                                                 </tableViewCellContentView>
                                                 <connections>
                                                     <outlet property="choreLabel" destination="lLk-l7-Okt" id="gaB-SG-CSx"/>
+                                                    <outlet property="doButtonOutlet" destination="LH9-LE-LO2" id="tM6-Hi-hGZ"/>
                                                     <outlet property="lastDoneLabel" destination="lDe-hf-SgV" id="xBJ-jx-yio"/>
                                                 </connections>
                                             </tableViewCell>
@@ -382,7 +383,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PPc-uc-8sa">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="LQ9-X2-6bY"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="LQ9-X2-6bY">
+                            <connections>
+                                <action selector="logOut:" destination="1yA-ij-PFD" id="bVK-ds-Nc2"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="9Rw-r5-bln">
                             <connections>
                                 <segue destination="8s9-XT-yKu" kind="show" id="Rac-0d-avx"/>
@@ -398,6 +403,7 @@
                         <outlet property="winnerLabel" destination="vXT-Xg-wmG" id="rD7-Y5-smg"/>
                         <segue destination="DKk-Yw-R9E" kind="show" identifier="showChores" id="dmU-v8-iMb"/>
                         <segue destination="AAq-mK-bN4" kind="show" identifier="showActivityFeed" id="ET2-4L-7EW"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="logoutFromMain" id="05B-fO-qJf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="91C-tL-i6a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -549,7 +555,7 @@
                                                 <constraint firstAttribute="width" constant="170" id="3Il-Jy-38U"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OCr-BX-SxK">
@@ -558,7 +564,7 @@
                                                 <constraint firstAttribute="width" constant="45" id="Jv5-7H-Tvg"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last done" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBe-oU-ahm">
@@ -577,7 +583,7 @@
                                             </constraints>
                                             <state key="normal" title="Do it!"/>
                                             <connections>
-                                                <action selector="tableDoButton:" destination="o2O-FU-z1f" eventType="touchUpInside" id="IZt-F1-N0p"/>
+                                                <action selector="tableDoButton:" destination="o2O-FU-z1f" eventType="touchUpInside" id="4G9-nF-dLa"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -595,6 +601,7 @@
                                 <connections>
                                     <outlet property="choreNameLabel" destination="UYO-E0-GjP" id="77i-Ty-PpN"/>
                                     <outlet property="scoreLabel" destination="OCr-BX-SxK" id="GMa-te-S42"/>
+                                    <outlet property="tableDoButtonOutlet" destination="oxg-uo-i2V" id="cTh-ek-t9s"/>
                                     <outlet property="tableLastDoneLabel" destination="WBe-oU-ahm" id="9t9-cp-sfe"/>
                                 </connections>
                             </tableViewCell>
@@ -969,6 +976,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="TDQ-Fo-48E"/>
-        <segue reference="AP1-bB-wOJ"/>
+        <segue reference="05B-fO-qJf"/>
+        <segue reference="Rac-0d-avx"/>
     </inferredMetricsTieBreakers>
 </document>
