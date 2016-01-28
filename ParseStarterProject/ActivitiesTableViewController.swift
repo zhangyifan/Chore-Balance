@@ -116,17 +116,38 @@ class ActivitiesTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
+            
             // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            activityList[indexPath.row].deleteInBackgroundWithBlock({ (success, error) -> Void in
+                
+                if success == true {
+                    
+                    self.activityList.removeAtIndex(indexPath.row)
+                    
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                    
+                } else if self.activityList[indexPath.row].user != User.currentUser() {
+                    
+                    //Can't edit another user's activity
+                    UserViewController.displayAlert("You can't edit someone else's activity", message: "This activity was not done by you.  Please ask them to edit it.", view: self)
+                    
+                } else {
+                    
+                    UserViewController.displayAlert("Couldn't delete activity", message: error!.localizedDescription, view: self)
+                    
+                }
+            })
+            
         } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
+            //We don't want this right now
+        }
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
