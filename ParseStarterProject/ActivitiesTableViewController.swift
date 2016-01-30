@@ -121,27 +121,47 @@ class ActivitiesTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             
-            // Delete the row from the data source
-            activityList[indexPath.row].deleteInBackgroundWithBlock({ (success, error) -> Void in
-                
-                if success == true {
-                    
-                    self.activityList.removeAtIndex(indexPath.row)
-                    
-                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-                    
-                } else if self.activityList[indexPath.row].user != User.currentUser() {
-                    
-                    //Can't edit another user's activity
-                    UserViewController.displayAlert("You can't edit someone else's activity", message: "This activity was not done by you.  Please ask them to edit it.", view: self)
-                    
-                } else {
-                    
-                    UserViewController.displayAlert("Couldn't delete activity", message: error!.localizedDescription, view: self)
-                    
-                }
-            })
+            let deletedActivity = activityList[indexPath.row]
             
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "M/d"
+            let dateString = formatter.stringFromDate(deletedActivity.completedAt)
+            
+            let deleteActivityAlert = UIAlertController(title: "Your activity will be deleted", message: "Just making sure you want to delete doing \(deletedActivity.chore.name) on \(dateString). This can't be undone.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            deleteActivityAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+                
+                //Nothing happens
+                
+            }))
+            
+            deleteActivityAlert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action: UIAlertAction!) in
+                
+                // Delete the row from the data source
+                self.activityList[indexPath.row].deleteInBackgroundWithBlock({ (success, error) -> Void in
+                    
+                    if success == true {
+                        
+                        self.activityList.removeAtIndex(indexPath.row)
+                        
+                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                        
+                    } else if self.activityList[indexPath.row].user != User.currentUser() {
+                        
+                        //Can't edit another user's activity
+                        UserViewController.displayAlert("You can't edit someone else's activity", message: "This activity was not done by you.  Please ask them to edit it.", view: self)
+                        
+                    } else {
+                        
+                        UserViewController.displayAlert("Couldn't delete activity", message: error!.localizedDescription, view: self)
+                        
+                    }
+                })
+                
+            }))
+            
+            presentViewController(deleteActivityAlert, animated: true, completion: nil)
+ 
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
             //We don't want this right now

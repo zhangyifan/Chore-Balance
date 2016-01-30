@@ -128,6 +128,8 @@ class HouseholdViewController: UIViewController {
                 //Error with user logged in
                 UserViewController.displayAlert("You're not logged in", message: "Please login or signup to add a household", view: self)
                 
+                //self.navigationController?.pushViewController(userViewController, animated: true)
+                
             }
             
         }

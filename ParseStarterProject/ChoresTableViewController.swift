@@ -203,17 +203,50 @@ class ChoresTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
         if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            
+            let deleteChoreAlert = UIAlertController(title: "Your chore will be deleted", message: "Just making sure you want to delete \(choreList[indexPath.row].name) for everyone in your household. This can't be undone.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            deleteChoreAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+                
+                //Nothing happens
+                
+            }))
+            
+            deleteChoreAlert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action: UIAlertAction!) in
+                
+                // Delete the row from the data source
+                self.choreList[indexPath.row].deleteInBackgroundWithBlock({ (success, error) -> Void in
+                    
+                    if success == true {
+                        
+                        self.choreList.removeAtIndex(indexPath.row)
+                        
+                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                        
+                    } else {
+                        
+                        UserViewController.displayAlert("Couldn't delete chore", message: error!.localizedDescription, view: self)
+                        
+                    }
+                    
+                })
+                
+            }))
+            
+            presentViewController(deleteChoreAlert, animated: true, completion: nil)
+            
         } else if editingStyle == .Insert {
+            
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+            
         }    
     }
-    */
+    
 
     /*
     // Override to support rearranging the table view.
