@@ -167,8 +167,6 @@ class UserViewController: UIViewController {
     
     func setLabels() {
         
-        print(signUpActive)
-        
         if signUpActive == true {
             
             //Set screen into signup mode

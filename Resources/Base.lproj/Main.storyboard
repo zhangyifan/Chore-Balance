@@ -614,11 +614,14 @@
                     <navigationItem key="navigationItem" title="All Chores" id="4EA-A2-oP1">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="11l-aH-yB4">
                             <connections>
-                                <segue destination="8s9-XT-yKu" kind="show" id="AP1-bB-wOJ"/>
+                                <action selector="addChore:" destination="DKk-Yw-R9E" id="BFA-8c-nd9"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <segue destination="8s9-XT-yKu" kind="show" identifier="addEditChore" id="ST9-ox-hKt"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LJU-Ae-UJ2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -909,6 +912,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="choreNameField" destination="6xY-CN-3jC" id="126-5K-Qtg"/>
+                        <outlet property="instructionLabel" destination="sIC-A9-y8P" id="big-SC-inc"/>
                         <outlet property="scoreInput" destination="Kgh-Ox-XXB" id="YTg-xS-sCr"/>
                         <segue destination="1yA-ij-PFD" kind="show" identifier="choreSaved" id="jsl-61-4mg"/>
                     </connections>
@@ -975,8 +979,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="TDQ-Fo-48E"/>
         <segue reference="05B-fO-qJf"/>
-        <segue reference="Rac-0d-avx"/>
+        <segue reference="jsl-61-4mg"/>
+        <segue reference="ST9-ox-hKt"/>
     </inferredMetricsTieBreakers>
 </document>

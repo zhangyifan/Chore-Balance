@@ -13,6 +13,10 @@ class ChoresTableViewController: UITableViewController {
 
     var choreList = [Chore]()
     
+    var addChoreMode = true
+    
+    var editedChore = Chore()
+    
     var refresher: UIRefreshControl!
     
     func refresh() {
@@ -83,10 +87,14 @@ class ChoresTableViewController: UITableViewController {
         
     }
     
-    @IBAction func doButtonPressed(sender: AnyObject) {
+    @IBAction func addChore(sender: AnyObject) {
         
+        addChoreMode = true
+
+        performSegueWithIdentifier("addEditChore", sender: self)
         
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,7 +133,6 @@ class ChoresTableViewController: UITableViewController {
         return choreList.count
     }
     
-    //TODO Modify this cell (maybe new custom cell) to let user EDIT CHORES HERE.  NAME, SCORE, or DELETE ENTIRELY
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: ToDoCell = tableView.dequeueReusableCellWithIdentifier("cell3", forIndexPath: indexPath) as! ToDoCell
@@ -247,6 +254,16 @@ class ChoresTableViewController: UITableViewController {
         }    
     }
     
+    //Edit a chore
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        addChoreMode = false
+        
+        editedChore = choreList[indexPath.row]
+        
+        performSegueWithIdentifier("addEditChore", sender: self)
+    }
+    
 
     /*
     // Override to support rearranging the table view.
@@ -269,7 +286,19 @@ class ChoresTableViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "addEditChore" && self.addChoreMode == false {
+            
+            if let choreViewController = segue.destinationViewController as? ChoreViewController {
+                
+                choreViewController.addChoreMode = false
+                
+                choreViewController.choreNameDisplayed = self.editedChore.name
+                
+                choreViewController.choreScoreDisplayed = self.editedChore.score
+                
+            }
+            
+        }
 
         
     }

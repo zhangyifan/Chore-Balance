@@ -15,8 +15,13 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
     
     //TODO - make Next/Done top right bar buttons do the same thing as buttons below
     
-    //Use for both signup and adding more chores
-    //var signupMode = true
+    var addChoreMode = true
+    
+    var choreNameDisplayed = ""
+    
+    var choreScoreDisplayed = 0
+    
+    @IBOutlet var instructionLabel: UILabel!
     
     @IBOutlet var choreNameField: UITextField!
     
@@ -81,6 +86,49 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        
+        setLabels()
+        
+    }
+    
+    func setLabels() {
+        
+        if addChoreMode == true {
+            
+            instructionLabel.text = "Add chores that need to be done regularly, and mark whether they are small (1), medium (3) or large (5) tasks."
+            
+            choreNameField.text = "Chore name"
+            
+            scoreInput.selectedSegmentIndex = 0
+            
+        } else {
+            
+            //Edit chore mode
+            instructionLabel.text = "Edit your chore's name or score."
+            
+            choreNameField.text = choreNameDisplayed
+            
+            switch choreScoreDisplayed {
+                
+            case 1:
+                scoreInput.selectedSegmentIndex = 0
+                
+            case 3:
+                scoreInput.selectedSegmentIndex = 1
+                
+            case 5:
+                scoreInput.selectedSegmentIndex = 2
+            
+            default:
+                break;
+                
+            }
+            
+        }
+        
     }
     
     /*For later when I make this a table
