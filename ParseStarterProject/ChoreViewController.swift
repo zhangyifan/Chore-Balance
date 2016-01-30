@@ -17,6 +17,8 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
     
     var addChoreMode = true
     
+    var editedChore = Chore()
+    
     var choreNameDisplayed = ""
     
     var choreScoreDisplayed = 0
@@ -55,22 +57,52 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
                     break;
                 }
                 
-                Chore().create(choreNameField.text!, score: score, household: User.currentUser()!.household! as! Household, lastDone: nil) {(error, chore) -> Void in
-                    
-                    if error == nil {
+                if addChoreMode == true {
+   
+                    Chore().create(choreNameField.text!, score: score, household: User.currentUser()!.household! as! Household, lastDone: nil) {(error, chore) -> Void in
                         
-                        /*//Add this as an activity - comment this out later if not needed.  For sample data, double to test weeding out duplicate chores.
-                        Activity(user: User.currentUser()!, chore: chore, scoreStamp: chore.score, completedAt: NSDate())
-                        Activity(user: User.currentUser()!, chore: chore, scoreStamp: chore.score, completedAt: NSDate())*/
-                        
-                        self.performSegueWithIdentifier("choreSaved", sender: self)
-                        
-                    } else {
-                        
-                        UserViewController.displayAlert("Chore failed to save", message: error!.description, view: self)
-                        
+                        if error == nil {
+                            
+                            /*//Add this as an activity - comment this out later if not needed.  For sample data, double to test weeding out duplicate chores.
+                            Activity(user: User.currentUser()!, chore: chore, scoreStamp: chore.score, completedAt: NSDate())
+                            Activity(user: User.currentUser()!, chore: chore, scoreStamp: chore.score, completedAt: NSDate())*/
+                            
+                            self.performSegueWithIdentifier("choreSaved", sender: self)
+                            
+                        } else {
+                            
+                            UserViewController.displayAlert("Chore failed to save", message: error!.localizedDescription, view: self)
+                            
+                        }
                     }
+                
+                } else {
+                    
+                    //Edit an existing chore
+                    editedChore.update(choreNameField.text!, score: score, closure: { (error) -> Void in
+                        
+                        if error == nil {
+                            
+                            let savedChoreAlert = UIAlertController(title: "All done!", message: "Your edits have been saved.", preferredStyle: UIAlertControllerStyle.Alert)
+                            
+                            savedChoreAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
+                                
+                                self.navigationController?.popViewControllerAnimated(true)
+                                
+                            }))
+                            
+                            self.presentViewController(savedChoreAlert, animated: true, completion: nil)
+                            
+                        } else {
+                            
+                             UserViewController.displayAlert("Edited chore failed to save", message: error!.localizedDescription, view: self)
+                            
+                        }
+                        
+                    })
+                    
                 }
+                
                 
             } else {
                 
@@ -98,6 +130,8 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
         
         if addChoreMode == true {
             
+            self.title = "Add Chores"
+            
             instructionLabel.text = "Add chores that need to be done regularly, and mark whether they are small (1), medium (3) or large (5) tasks."
             
             choreNameField.text = "Chore name"
@@ -107,6 +141,8 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
         } else {
             
             //Edit chore mode
+            self.title = "Edit Chore"
+            
             instructionLabel.text = "Edit your chore's name or score."
             
             choreNameField.text = choreNameDisplayed

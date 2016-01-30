@@ -73,7 +73,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                 } else {
                     
-                    UserViewController.displayAlert("Couldn't load household members", message: error!.description, view: self)
+                    UserViewController.displayAlert("Couldn't load household members", message: error!.localizedDescription, view: self)
                     
                     refreshControl.endRefreshing()
                     
@@ -94,7 +94,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                     } else {
                     
-                        UserViewController.displayAlert("Couldn't find activities", message: error!.description, view: self)
+                        UserViewController.displayAlert("Couldn't find activities", message: error!.localizedDescription, view: self)
                     
                         refreshControl.endRefreshing()
                     
@@ -135,7 +135,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                     
                                 } else {
                                     
-                                    UserViewController.displayAlert("Couldn't find last done date", message: error!.description, view: self)
+                                    UserViewController.displayAlert("Couldn't find last done date", message: error!.localizedDescription, view: self)
                                     
                                     refreshControl.endRefreshing()
                                 }
@@ -148,7 +148,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         
                     } else {
                         
-                        UserViewController.displayAlert("Couldn't find chores", message: error!.description, view: self)
+                        UserViewController.displayAlert("Couldn't find chores", message: error!.localizedDescription, view: self)
                         
                         refreshControl.endRefreshing()
     
@@ -313,7 +313,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         
                         if error != nil {
                             
-                            UserViewController.displayAlert("Chore last done date failed to update", message: error!.description, view: self)
+                            UserViewController.displayAlert("Chore last done date failed to update", message: error!.localizedDescription, view: self)
                             
                         } else {
                             
@@ -324,7 +324,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                 } else {
                     
-                    UserViewController.displayAlert("Activity failed to save", message: error!.description, view: self)
+                    UserViewController.displayAlert("Activity failed to save", message: error!.localizedDescription, view: self)
                     
                 }
                 

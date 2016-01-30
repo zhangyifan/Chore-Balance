@@ -109,6 +109,30 @@ class Chore: PFObject, PFSubclassing {
     
     func updateLastDone(closure: (NSError?) -> Void) {
         
+        self.lastDone = NSDate()
+        
+        self.saveInBackgroundWithBlock { (success, error) -> Void in
+            
+            if error != nil {
+                
+                closure(error)
+                
+            } else {
+         
+                closure(nil)
+                
+            }
+            
+        }
+        
+    }
+    
+    func update(name: String, score: Int, closure: (NSError?) -> Void) {
+        
+        self.name = name
+        
+        self.score = score
+        
         self.saveInBackgroundWithBlock { (success, error) -> Void in
             
             if error != nil {
@@ -119,7 +143,7 @@ class Chore: PFObject, PFSubclassing {
                 
                 closure(nil)
                 
-            }
+            }       
             
         }
         

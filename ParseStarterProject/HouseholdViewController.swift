@@ -55,7 +55,7 @@ class HouseholdViewController: UIViewController {
                         self.activityIndicator.stopAnimating()
                         UIApplication.sharedApplication().endIgnoringInteractionEvents()
                             
-                        UserViewController.displayAlert("Household name error", message: error!.description, view: self)
+                        UserViewController.displayAlert("Household name error", message: error!.localizedDescription, view: self)
                         
                     } else {
                         
@@ -83,7 +83,7 @@ class HouseholdViewController: UIViewController {
                                         self.activityIndicator.stopAnimating()
                                         UIApplication.sharedApplication().endIgnoringInteractionEvents()
                                         
-                                        UserViewController.displayAlert("Household failed to save", message: error!.description, view: self)
+                                        UserViewController.displayAlert("Household failed to save", message: error!.localizedDescription, view: self)
                                         
                                     }
                                 }
@@ -152,7 +152,7 @@ class HouseholdViewController: UIViewController {
                 
             } else {
                 
-                UserViewController.displayAlert("Failed to add you to household", message: error!.description, view: self)
+                UserViewController.displayAlert("Failed to add you to household", message: error!.localizedDescription, view: self)
                 
             }
             

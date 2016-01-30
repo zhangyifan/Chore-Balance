@@ -58,7 +58,7 @@ class ChoresTableViewController: UITableViewController {
                                 
                             } else {
                                 
-                                UserViewController.displayAlert("Couldn't find last done date", message: error!.description, view: self)
+                                UserViewController.displayAlert("Couldn't find last done date", message: error!.localizedDescription, view: self)
                                 
                                 self.refresher.endRefreshing()
                             }
@@ -71,7 +71,7 @@ class ChoresTableViewController: UITableViewController {
                     
                 } else {
                     
-                    UserViewController.displayAlert("Couldn't find chores", message: error!.description, view: self)
+                    UserViewController.displayAlert("Couldn't find chores", message: error!.localizedDescription, view: self)
                     
                     self.refresher.endRefreshing()
                     
@@ -177,10 +177,10 @@ class ChoresTableViewController: UITableViewController {
                         
                         if error != nil {
                             
-                            UserViewController.displayAlert("Chore last done date failed to update", message: error!.description, view: self)
+                            UserViewController.displayAlert("Chore last done date failed to update", message: error!.localizedDescription, view: self)
                             
                         } else {
-                            
+                                
                             self.refresh()
                             
                             //Do I need this too?  self.toDoTableView.reloadData()
@@ -190,7 +190,7 @@ class ChoresTableViewController: UITableViewController {
                     
                 } else {
                     
-                    UserViewController.displayAlert("Activity failed to save", message: error!.description, view: self)
+                    UserViewController.displayAlert("Activity failed to save", message: error!.localizedDescription, view: self)
                     
                 }
                 
@@ -291,6 +291,8 @@ class ChoresTableViewController: UITableViewController {
             if let choreViewController = segue.destinationViewController as? ChoreViewController {
                 
                 choreViewController.addChoreMode = false
+                
+                choreViewController.editedChore = self.editedChore
                 
                 choreViewController.choreNameDisplayed = self.editedChore.name
                 

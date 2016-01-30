@@ -33,7 +33,7 @@ class MembersTableViewController: UITableViewController {
                 
             } else {
                 
-                UserViewController.displayAlert("Couldn't load household members", message: error!.description, view: self)
+                UserViewController.displayAlert("Couldn't load household members", message: error!.localizedDescription, view: self)
                 
                 self.refresher.endRefreshing()
                 

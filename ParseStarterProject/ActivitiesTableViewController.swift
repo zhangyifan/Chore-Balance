@@ -31,7 +31,7 @@ class ActivitiesTableViewController: UITableViewController {
                     
                 } else {
                     
-                    UserViewController.displayAlert("Couldn't find activities", message: error!.description, view: self)
+                    UserViewController.displayAlert("Couldn't find activities", message: error!.localizedDescription, view: self)
                     
                     self.refresher.endRefreshing()
                     
