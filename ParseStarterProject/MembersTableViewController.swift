@@ -18,6 +18,10 @@ class MembersTableViewController: UITableViewController {
     
     func refresh() {
         
+        //Clear these
+        var sortedNames = [String]()
+        var sortedScores = [Int]()
+        
         //Find all sorted users in the same household
         MembersTableViewController.getSortedUsers() {(names: [String]?, scores: [Int]?, error: NSError?) -> Void in
             
@@ -53,8 +57,7 @@ class MembersTableViewController: UITableViewController {
             
                 if error == nil {
 
-                    //For every user in household, sum up scores
-                    //In the future set monthly, weekly time limits TODO
+                    //For every user in household, sum up scores after scoreFromDate
                     for user in users! {
                     
                         if let parseUser = user as? User {
@@ -67,7 +70,7 @@ class MembersTableViewController: UITableViewController {
                                     nameScores[parseUser.username!] = score
                                     
                                     //Check to see if we got all scores - if so, sort and display.
-                                    if nameScores.count == users!.count {
+                                    if nameScores.count == users!.count && nameScores.count != 0 {
                                         
                                         var sortedNames = [String]()
                                         var sortedScores = [Int]()
@@ -112,6 +115,43 @@ class MembersTableViewController: UITableViewController {
         }
         
     }
+    
+    @IBAction func resetFromDate(sender: AnyObject) {
+        
+        //Alert to double check the reset
+        let resetAlert = UIAlertController(title: "Are you sure?", message: "Just making sure you want to reset all scores in your household.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        resetAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+            
+            //Nothing happens
+            
+        }))
+        
+        resetAlert.addAction(UIAlertAction(title: "Reset", style: .Default, handler: { (action: UIAlertAction!) in
+            
+            //Set the date to calculate scores from to current date
+            User.currentUser()?.household?.updateScoreFromDate(NSDate(), closure: { (error) -> Void in
+                
+                if error == nil {
+                    
+                    UserViewController.displayAlert("Leaderboard has been reset", message: "Scores will be counted from today onward. Get choring!", view: self)
+                    
+                    self.refresh()
+                    
+                } else {
+                    
+                    UserViewController.displayAlert("Couldn't reset scores", message: error!.localizedDescription, view: self)
+                    
+                }
+                
+            })
+            
+        }))
+        
+        presentViewController(resetAlert, animated: true, completion: nil)
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

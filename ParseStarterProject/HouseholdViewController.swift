@@ -71,7 +71,7 @@ class HouseholdViewController: UIViewController {
                                 
                             } else if objects!.count == 0 {
                                 
-                                Household().create(self.householdTextField.text!) {(error, household) -> Void in
+                                Household().create(self.householdTextField.text!, scoreFromDate: NSDate()) {(error, household) -> Void in
                                     
                                     if error == nil {
                                         

@@ -79,6 +79,8 @@ class User: PFUser {
         
         scoresQuery.whereKey("user", equalTo: self)
         
+        scoresQuery.whereKey("completedAt", greaterThanOrEqualTo: self.household!.scoreFromDate)
+        
         scoresQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
             
             if let foundActivities = activities as? [Activity] {

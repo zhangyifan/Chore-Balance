@@ -26,6 +26,8 @@ class Household: PFObject, PFSubclassing {
     //Attributes
     @NSManaged var name: String
     
+    @NSManaged var scoreFromDate: NSDate
+    
     //Set up what querying Household does
     override class func query() -> PFQuery? {
         //1
@@ -34,10 +36,12 @@ class Household: PFObject, PFSubclassing {
     }
     
     //Initialize
-    init(name: String) {
+    init(name: String, scoreFromDate: NSDate) {
         super.init()
         
         self.name = name
+        
+        self.scoreFromDate = scoreFromDate
         
     }
     
@@ -45,9 +49,15 @@ class Household: PFObject, PFSubclassing {
         super.init()
     }
     
-    func create(name: String, closure: (NSError?, Household)-> Void) {
+    func create(name: String, scoreFromDate: NSDate, closure: (NSError?, Household)-> Void) {
         
-        let household = Household(name: name)
+        let household = Household(name: name, scoreFromDate: scoreFromDate)
+        
+        let acl = PFACL()
+        acl.publicReadAccess = true
+        acl.publicWriteAccess = true
+        
+        household.ACL = acl
         
         household.saveInBackgroundWithBlock({ (success, error) -> Void in
             
@@ -130,6 +140,26 @@ class Household: PFObject, PFSubclassing {
                 
             }
         })
+        
+    }
+    
+    func updateScoreFromDate(date: NSDate, closure: (NSError?) -> Void) {
+        
+        self.scoreFromDate = date
+        
+        self.saveInBackgroundWithBlock { (success, error) -> Void in
+            
+            if error != nil {
+                
+                closure(error)
+                
+            } else {
+                
+                closure(nil)
+                
+            }
+            
+        }
         
     }
     

@@ -6,6 +6,7 @@
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--User View Controller-->
@@ -410,7 +411,7 @@
             </objects>
             <point key="canvasLocation" x="1765.5" y="1380.5"/>
         </scene>
-        <!--Household Leaderboard-->
+        <!--Leaderboard-->
         <scene sceneID="AS8-sf-Ne7">
             <objects>
                 <tableViewController id="5kO-Yw-cab" customClass="MembersTableViewController" customModule="Chore_Balance" customModuleProvider="target" sceneMemberID="viewController">
@@ -450,12 +451,19 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Household Leaderboard" id="WCV-Rh-dc5">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="RB0-ZN-Pnu">
-                            <connections>
-                                <segue destination="aBk-dh-OdP" kind="show" id="Qny-yX-rre"/>
-                            </connections>
-                        </barButtonItem>
+                    <navigationItem key="navigationItem" title="Leaderboard" id="WCV-Rh-dc5">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="RB0-ZN-Pnu">
+                                <connections>
+                                    <segue destination="aBk-dh-OdP" kind="show" id="Qny-yX-rre"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Reset" id="CtK-mv-AHv">
+                                <connections>
+                                    <action selector="resetFromDate:" destination="5kO-Yw-cab" id="Jh4-5W-ZTr"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -976,6 +984,49 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aXt-Dd-bcT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="591.5" y="312.5"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="c1K-FB-iLA">
+            <objects>
+                <tableViewController id="TpZ-eh-sWq" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Xal-Qh-kFc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="IRk-pa-P6y">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IRk-pa-P6y" id="5N2-hV-U5I">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="TpZ-eh-sWq" id="Tf8-tD-bea"/>
+                            <outlet property="delegate" destination="TpZ-eh-sWq" id="y4S-RC-7Sn"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="KJA-1c-IAE"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WBh-fz-LEk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="cyy-Bx-8wE">
+            <objects>
+                <navigationController id="BwI-5A-p4g" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TTT-PQ-VRO">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="TpZ-eh-sWq" kind="relationship" relationship="rootViewController" id="GaN-BE-am6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HDM-sz-G92" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
