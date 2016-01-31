@@ -195,6 +195,23 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         presentViewController(addActivityAlert, animated: true, completion: nil)
         
     }
+    
+    //Share
+    @IBAction func shareButton(sender: AnyObject) {
+        
+        let shareText = "I think this Chore Balance app can help us get chores done without nagging.  Can you download it and join the household I made - \(User.currentUser()!.household!.name)?"
+        
+        let shareURL = NSURL(string: "http://bit.ly/areallink")
+        
+        let activityViewController = UIActivityViewController(activityItems: [shareText, shareURL!], applicationActivities: nil)
+        
+        activityViewController.excludedActivityTypes = [UIActivityTypePostToFacebook, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypePostToFlickr, UIActivityTypePostToVimeo]
+        
+        presentViewController(activityViewController, animated: true, completion: nil)
+        
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
