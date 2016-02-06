@@ -272,7 +272,7 @@
                                             <outlet property="delegate" destination="1yA-ij-PFD" id="OFm-V0-xBL"/>
                                         </connections>
                                     </tableView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="asm-Sn-Oeh">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="asm-Sn-Oeh">
                                         <rect key="frame" x="0.0" y="161" width="375" height="249"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -986,53 +986,10 @@
             </objects>
             <point key="canvasLocation" x="591.5" y="312.5"/>
         </scene>
-        <!--Root View Controller-->
-        <scene sceneID="c1K-FB-iLA">
-            <objects>
-                <tableViewController id="TpZ-eh-sWq" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Xal-Qh-kFc">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="IRk-pa-P6y">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IRk-pa-P6y" id="5N2-hV-U5I">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="TpZ-eh-sWq" id="Tf8-tD-bea"/>
-                            <outlet property="delegate" destination="TpZ-eh-sWq" id="y4S-RC-7Sn"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="KJA-1c-IAE"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WBh-fz-LEk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="cyy-Bx-8wE">
-            <objects>
-                <navigationController id="BwI-5A-p4g" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="TTT-PQ-VRO">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="TpZ-eh-sWq" kind="relationship" relationship="rootViewController" id="GaN-BE-am6"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HDM-sz-G92" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="05B-fO-qJf"/>
+        <segue reference="ST9-ox-hKt"/>
         <segue reference="jsl-61-4mg"/>
-        <segue reference="lsS-Tr-nVC"/>
+        <segue reference="05B-fO-qJf"/>
     </inferredMetricsTieBreakers>
 </document>

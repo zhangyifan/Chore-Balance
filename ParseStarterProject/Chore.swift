@@ -32,6 +32,8 @@ class Chore: PFObject, PFSubclassing {
     
     @NSManaged var lastDone: NSDate?
     
+    @NSManaged var isDeleted: Bool
+    
     //Set up what querying Chores does
     override class func query() -> PFQuery? {
     //1
@@ -42,13 +44,14 @@ class Chore: PFObject, PFSubclassing {
     }
     
     //Initialize
-    init(name: String, score: Int, household: Household, lastDone: NSDate?) {
+    init(name: String, score: Int, household: Household, lastDone: NSDate?, isDeleted: Bool) {
         super.init()
         
         self.name = name
         self.score = score
         self.household = household
         self.lastDone = lastDone
+        self.isDeleted = false
         
     }
     
@@ -58,7 +61,7 @@ class Chore: PFObject, PFSubclassing {
     
     func create(name: String, score: Int, household: Household, lastDone: NSDate?, closure: (NSError?, Chore) -> Void) {
         
-        let chore = Chore(name: name, score: score, household: household, lastDone: lastDone)
+        let chore = Chore(name: name, score: score, household: household, lastDone: lastDone, isDeleted: false)
         
         let acl = PFACL()
         acl.publicReadAccess = true
@@ -127,11 +130,13 @@ class Chore: PFObject, PFSubclassing {
         
     }
     
-    func update(name: String, score: Int, closure: (NSError?) -> Void) {
+    func update(name: String, score: Int, isDeleted: Bool, closure: (NSError?) -> Void) {
         
         self.name = name
         
         self.score = score
+        
+        self.isDeleted = isDeleted
         
         self.saveInBackgroundWithBlock { (success, error) -> Void in
             

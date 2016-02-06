@@ -106,45 +106,52 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                     if error == nil {
                         
-                        self.choreList = chores!
+                        self.choreList.removeAll(keepCapacity: true)
                         
                         var foundDates = 0
                         
                         for chore in chores! {
                             
-                            chore.getLastDone() {(activity: Activity?, error: NSError?) -> Void in
+                            if chore.isDeleted == false {
                                 
-                                if error == nil {
+                                self.choreList.append(chore)
+                                
+                                chore.getLastDone() {(activity: Activity?, error: NSError?) -> Void in
                                     
-                                    foundDates++
-  
-                                    //Check to see if all dates have been loaded
-                                    if foundDates == chores?.count {
+                                    if error == nil {
                                         
-                                        //Sort so that the ones never done are first
-                                        self.choreList.sortInPlace({ (item1, item2) -> Bool in
-                                            let t1 = item1.lastDone ?? NSDate.distantPast()
-                                            let t2 = item2.lastDone ?? NSDate.distantPast()
-                                            return t1.compare(t2) == NSComparisonResult.OrderedAscending
+                                        foundDates++
+                                        
+                                        //Check to see if all dates have been loaded
+                                        if foundDates == self.choreList.count {
                                             
-                                        })
+                                            
+                                            //Sort so that the ones never done are first
+                                            self.choreList.sortInPlace({ (item1, item2) -> Bool in
+                                                let t1 = item1.lastDone ?? NSDate.distantPast()
+                                                let t2 = item2.lastDone ?? NSDate.distantPast()
+                                                return t1.compare(t2) == NSComparisonResult.OrderedAscending
+                                                
+                                            })
+                                            
+                                            self.toDoTableView.reloadData()
+                                            
+                                            self.refreshControl.endRefreshing()
+                                            
+                                        }
                                         
-                                        self.toDoTableView.reloadData()
+                                    } else {
                                         
+                                        UserViewController.displayAlert("Couldn't find last done date", message: error!.localizedDescription, view: self)
+                                        
+                                        self.refreshControl.endRefreshing()
                                     }
                                     
-                                } else {
-                                    
-                                    UserViewController.displayAlert("Couldn't find last done date", message: error!.localizedDescription, view: self)
-                                    
-                                    refreshControl.endRefreshing()
                                 }
-
+                                
                             }
                             
                         }
-                        
-                        
                         
                     } else {
                         

@@ -79,7 +79,7 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
                 } else {
                     
                     //Edit an existing chore
-                    editedChore.update(choreNameField.text!, score: score, closure: { (error) -> Void in
+                    editedChore.update(choreNameField.text!, score: score, isDeleted: false, closure: { (error) -> Void in
                         
                         if error == nil {
                             

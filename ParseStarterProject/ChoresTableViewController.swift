@@ -17,6 +17,8 @@ class ChoresTableViewController: UITableViewController {
     
     var editedChore = Chore()
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
     var refresher: UIRefreshControl!
     
     func refresh() {
@@ -27,47 +29,58 @@ class ChoresTableViewController: UITableViewController {
                 
                 if error == nil {
                     
-                    self.choreList = chores!
+                    self.choreList.removeAll(keepCapacity: true)
                     
                     var foundDates = 0
                     
                     for chore in chores! {
                         
-                        chore.getLastDone() {(activity: Activity?, error: NSError?) -> Void in
+                        if chore.isDeleted == false {
                             
-                            if error == nil {
+                            self.choreList.append(chore)
+                            
+                            chore.getLastDone() {(activity: Activity?, error: NSError?) -> Void in
                                 
-                                foundDates++
-                                
-                                //Check to see if all dates have been loaded
-                                if foundDates == chores?.count {
+                                if error == nil {
                                     
-                                    //Sort so that the ones never done are first
-                                    self.choreList.sortInPlace({ (item1, item2) -> Bool in
-                                        let t1 = item1.lastDone ?? NSDate.distantPast()
-                                        let t2 = item2.lastDone ?? NSDate.distantPast()
-                                        return t1.compare(t2) == NSComparisonResult.OrderedAscending
+                                    foundDates++
+                                    
+                                    //Check to see if all dates have been loaded
+                                    if foundDates == self.choreList.count {
                                         
-                                    })
+                                        
+                                        //Sort so that the ones never done are first
+                                        self.choreList.sortInPlace({ (item1, item2) -> Bool in
+                                            let t1 = item1.lastDone ?? NSDate.distantPast()
+                                            let t2 = item2.lastDone ?? NSDate.distantPast()
+                                            return t1.compare(t2) == NSComparisonResult.OrderedAscending
+                                            
+                                        })
+                                        
+                                        self.tableView.reloadData()
+                                        
+                                        self.refresher.endRefreshing()
+                                        
+                                        self.activityIndicator.stopAnimating()
+                                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                                        
+                                    }
                                     
-                                    self.tableView.reloadData()
+                                } else {
+                                    
+                                    UserViewController.displayAlert("Couldn't find last done date", message: error!.localizedDescription, view: self)
                                     
                                     self.refresher.endRefreshing()
                                     
+                                    self.activityIndicator.stopAnimating()
+                                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
                                 }
                                 
-                            } else {
-                                
-                                UserViewController.displayAlert("Couldn't find last done date", message: error!.localizedDescription, view: self)
-                                
-                                self.refresher.endRefreshing()
                             }
                             
                         }
                         
                     }
-                    
-                    
                     
                 } else {
                     
@@ -111,6 +124,8 @@ class ChoresTableViewController: UITableViewController {
         self.navigationItem.hidesBackButton = false
         
         self.navigationController?.navigationBarHidden = false
+        
+        loadSpinner()
         
         refresh()
         
@@ -209,14 +224,24 @@ class ChoresTableViewController: UITableViewController {
         return true
     }
     */
-
+    func loadSpinner() {
+        
+        self.activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0,0,50,50))
+        self.activityIndicator.center = self.view.center
+        self.activityIndicator.hidesWhenStopped = true
+        self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+    }
     
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
         if editingStyle == .Delete {
             
-            let deleteChoreAlert = UIAlertController(title: "Your chore will be deleted", message: "Just making sure you want to delete \(choreList[indexPath.row].name) for everyone in your household. This can't be undone.", preferredStyle: UIAlertControllerStyle.Alert)
+            let deleteChoreAlert = UIAlertController(title: "Your chore will be deleted", message: "Just making sure you want to delete \(choreList[indexPath.row].name) for everyone in your household.", preferredStyle: UIAlertControllerStyle.Alert)
             
             deleteChoreAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
                 
@@ -226,17 +251,24 @@ class ChoresTableViewController: UITableViewController {
             
             deleteChoreAlert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action: UIAlertAction!) in
                 
+                self.loadSpinner()
+                
                 // Delete the row from the data source
-                self.choreList[indexPath.row].deleteInBackgroundWithBlock({ (success, error) -> Void in
+                let deletedChore = self.choreList[indexPath.row]
+
+                deletedChore.update(deletedChore.name, score: deletedChore.score, isDeleted: true, closure: {(error) -> Void in
                     
-                    if success == true {
+                    if error == nil {
                         
                         self.choreList.removeAtIndex(indexPath.row)
+                        
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
                         
                         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                         
                     } else {
-                        
+                    
                         UserViewController.displayAlert("Couldn't delete chore", message: error!.localizedDescription, view: self)
                         
                     }
