@@ -17,11 +17,12 @@ var userList = [User]()
 
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet var scrollView: UIScrollView!
+    
     @IBOutlet var toDoTableView: UITableView!
     
+    /*#############Uncomment when ready to work on this
     @IBOutlet var activityTableView: UITableView!
-    
-    @IBOutlet var scrollView: UIScrollView!
     
     //Current Scores section
     @IBOutlet var winnerLabel: UILabel!
@@ -29,7 +30,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var secondLabel: UILabel!
     
     //Activities section
-    var activityList = [Activity]()
+    var activityList = [Activity]() ##########*/
     
     //Chores section
     var choreList = [Chore]()
@@ -59,11 +60,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                     if names!.count > 0 && scores!.count > 0 {
                         
-                        self.winnerLabel.text = names![0] + " - \(scores![0])"
+                        //self.winnerLabel.text = names![0] + " - \(scores![0])"
                         
                         if names!.count > 1 && scores!.count > 1 {
                             
-                            self.secondLabel.text = names![1] + " - \(scores![1])"
+                            //self.secondLabel.text = names![1] + " - \(scores![1])"
                             
                         }
                         
@@ -83,7 +84,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             if let household = User.currentUser()!.household! as? Household {
                 
-                //********ACTIVITY FEED SECTION**************
+                /*#############*******ACTIVITY FEED SECTION**************
                 household.getActivities() {(activities: [Activity]?, error: NSError?)-> Void in
                 
                     if error == nil {
@@ -99,7 +100,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         refreshControl.endRefreshing()
                     
                     }
-                }
+                }###############*/
                 
                 //********CHORES SECTION**************
                 household.getChores() { (chores: [Chore]?, error: NSError?) -> Void in
@@ -227,7 +228,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //Set up tables and stuff
         toDoTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "toDoCell")
-        activityTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "activityCell")
+        //###########activityTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "activityCell")
 
         
     }
@@ -255,11 +256,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
         
-        if tableView == self.activityTableView {
+        /*#######if tableView == self.activityTableView {
             
             //Calculate rows of activities
             count = activityList.count
-        }
+        }###### */
         
         return count!
     }
@@ -284,7 +285,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
         
-        if tableView == self.activityTableView {
+        /*###########if tableView == self.activityTableView {
             
             let activityCell: ActivityCell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! ActivityCell
             
@@ -303,7 +304,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             activityCell.setCell(completedDate, description: description, score: score)
             
             cell = activityCell
-        }
+        }##########*/
         
         
         return cell!
@@ -368,11 +369,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
         
-        if tableView == self.activityTableView {
+        /*##########if tableView == self.activityTableView {
             
             self.performSegueWithIdentifier("showActivityFeed", sender: self)
             
-        }
+        }###########*/
         
         
     }
