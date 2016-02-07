@@ -21,6 +21,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var toDoTableView: UITableView!
     
+    @IBOutlet var balanceImage: UIImageView!
+    
+    var animationTimer = NSTimer()
+    
+    var animationCounter = 1
+    
+    var countingUp = true
+    
     /*#############Uncomment when ready to work on this
     @IBOutlet var activityTableView: UITableView!
     
@@ -49,6 +57,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         lastRefreshTime = NSDate()
         
+        animationTimer = NSTimer.scheduledTimerWithTimeInterval(0.075, target: self, selector: Selector("startAnimation"), userInfo: nil, repeats: true)
+        
         if User.currentUser() != nil {
             
             //********CURRENT SCORES SECTION**************
@@ -69,13 +79,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         }
                         
                     }
-                    
+
                     refreshControl.endRefreshing()
                     
                 } else {
                     
                     UserViewController.displayAlert("Couldn't load household members", message: error!.localizedDescription, view: self)
-                    
+
                     refreshControl.endRefreshing()
                     
                 }
@@ -137,6 +147,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                             
                                             self.toDoTableView.reloadData()
                                             
+                                            self.animationTimer.invalidate()
                                             self.refreshControl.endRefreshing()
                                             
                                         }
@@ -145,6 +156,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                         
                                         UserViewController.displayAlert("Couldn't find last done date", message: error!.localizedDescription, view: self)
                                         
+                                        self.animationTimer.invalidate()
                                         self.refreshControl.endRefreshing()
                                     }
                                     
@@ -158,6 +170,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         
                         UserViewController.displayAlert("Couldn't find chores", message: error!.localizedDescription, view: self)
                         
+                        self.animationTimer.invalidate()
                         refreshControl.endRefreshing()
     
                     }
@@ -179,6 +192,39 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //Maybe in the future have caching of data?
         
+        
+    }
+    
+    func startAnimation() {
+        
+        if countingUp == true {
+            
+            if animationCounter == 13 {
+                
+                countingUp = false
+                
+            } else {
+                
+                animationCounter++
+                
+            }
+            
+        } else {
+            
+            if animationCounter == 1 {
+                
+                countingUp = true
+                
+            } else {
+                
+                animationCounter--
+                
+            }
+            
+        }
+        
+        
+        balanceImage.image = UIImage(named: "frame\(animationCounter).png")
         
     }
     
@@ -236,9 +282,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Hide Navigation Controller Back button
     override func viewWillAppear(animated: Bool) {
         
-        /*self.navigationItem.hidesBackButton = true
+        self.navigationItem.hidesBackButton = true
         
-        self.navigationController?.navigationBarHidden = true*/
+        self.navigationController!.navigationBar.barTintColor = UIColor(red: 247.0/255.0, green: 252.0/255.0, blue: 240.0/255.0, alpha: 1.0)
+        
+        //Remove line beneath navigation bars
+        self.navigationController?.navigationBar.clipsToBounds = true
         
         //Check if data has been reloaded recently, and if so reload it. TODO
         handleRefresh(refreshControl)
