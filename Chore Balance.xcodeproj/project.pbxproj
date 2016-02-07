@@ -21,6 +21,10 @@
 		E30520A41C505E0C00FB5CBB /* Household.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30520A31C505E0C00FB5CBB /* Household.swift */; };
 		E30520A61C5063D000FB5CBB /* Chore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30520A51C5063D000FB5CBB /* Chore.swift */; };
 		E30520A81C5063D900FB5CBB /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30520A71C5063D900FB5CBB /* Activity.swift */; };
+		E33EBA921C66DA9200355068 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA8E1C66DA9200355068 /* check.png */; };
+		E33EBA931C66DA9200355068 /* score1.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA8F1C66DA9200355068 /* score1.png */; };
+		E33EBA941C66DA9200355068 /* score3.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA901C66DA9200355068 /* score3.png */; };
+		E33EBA951C66DA9200355068 /* score5.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA911C66DA9200355068 /* score5.png */; };
 		E35658771C485E95007671E2 /* ChoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35658761C485E95007671E2 /* ChoreViewController.swift */; };
 		E35658791C487171007671E2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35658781C487171007671E2 /* MainViewController.swift */; };
 		E3ABFE941C4572CE0094935B /* HouseholdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABFE931C4572CE0094935B /* HouseholdViewController.swift */; };
@@ -51,6 +55,10 @@
 		E30520A31C505E0C00FB5CBB /* Household.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Household.swift; sourceTree = "<group>"; };
 		E30520A51C5063D000FB5CBB /* Chore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chore.swift; sourceTree = "<group>"; };
 		E30520A71C5063D900FB5CBB /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		E33EBA8E1C66DA9200355068 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
+		E33EBA8F1C66DA9200355068 /* score1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score1.png; sourceTree = "<group>"; };
+		E33EBA901C66DA9200355068 /* score3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score3.png; sourceTree = "<group>"; };
+		E33EBA911C66DA9200355068 /* score5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score5.png; sourceTree = "<group>"; };
 		E35658761C485E95007671E2 /* ChoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoreViewController.swift; sourceTree = "<group>"; };
 		E35658781C487171007671E2 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E3ABFE931C4572CE0094935B /* HouseholdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseholdViewController.swift; sourceTree = "<group>"; };
@@ -85,6 +93,10 @@
 			children = (
 				814C3AC81B69877600E307BB /* Images.xcassets */,
 				814C3AC91B69877600E307BB /* Info.plist */,
+				E33EBA8E1C66DA9200355068 /* check.png */,
+				E33EBA8F1C66DA9200355068 /* score1.png */,
+				E33EBA901C66DA9200355068 /* score3.png */,
+				E33EBA911C66DA9200355068 /* score5.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -246,6 +258,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E33EBA921C66DA9200355068 /* check.png in Resources */,
+				E33EBA931C66DA9200355068 /* score1.png in Resources */,
+				E33EBA941C66DA9200355068 /* score3.png in Resources */,
+				E33EBA951C66DA9200355068 /* score5.png in Resources */,
 				814C3ACA1B69877600E307BB /* Main.storyboard in Resources */,
 				814C3ACB1B69877600E307BB /* Images.xcassets in Resources */,
 			);

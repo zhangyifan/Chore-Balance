@@ -213,12 +213,12 @@
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LH9-LE-LO2">
                                                             <rect key="frame" x="334" y="10" width="20" height="22"/>
-                                                            <state key="normal" image="check"/>
+                                                            <state key="normal" image="check.png"/>
                                                             <connections>
                                                                 <action selector="DoButton:" destination="eNY-za-lt9" eventType="touchUpInside" id="Ikl-6K-UT4"/>
                                                             </connections>
                                                         </button>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="score5" translatesAutoresizingMaskIntoConstraints="NO" id="pj4-EX-nbc">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="score5.png" translatesAutoresizingMaskIntoConstraints="NO" id="pj4-EX-nbc">
                                                             <rect key="frame" x="16" y="6" width="26" height="26"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="26" id="OJM-1u-g8l"/>
@@ -926,8 +926,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="check" width="20" height="15"/>
-        <image name="score5" width="44" height="44"/>
+        <image name="check.png" width="20" height="15"/>
+        <image name="score5.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ST9-ox-hKt"/>
