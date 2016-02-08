@@ -23,19 +23,26 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var balanceImage: UIImageView!
     
-    var animationTimer = NSTimer()
-    
+    //Animate the balance
+    var balanceTimer = NSTimer()
     var animationCounter = 1
-    
     var countingUp = true
+    var balanceAnimating = true
+    
+    //Animate the member names
+    var namesTimer = NSTimer()
+
+    @IBOutlet var winnerName: UILabel!
+    @IBOutlet var winnerScore: UILabel!
+    @IBOutlet var secondName: UILabel!
+    @IBOutlet var secondScore: UILabel!
+    @IBOutlet var secondToLastName: UILabel!
+    @IBOutlet var secondToLastScore: UILabel!
+    @IBOutlet var lastName: UILabel!
+    @IBOutlet var lastScore: UILabel!
     
     /*#############Uncomment when ready to work on this
     @IBOutlet var activityTableView: UITableView!
-    
-    //Current Scores section
-    @IBOutlet var winnerLabel: UILabel!
-    
-    @IBOutlet var secondLabel: UILabel!
     
     //Activities section
     var activityList = [Activity]() ##########*/
@@ -57,7 +64,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         lastRefreshTime = NSDate()
         
-        animationTimer = NSTimer.scheduledTimerWithTimeInterval(0.075, target: self, selector: Selector("startAnimation"), userInfo: nil, repeats: true)
+        balanceTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: Selector("startAnimation"), userInfo: nil, repeats: true)
         
         if User.currentUser() != nil {
             
@@ -70,11 +77,36 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                     if names!.count > 0 && scores!.count > 0 {
                         
-                        //self.winnerLabel.text = names![0] + " - \(scores![0])"
+                        self.winnerName.text = names![0]
+                        self.winnerScore.text = String(scores![0])
                         
-                        if names!.count > 1 && scores!.count > 1 {
+                        self.lastName.text = ""
+                        self.lastScore.text = ""
+                        self.secondName.text = ""
+                        self.secondScore.text = ""
+                        self.secondToLastName.text = ""
+                        self.secondToLastScore.text = ""
+                        
+                        if names!.count == 2 && scores!.count == 2 {
                             
-                            //self.secondLabel.text = names![1] + " - \(scores![1])"
+                            self.lastName.text = names![1]
+                            self.lastScore.text = String(scores![1])
+                            
+                        } else if names!.count == 3 && scores!.count == 3 {
+                            
+                            self.lastName.text = names![2]
+                            self.lastScore.text = String(scores![2])
+                            self.secondName.text = names![1]
+                            self.secondScore.text = String(scores![1])
+                            
+                        } else {
+                            
+                            self.lastName.text = names![names!.count]
+                            self.lastScore.text = String(scores![scores!.count])
+                            self.secondName.text = names![1]
+                            self.secondScore.text = String(scores![1])
+                            self.secondToLastName.text = names![names!.count-1]
+                            self.secondToLastScore.text = String(scores![scores!.count-1])
                             
                         }
                         
@@ -147,7 +179,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                             
                                             self.toDoTableView.reloadData()
                                             
-                                            self.animationTimer.invalidate()
+                                            self.balanceAnimating = false
                                             self.refreshControl.endRefreshing()
                                             
                                         }
@@ -156,7 +188,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                         
                                         UserViewController.displayAlert("Couldn't find last done date", message: error!.localizedDescription, view: self)
                                         
-                                        self.animationTimer.invalidate()
+                                        self.balanceAnimating = false
                                         self.refreshControl.endRefreshing()
                                     }
                                     
@@ -170,7 +202,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         
                         UserViewController.displayAlert("Couldn't find chores", message: error!.localizedDescription, view: self)
                         
-                        self.animationTimer.invalidate()
+                        self.balanceAnimating = false
                         refreshControl.endRefreshing()
     
                     }
@@ -195,14 +227,26 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    //Start balance going up and down, ending in up position
     func startAnimation() {
-        
+            
         if countingUp == true {
             
             if animationCounter == 13 {
                 
-                countingUp = false
-                
+                if balanceAnimating {
+                    
+                    countingUp = false
+                    
+                } else {
+                    
+                    balanceTimer.invalidate()
+                    
+                    balanceAnimating = true
+
+                    displayNames()
+                }
+           
             } else {
                 
                 animationCounter++
@@ -223,9 +267,72 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
         
-        
         balanceImage.image = UIImage(named: "frame\(animationCounter).png")
+    }
+    
+    //Names appear with fade-in
+    func displayNames() {
         
+        UIView.animateWithDuration(1, animations: { () -> Void in
+            
+            self.winnerName.alpha = 1
+            self.winnerScore.alpha = 1
+            self.secondName.alpha = 1
+            self.secondScore.alpha = 1
+            self.secondToLastName.alpha = 1
+            self.secondToLastScore.alpha = 1
+            self.lastName.alpha = 1
+            self.lastScore.alpha = 1
+            
+            self.namesTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("animateBalanceDown"), userInfo: nil, repeats: true)
+
+        })
+        
+        self.animateNames()
+        
+    }
+    
+    func animateNames() {
+        
+        //In the future consider a delay, or completion block to displayNames? TODO
+        self.winnerName.center = CGPointMake(self.winnerName.center.x, -0.5)
+        self.winnerScore.center = CGPointMake(self.winnerScore.center.x, 26)
+        /*secondName.center = CGPointMake(secondName.center.x, 21.5)
+        winnerScore.center = CGPointMake(secondScore.center.x, 41)
+        secondToLastName.center = CGPointMake(secondToLastName.center.x, 32.5)
+        secondToLastScore.center = CGPointMake(secondToLastScore.center.x, 52)
+        lastName.center = CGPointMake(lastName.center.x, 42.5)
+        lastScore.center = CGPointMake(lastScore.center.x, 62)*/
+        
+        UIView.animateWithDuration(1.3) { () -> Void in
+            
+            self.winnerName.center = CGPointMake(self.winnerName.center.x, self.winnerName.center.y+30)
+            self.winnerScore.center = CGPointMake(self.winnerScore.center.x, self.winnerScore.center.y+30)
+            self.secondName.center = CGPointMake(self.secondName.center.x, self.secondName.center.y+10)
+            self.secondScore.center = CGPointMake(self.secondScore.center.x, self.secondScore.center.y+10)
+            self.secondToLastName.center = CGPointMake(self.secondToLastName.center.x, self.secondToLastName.center.y-10)
+            self.secondToLastScore.center = CGPointMake(self.secondToLastScore.center.x, self.secondToLastScore.center.y-10)
+            self.lastName.center = CGPointMake(self.lastName.center.x, self.lastName.center.y-30)
+            self.lastScore.center = CGPointMake(self.lastScore.center.x, self.lastScore.center.y-30)
+            
+        }
+        
+    }
+    
+    func animateBalanceDown() {
+        
+        if animationCounter > 1 {
+                
+            animationCounter--
+                
+        } else {
+            
+            namesTimer.invalidate()
+            
+        }
+            
+        balanceImage.image = UIImage(named: "frame\(animationCounter).png")
+
     }
     
     @IBAction func logOut(sender: AnyObject) {
@@ -272,18 +379,34 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         //Pull to refresh
         self.scrollView.addSubview(self.refreshControl)
         
-        //Set up tables and stuff
-        toDoTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "toDoCell")
-        //###########activityTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "activityCell")
-
-        
     }
     
-    //Hide Navigation Controller Back button
+    //Prep for animations because view has coordinates but not appeared yet
+    override func viewDidLayoutSubviews() {
+    
+        winnerName.alpha = 0
+        winnerScore.alpha = 0
+        secondName.alpha = 0
+        secondScore.alpha = 0
+        secondToLastName.alpha = 0
+        secondToLastScore.alpha = 0
+        lastName.alpha = 0
+        lastScore.alpha = 0
+        
+        winnerName.center = CGPointMake(winnerName.center.x, -0.5)
+        winnerScore.center = CGPointMake(winnerScore.center.x, 26)
+        secondName.center = CGPointMake(secondName.center.x, 21.5)
+        winnerScore.center = CGPointMake(secondScore.center.x, 41)
+        secondToLastName.center = CGPointMake(secondToLastName.center.x, 32.5)
+        secondToLastScore.center = CGPointMake(secondToLastScore.center.x, 52)
+        lastName.center = CGPointMake(lastName.center.x, 42.5)
+        lastScore.center = CGPointMake(lastScore.center.x, 62)
+    }
+    
+    //Hide Navigation Controller Back button and special color for main screen
     override func viewWillAppear(animated: Bool) {
         
         self.navigationItem.hidesBackButton = true
-        
         self.navigationController!.navigationBar.barTintColor = UIColor(red: 247.0/255.0, green: 252.0/255.0, blue: 240.0/255.0, alpha: 1.0)
         
         //Remove line beneath navigation bars
@@ -291,6 +414,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //Check if data has been reloaded recently, and if so reload it. TODO
         handleRefresh(refreshControl)
+        
+        //Set up tables and stuff
+        toDoTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "toDoCell")
+        //###########activityTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "activityCell")
         
     }
     
