@@ -64,6 +64,25 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         lastRefreshTime = NSDate()
         
+        //***********ANIMATIONS SETUP***************
+        winnerName.alpha = 0
+        winnerScore.alpha = 0
+        secondName.alpha = 0
+        secondScore.alpha = 0
+        secondToLastName.alpha = 0
+        secondToLastScore.alpha = 0
+        lastName.alpha = 0
+        lastScore.alpha = 0
+
+        winnerName.center.y = -1.5
+        winnerScore.center.y = 25.5
+        secondName.center.y = 19
+        secondScore.center.y = 38
+        secondToLastName.center.y = 30
+        secondToLastScore.center.y = 49
+        lastName.center.y = 40
+        lastScore.center.y = 59
+
         balanceTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: Selector("startAnimation"), userInfo: nil, repeats: true)
         
         if User.currentUser() != nil {
@@ -101,12 +120,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                             
                         } else {
                             
-                            self.lastName.text = names![names!.count]
-                            self.lastScore.text = String(scores![scores!.count])
+                            let lastNameIndex = names!.count - 1
+                            let lastScoreIndex = scores!.count - 1
+                            let secondToLastNameIndex = names!.count - 2
+                            let secondToLastScoreIndex = scores!.count - 2
+                            
+                            self.lastName.text = names![lastNameIndex]
+                            self.lastScore.text = String(scores![lastScoreIndex])
                             self.secondName.text = names![1]
                             self.secondScore.text = String(scores![1])
-                            self.secondToLastName.text = names![names!.count-1]
-                            self.secondToLastScore.text = String(scores![scores!.count-1])
+                            self.secondToLastName.text = names![secondToLastNameIndex]
+                            self.secondToLastScore.text = String(scores![secondToLastScoreIndex])
                             
                         }
                         
@@ -295,25 +319,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func animateNames() {
         
         //In the future consider a delay, or completion block to displayNames? TODO
-        self.winnerName.center = CGPointMake(self.winnerName.center.x, -0.5)
-        self.winnerScore.center = CGPointMake(self.winnerScore.center.x, 26)
-        /*secondName.center = CGPointMake(secondName.center.x, 21.5)
-        winnerScore.center = CGPointMake(secondScore.center.x, 41)
-        secondToLastName.center = CGPointMake(secondToLastName.center.x, 32.5)
-        secondToLastScore.center = CGPointMake(secondToLastScore.center.x, 52)
-        lastName.center = CGPointMake(lastName.center.x, 42.5)
-        lastScore.center = CGPointMake(lastScore.center.x, 62)*/
         
         UIView.animateWithDuration(1.3) { () -> Void in
             
-            self.winnerName.center = CGPointMake(self.winnerName.center.x, self.winnerName.center.y+30)
-            self.winnerScore.center = CGPointMake(self.winnerScore.center.x, self.winnerScore.center.y+30)
-            self.secondName.center = CGPointMake(self.secondName.center.x, self.secondName.center.y+10)
-            self.secondScore.center = CGPointMake(self.secondScore.center.x, self.secondScore.center.y+10)
-            self.secondToLastName.center = CGPointMake(self.secondToLastName.center.x, self.secondToLastName.center.y-10)
-            self.secondToLastScore.center = CGPointMake(self.secondToLastScore.center.x, self.secondToLastScore.center.y-10)
-            self.lastName.center = CGPointMake(self.lastName.center.x, self.lastName.center.y-30)
-            self.lastScore.center = CGPointMake(self.lastScore.center.x, self.lastScore.center.y-30)
+            self.winnerName.center.y = self.winnerName.center.y+30
+            self.winnerScore.center.y = self.winnerScore.center.y+30
+            self.secondName.center.y = self.secondName.center.y+10
+            self.secondScore.center.y = self.secondScore.center.y+10
+            self.secondToLastName.center.y = self.secondToLastName.center.y-10
+            self.secondToLastScore.center.y = self.secondToLastScore.center.y-10
+            self.lastName.center.y = self.lastName.center.y-30
+            self.lastScore.center.y = self.lastScore.center.y-30
             
         }
         
@@ -383,7 +399,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //Prep for animations because view has coordinates but not appeared yet
     override func viewDidLayoutSubviews() {
-    
+    /*
         winnerName.alpha = 0
         winnerScore.alpha = 0
         secondName.alpha = 0
@@ -393,6 +409,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         lastName.alpha = 0
         lastScore.alpha = 0
         
+        
         winnerName.center = CGPointMake(winnerName.center.x, -0.5)
         winnerScore.center = CGPointMake(winnerScore.center.x, 26)
         secondName.center = CGPointMake(secondName.center.x, 21.5)
@@ -400,7 +417,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         secondToLastName.center = CGPointMake(secondToLastName.center.x, 32.5)
         secondToLastScore.center = CGPointMake(secondToLastScore.center.x, 52)
         lastName.center = CGPointMake(lastName.center.x, 42.5)
-        lastScore.center = CGPointMake(lastScore.center.x, 62)
+        lastScore.center = CGPointMake(lastScore.center.x, 62)*/
+
     }
     
     //Hide Navigation Controller Back button and special color for main screen
