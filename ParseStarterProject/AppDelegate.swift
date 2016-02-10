@@ -33,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Household.registerSubclass()
         Chore.registerSubclass()
         Activity.registerSubclass()
+        
+        //Hide status bar in app
+        application.statusBarHidden = true
 
         // ****************************************************************************
         // Uncomment and fill in with your Parse credentials:

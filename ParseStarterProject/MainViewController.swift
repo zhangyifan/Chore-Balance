@@ -74,14 +74,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         lastName.alpha = 0
         lastScore.alpha = 0
 
-        winnerName.center.y = -1.5
-        winnerScore.center.y = 25.5
-        secondName.center.y = 19
-        secondScore.center.y = 38
-        secondToLastName.center.y = 30
-        secondToLastScore.center.y = 49
-        lastName.center.y = 40
-        lastScore.center.y = 59
+        winnerName.center.y = 42.5
+        winnerScore.center.y = 69.5
+        secondName.center.y = 63
+        secondScore.center.y = 82
+        secondToLastName.center.y = 74
+        secondToLastScore.center.y = 93
+        lastName.center.y = 84
+        lastScore.center.y = 103
 
         balanceTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: Selector("startAnimation"), userInfo: nil, repeats: true)
         
@@ -399,7 +399,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //Prep for animations because view has coordinates but not appeared yet
     override func viewDidLayoutSubviews() {
-    /*
+    
         winnerName.alpha = 0
         winnerScore.alpha = 0
         secondName.alpha = 0
@@ -408,24 +408,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         secondToLastScore.alpha = 0
         lastName.alpha = 0
         lastScore.alpha = 0
-        
-        
-        winnerName.center = CGPointMake(winnerName.center.x, -0.5)
-        winnerScore.center = CGPointMake(winnerScore.center.x, 26)
-        secondName.center = CGPointMake(secondName.center.x, 21.5)
-        winnerScore.center = CGPointMake(secondScore.center.x, 41)
-        secondToLastName.center = CGPointMake(secondToLastName.center.x, 32.5)
-        secondToLastScore.center = CGPointMake(secondToLastScore.center.x, 52)
-        lastName.center = CGPointMake(lastName.center.x, 42.5)
-        lastScore.center = CGPointMake(lastScore.center.x, 62)*/
-
     }
     
     //Hide Navigation Controller Back button and special color for main screen
     override func viewWillAppear(animated: Bool) {
         
         self.navigationItem.hidesBackButton = true
+        //self.navigationController!.navigationBar.hidden = true
+        
         self.navigationController!.navigationBar.barTintColor = UIColor(red: 247.0/255.0, green: 252.0/255.0, blue: 240.0/255.0, alpha: 1.0)
+        //self.navigationController!.navigationBar.translucent = true
+        //self.navigationController!.navigationBar.alpha = 0.5
         
         //Remove line beneath navigation bars
         self.navigationController?.navigationBar.clipsToBounds = true

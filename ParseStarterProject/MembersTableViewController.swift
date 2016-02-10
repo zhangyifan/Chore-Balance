@@ -169,6 +169,7 @@ class MembersTableViewController: UITableViewController {
         self.navigationItem.hidesBackButton = false
         self.navigationController?.navigationBarHidden = false
         self.navigationController!.navigationBar.barTintColor = UIColor(red: 132.0/255.0, green: 220.0/255.0, blue: 154.0/255.0, alpha: 1.0)
+        self.navigationController!.navigationBar.alpha = 1.0
         self.navigationController?.navigationBar.clipsToBounds = false
         
         //Check if data has been reloaded recently, and if so reload it. TODO
