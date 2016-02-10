@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		814C3ACA1B69877600E307BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC61B69877600E307BB /* Main.storyboard */; };
 		814C3ACB1B69877600E307BB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 814C3AC81B69877600E307BB /* Images.xcassets */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA814D1A49DA1800E65899 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* UserViewController.swift */; };
@@ -40,6 +39,8 @@
 		E33EBAAF1C66E0F700355068 /* frame13.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBAA21C66E0F700355068 /* frame13.png */; };
 		E35658771C485E95007671E2 /* ChoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35658761C485E95007671E2 /* ChoreViewController.swift */; };
 		E35658791C487171007671E2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35658781C487171007671E2 /* MainViewController.swift */; };
+		E36DBEAE1C6BDA9E00F22C32 /* TickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36DBEAD1C6BDA9E00F22C32 /* TickerCell.swift */; };
+		E36DBEB01C6BE26F00F22C32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E36DBEAF1C6BE26F00F22C32 /* Main.storyboard */; };
 		E3ABFE941C4572CE0094935B /* HouseholdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABFE931C4572CE0094935B /* HouseholdViewController.swift */; };
 		E3C209981C4C4BCA00661460 /* MembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C209971C4C4BCA00661460 /* MembersTableViewController.swift */; };
 		E3C2099A1C4E9C7E00661460 /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C209991C4E9C7E00661460 /* InviteViewController.swift */; };
@@ -50,7 +51,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		814C3AC71B69877600E307BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		814C3AC81B69877600E307BB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		814C3AC91B69877600E307BB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA81451A49DA1800E65899 /* Chore Balance.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chore Balance.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,6 +87,8 @@
 		E33EBAA21C66E0F700355068 /* frame13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame13.png; sourceTree = "<group>"; };
 		E35658761C485E95007671E2 /* ChoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoreViewController.swift; sourceTree = "<group>"; };
 		E35658781C487171007671E2 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		E36DBEAD1C6BDA9E00F22C32 /* TickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TickerCell.swift; path = ../TickerCell.swift; sourceTree = "<group>"; };
+		E36DBEAF1C6BE26F00F22C32 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E3ABFE931C4572CE0094935B /* HouseholdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseholdViewController.swift; sourceTree = "<group>"; };
 		E3C209971C4C4BCA00661460 /* MembersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembersTableViewController.swift; sourceTree = "<group>"; };
 		E3C209991C4E9C7E00661460 /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
@@ -162,7 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				E3CC055A1C53EE7E00AEC89C /* Chore-Balance-Bridging-Header.h */,
-				814C3AC61B69877600E307BB /* Main.storyboard */,
+				E36DBEAF1C6BE26F00F22C32 /* Main.storyboard */,
 				E35E49101C4FE164009EA4EA /* Delegate */,
 				E35E490F1C4FE142009EA4EA /* Controller */,
 				E35E49111C4FE180009EA4EA /* View */,
@@ -232,6 +234,7 @@
 		E35E49111C4FE180009EA4EA /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E36DBEAD1C6BDA9E00F22C32 /* TickerCell.swift */,
 				E3C209A11C4F169400661460 /* ToDoCell.swift */,
 				E3D119291C4F20C30078BC2F /* ActivityCell.swift */,
 			);
@@ -302,12 +305,12 @@
 				E33EBAAF1C66E0F700355068 /* frame13.png in Resources */,
 				E33EBA921C66DA9200355068 /* check.png in Resources */,
 				E33EBAA51C66E0F700355068 /* frame3.png in Resources */,
+				E36DBEB01C6BE26F00F22C32 /* Main.storyboard in Resources */,
 				E33EBAA71C66E0F700355068 /* frame5.png in Resources */,
 				E33EBA931C66DA9200355068 /* score1.png in Resources */,
 				E33EBAA41C66E0F700355068 /* frame2.png in Resources */,
 				E33EBA941C66DA9200355068 /* score3.png in Resources */,
 				E33EBA951C66DA9200355068 /* score5.png in Resources */,
-				814C3ACA1B69877600E307BB /* Main.storyboard in Resources */,
 				E33EBAAC1C66E0F700355068 /* frame10.png in Resources */,
 				E33EBAAB1C66E0F700355068 /* frame9.png in Resources */,
 				E33EBAA31C66E0F700355068 /* frame1.png in Resources */,
@@ -339,24 +342,13 @@
 				E30520A21C5047E100FB5CBB /* User.swift in Sources */,
 				E3C2099E1C4EA38200661460 /* ActivitiesTableViewController.swift in Sources */,
 				E30520A61C5063D000FB5CBB /* Chore.swift in Sources */,
+				E36DBEAE1C6BDA9E00F22C32 /* TickerCell.swift in Sources */,
 				E3C2099A1C4E9C7E00661460 /* InviteViewController.swift in Sources */,
 				E35658791C487171007671E2 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		814C3AC61B69877600E307BB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				814C3AC71B69877600E307BB /* Base */,
-			);
-			name = Main.storyboard;
-			path = ../Resources;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		81BA81621A49DA1800E65899 /* Debug */ = {

@@ -15,7 +15,9 @@ import Parse
 //List of users in household.  Maybe cache in the future?  TODO GET RID OF THIS?
 var userList = [User]()
 
-class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     @IBOutlet var scrollView: UIScrollView!
     
@@ -41,14 +43,19 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var lastName: UILabel!
     @IBOutlet var lastScore: UILabel!
     
-    /*#############Uncomment when ready to work on this
-    @IBOutlet var activityTableView: UITableView!
+    //@IBOutlet var activityTableView: UITableView!
     
     //Activities section
-    var activityList = [Activity]() ##########*/
+    var activityList = [Activity]()
+    
+    @IBOutlet var collectionView: UICollectionView!
     
     //Chores section
     var choreList = [Chore]()
+    
+    var addChoreMode = true
+    
+    var editedChore = Chore()
 
     //Refresh function
     var lastRefreshTime = NSDate()
@@ -150,14 +157,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             if let household = User.currentUser()!.household! as? Household {
                 
-                /*#############*******ACTIVITY FEED SECTION**************
+                //********ACTIVITY FEED SECTION**************
                 household.getActivities() {(activities: [Activity]?, error: NSError?)-> Void in
                 
                     if error == nil {
                     
                         self.activityList = activities!
                     
-                        self.activityTableView.reloadData()
+                        self.collectionView.reloadData()
                     
                     } else {
                     
@@ -166,7 +173,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         refreshControl.endRefreshing()
                     
                     }
-                }###############*/
+                }
                 
                 //********CHORES SECTION**************
                 household.getChores() { (chores: [Chore]?, error: NSError?) -> Void in
@@ -432,69 +439,61 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    //Activity ticker collection view
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        print(activityList)
+        return activityList.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell: TickerCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell3", forIndexPath: indexPath) as! TickerCell
+        
+        let activity = activityList[indexPath.row]
+        
+        let completedDate = activity.completedAt
+        
+        let choreName = activity.chore["name"] as! String
+        
+        let userName = activity.user["username"] as! String
+        
+        let description = userName + " did " + choreName
+        
+        let score = activity.scoreStamp
+        
+        cell.setCell(completedDate, description: description, score: score)
+        
+        return cell
+        
+    }
+    
+    //Tap on ticker
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        self.performSegueWithIdentifier("showActivityFeed", sender: self)
+        
+    }
+    
+    //Chores Tabe
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        var count:Int?
-        
-        if tableView == self.toDoTableView {
-            
-            //Calculate rows of Chores
-            count = choreList.count
-            
-        }
-        
-        /*#######if tableView == self.activityTableView {
-            
-            //Calculate rows of activities
-            count = activityList.count
-        }###### */
-        
-        return count!
+
+        return choreList.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell:UITableViewCell?
+        let toDoCell: ToDoCell = tableView.dequeueReusableCellWithIdentifier("cell1", forIndexPath: indexPath) as! ToDoCell
+            
+        let chore = choreList[indexPath.row]
+            
+        toDoCell.setCell(chore.name, score: chore.score, lastDone: chore.lastDone)
+            
+        toDoCell.doButtonOutlet.tag = indexPath.row
+            
+        toDoCell.doButtonOutlet.addTarget(self, action: Selector("addActivity:"), forControlEvents: UIControlEvents.TouchUpInside)
         
-        if tableView == self.toDoTableView {
-            
-            let toDoCell: ToDoCell = tableView.dequeueReusableCellWithIdentifier("cell1", forIndexPath: indexPath) as! ToDoCell
-            
-            let chore = choreList[indexPath.row]
-            
-            toDoCell.setCell(chore.name, score: chore.score, lastDone: chore.lastDone)
-            
-            toDoCell.doButtonOutlet.tag = indexPath.row
-            
-            toDoCell.doButtonOutlet.addTarget(self, action: Selector("addActivity:"), forControlEvents: UIControlEvents.TouchUpInside)
-            
-            cell = toDoCell
-            
-        }
-        
-        /*###########if tableView == self.activityTableView {
-            
-            let activityCell: ActivityCell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! ActivityCell
-            
-            let activity = activityList[indexPath.row]
-            
-            let completedDate = activity.completedAt
-            
-            let choreName = activity.chore["name"] as! String
-            
-            let userName = activity.user["username"] as! String
-            
-            let description = userName + " did " + choreName
-            
-            let score = activity.scoreStamp
-            
-            activityCell.setCell(completedDate, description: description, score: score)
-            
-            cell = activityCell
-        }##########*/
-        
-        
-        return cell!
+        return toDoCell
     }
     
     //Do a chore
@@ -548,20 +547,76 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    // Override to support editing the table view.
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
-        if tableView == self.toDoTableView {
+        if editingStyle == .Delete {
             
-            self.performSegueWithIdentifier("showChores", sender: self)
+            let deleteChoreAlert = UIAlertController(title: "Your chore will be deleted", message: "Just making sure you want to delete \(choreList[indexPath.row].name) for everyone in your household.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            deleteChoreAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: { (action: UIAlertAction!) in
+                
+                //Nothing happens
+                
+            }))
+            
+            deleteChoreAlert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action: UIAlertAction!) in
+                
+                self.loadSpinner()
+                
+                // Delete the row from the data source
+                let deletedChore = self.choreList[indexPath.row]
+                
+                deletedChore.update(deletedChore.name, score: deletedChore.score, isDeleted: true, closure: {(error) -> Void in
+                    
+                    if error == nil {
+                        
+                        self.choreList.removeAtIndex(indexPath.row)
+                        
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                        
+                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                        
+                    } else {
+                        
+                        UserViewController.displayAlert("Couldn't delete chore", message: error!.localizedDescription, view: self)
+                        
+                    }
+                    
+                })
+                
+            }))
+            
+            presentViewController(deleteChoreAlert, animated: true, completion: nil)
+            
+        } else if editingStyle == .Insert {
+            
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
             
         }
+    }
+    
+    //Edit a chore
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        /*##########if tableView == self.activityTableView {
-            
-            self.performSegueWithIdentifier("showActivityFeed", sender: self)
-            
-        }###########*/
+        addChoreMode = false
         
+        editedChore = choreList[indexPath.row]
+        
+        performSegueWithIdentifier("addEditChore", sender: self)
+    }
+    
+    //A thinking spinner
+    func loadSpinner() {
+        
+        self.activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0,0,50,50))
+        self.activityIndicator.center = self.view.center
+        self.activityIndicator.hidesWhenStopped = true
+        self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
     }
 
@@ -578,11 +633,26 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
-        if (segue.identifier == "logoutFromMain")
-        {
+        if segue.identifier == "logoutFromMain" {
+            
             if let userViewController = segue.destinationViewController as? UserViewController {
 
                 userViewController.signUpActive = false;
+            }
+            
+        } else if segue.identifier == "addEditChore" && self.addChoreMode == false {
+            
+            // Get the new view controller using segue.destinationViewController.
+            if let choreViewController = segue.destinationViewController as? ChoreViewController {
+                
+                choreViewController.addChoreMode = false
+                
+                choreViewController.editedChore = self.editedChore
+                
+                choreViewController.choreNameDisplayed = self.editedChore.name
+                
+                choreViewController.choreScoreDisplayed = self.editedChore.score
+                
             }
             
         }
