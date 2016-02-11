@@ -50,6 +50,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var collectionView: UICollectionView!
     
+    var tickerTimer = NSTimer()
+    
     //Chores section
     var choreList = [Chore]()
     
@@ -165,7 +167,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         self.activityList = activities!
                     
                         self.collectionView.reloadData()
-                    
+
                     } else {
                     
                         UserViewController.displayAlert("Couldn't find activities", message: error!.localizedDescription, view: self)
@@ -402,6 +404,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         //Pull to refresh
         self.scrollView.addSubview(self.refreshControl)
         
+        self.tickerTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("autoScroll"), userInfo: nil, repeats: true)
+        
     }
     
     //Prep for animations because view has coordinates but not appeared yet
@@ -415,6 +419,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         secondToLastScore.alpha = 0
         lastName.alpha = 0
         lastScore.alpha = 0
+        
     }
     
     //Hide Navigation Controller Back button and special color for main screen
@@ -441,9 +446,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //Activity ticker collection view
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        print(activityList)
+
         return activityList.count
+        
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -472,6 +477,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
         self.performSegueWithIdentifier("showActivityFeed", sender: self)
+  
+    }
+    
+    func autoScroll() {
+        
+        var index = NSIndexPath(forItem: self.collectionView.indexPathsForVisibleItems()[0].row + 1, inSection: 0)
+        
+        self.collectionView.scrollToItemAtIndexPath(index, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
         
     }
     
