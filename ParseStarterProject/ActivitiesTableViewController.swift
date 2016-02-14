@@ -19,7 +19,7 @@ class ActivitiesTableViewController: UITableViewController {
         
         if let household = User.currentUser()!.household! as? Household {
             
-            household.getActivities() {(activities: [Activity]?, error: NSError?)-> Void in
+            household.getActivities(nil) {(activities: [Activity]?, error: NSError?)-> Void in
                 
                 if error == nil {
                     

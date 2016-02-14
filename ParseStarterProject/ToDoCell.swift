@@ -11,11 +11,15 @@ import UIKit
 class ToDoCell: UITableViewCell {
 
     //Main
+    @IBOutlet var scoreImage: UIImageView!
+    
     @IBOutlet var choreLabel: UILabel!
     
     @IBOutlet var lastDoneLabel: UILabel!
     
     @IBOutlet var doButtonOutlet: UIButton!
+    
+    @IBOutlet var addChoreButton: UIButton!
     
     @IBAction func DoButton(sender: AnyObject) {
     }
@@ -34,7 +38,15 @@ class ToDoCell: UITableViewCell {
   
     func setCell(description: String, score: Int, lastDone: NSDate?) {
         
-        choreLabel.text = description + " - \(score)"
+        scoreImage.hidden = false
+        choreLabel.hidden = false
+        lastDoneLabel.hidden = false
+        doButtonOutlet.hidden = false
+        addChoreButton.hidden = true
+        
+        scoreImage.image = UIImage(named: "score\(score).png")
+            
+        choreLabel.text = description
         
         if lastDone == nil {
             
@@ -50,6 +62,17 @@ class ToDoCell: UITableViewCell {
             lastDoneLabel.text = "last " + dateString
         }
   
+    }
+    
+    func addChoreCell() {
+        
+        scoreImage.hidden = true
+        choreLabel.hidden = true
+        lastDoneLabel.hidden = true
+        doButtonOutlet.hidden = true
+        
+        addChoreButton.hidden = false
+        
     }
     
     func setTableCell(description: String, score: Int, lastDone: NSDate?) {

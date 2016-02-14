@@ -30,7 +30,7 @@ class User: PFUser {
         //1
         let query = PFUser.query()
         //2
-        //query!.includeKey("household")
+        query!.includeKey("household")
         return query
     }
     
@@ -75,12 +75,14 @@ class User: PFUser {
         
         var score = 0
         
+        let household = self.household! as! Household
+        
         let scoresQuery = Activity.query()!
         
         scoresQuery.whereKey("user", equalTo: self)
-        
+
         scoresQuery.whereKey("completedAt", greaterThanOrEqualTo: self.household!.scoreFromDate)
-        
+      
         scoresQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
             
             if let foundActivities = activities as? [Activity] {

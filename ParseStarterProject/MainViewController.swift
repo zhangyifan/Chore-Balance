@@ -43,7 +43,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var lastName: UILabel!
     @IBOutlet var lastScore: UILabel!
     
-    //@IBOutlet var activityTableView: UITableView!
+    var isTie = false
     
     //Activities section
     var activityList = [Activity]()
@@ -74,6 +74,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         lastRefreshTime = NSDate()
         
         //***********ANIMATIONS SETUP***************
+        balanceTimer.invalidate()
+        namesTimer.invalidate()
+        
         winnerName.alpha = 0
         winnerScore.alpha = 0
         secondName.alpha = 0
@@ -82,6 +85,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         secondToLastScore.alpha = 0
         lastName.alpha = 0
         lastScore.alpha = 0
+        print("refresh \(winnerName.alpha)")
 
         winnerName.center.y = 42.5
         winnerScore.center.y = 69.5
@@ -92,10 +96,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         lastName.center.y = 84
         lastScore.center.y = 103
 
-        balanceTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: Selector("startAnimation"), userInfo: nil, repeats: true)
+        balanceTimer = NSTimer.scheduledTimerWithTimeInterval(0.03, target: self, selector: Selector("startAnimation"), userInfo: nil, repeats: true)
         
         if User.currentUser() != nil {
-            
+
             //********CURRENT SCORES SECTION**************
             
             //Find all sorted users in the same household
@@ -104,6 +108,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 if error == nil {
                     
                     if names!.count > 0 && scores!.count > 0 {
+                        
+                        self.isTie = self.checkForTie(scores!)
+                        print("check for tie \(self.isTie)")
                         
                         self.winnerName.text = names![0]
                         self.winnerScore.text = String(scores![0])
@@ -144,12 +151,16 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         }
                         
                     }
+                    
+                    self.balanceAnimating = false
 
                     refreshControl.endRefreshing()
                     
                 } else {
                     
                     UserViewController.displayAlert("Couldn't load household members", message: error!.localizedDescription, view: self)
+                    
+                    self.balanceAnimating = false
 
                     refreshControl.endRefreshing()
                     
@@ -159,8 +170,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             if let household = User.currentUser()!.household! as? Household {
                 
+                let myCalendar = NSCalendar.currentCalendar()
+                //let yesterday =
+                let threeDaysAgo = myCalendar.dateByAddingUnit(.Day, value: -3, toDate: NSDate(), options: [])
+                
                 //********ACTIVITY FEED SECTION**************
-                household.getActivities() {(activities: [Activity]?, error: NSError?)-> Void in
+                household.getActivities(threeDaysAgo) {(activities: [Activity]?, error: NSError?)-> Void in
                 
                     if error == nil {
                     
@@ -211,8 +226,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                             })
                                             
                                             self.toDoTableView.reloadData()
-                                            
-                                            self.balanceAnimating = false
+
                                             self.refreshControl.endRefreshing()
                                             
                                         }
@@ -221,7 +235,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                         
                                         UserViewController.displayAlert("Couldn't find last done date", message: error!.localizedDescription, view: self)
                                         
-                                        self.balanceAnimating = false
                                         self.refreshControl.endRefreshing()
                                     }
                                     
@@ -260,12 +273,31 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    //Check to see if there's a tie in scores
+    func checkForTie(scores: [Int]) -> Bool {
+        
+        var isTie = true
+        
+        let firstScore = scores[0]
+        
+        for score in scores {
+            
+            if score != firstScore {
+                
+                isTie = false
+            }
+            
+        }
+        
+        return isTie
+    }
+    
     //Start balance going up and down, ending in up position
     func startAnimation() {
             
         if countingUp == true {
             
-            if animationCounter == 13 {
+            if animationCounter == 14 {
                 
                 if balanceAnimating {
                     
@@ -276,7 +308,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     balanceTimer.invalidate()
                     
                     balanceAnimating = true
-
+                    
                     displayNames()
                 }
            
@@ -300,6 +332,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
         
+        print("start animation \(animationCounter)")
         balanceImage.image = UIImage(named: "frame\(animationCounter).png")
     }
     
@@ -316,12 +349,24 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.secondToLastScore.alpha = 1
             self.lastName.alpha = 1
             self.lastScore.alpha = 1
+            print("display names")
             
-            self.namesTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("animateBalanceDown"), userInfo: nil, repeats: true)
 
         })
         
-        self.animateNames()
+        if isTie {
+            
+            namesTimer = NSTimer.scheduledTimerWithTimeInterval(0.075, target: self, selector: Selector("animateBalanceTied"), userInfo: nil, repeats: true)
+            
+            animateTiedNames()
+            
+        } else {
+            
+            namesTimer = NSTimer.scheduledTimerWithTimeInterval(0.075, target: self, selector: Selector("animateBalanceDown"), userInfo: nil, repeats: true)
+            
+            animateNames()
+        }
+        
         
     }
     
@@ -329,7 +374,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //In the future consider a delay, or completion block to displayNames? TODO
         
-        UIView.animateWithDuration(1.3) { () -> Void in
+        UIView.animateWithDuration(1.2) { () -> Void in
             
             self.winnerName.center.y = self.winnerName.center.y+30
             self.winnerScore.center.y = self.winnerScore.center.y+30
@@ -339,8 +384,34 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.secondToLastScore.center.y = self.secondToLastScore.center.y-10
             self.lastName.center.y = self.lastName.center.y-30
             self.lastScore.center.y = self.lastScore.center.y-30
+            print("animate names")
             
         }
+        
+    }
+    
+    func animateTiedNames() {
+  
+        UIView.animateWithDuration(0.65) { () -> Void in
+            
+            self.winnerName.center.y = self.winnerName.center.y+18
+            self.winnerScore.center.y = self.winnerScore.center.y+18
+            self.secondName.center.y = self.secondName.center.y+9
+            self.secondScore.center.y = self.secondScore.center.y+9
+            self.secondToLastName.center.y = self.secondToLastName.center.y-2
+            self.secondToLastScore.center.y = self.secondToLastScore.center.y-2
+            self.lastName.center.y = self.lastName.center.y-12
+            self.lastScore.center.y = self.lastScore.center.y-12
+            print("animate names")
+            
+        }
+        
+        /*self.secondName.font = UIFont.boldSystemFontOfSize(24)
+        self.secondScore.font = UIFont.boldSystemFontOfSize(24)
+        self.secondToLastName.font = UIFont.boldSystemFontOfSize(24)
+        self.secondToLastScore.font = UIFont.boldSystemFontOfSize(24)
+        self.lastName.font = UIFont.boldSystemFontOfSize(24)
+        self.lastScore.font = UIFont.boldSystemFontOfSize(24)*/
         
     }
     
@@ -355,9 +426,25 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             namesTimer.invalidate()
             
         }
-            
+        print("balance down \(animationCounter)")
         balanceImage.image = UIImage(named: "frame\(animationCounter).png")
 
+    }
+    
+    func animateBalanceTied() {
+        
+        if animationCounter > 8 {
+            
+            animationCounter--
+            
+        } else {
+            
+            namesTimer.invalidate()
+            
+        }
+        print("balance tied \(animationCounter)")
+        balanceImage.image = UIImage(named: "frame\(animationCounter).png")
+        
     }
     
     @IBAction func logOut(sender: AnyObject) {
@@ -403,14 +490,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //Pull to refresh
         self.scrollView.addSubview(self.refreshControl)
-        
+
         self.tickerTimer = NSTimer.scheduledTimerWithTimeInterval(2, target: self, selector: Selector("autoScroll"), userInfo: nil, repeats: true)
         
     }
     
-    //Prep for animations because view has coordinates but not appeared yet
-    override func viewDidLayoutSubviews() {
-    
+    //Disappear labels when rotated because will be in wrong place
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
         winnerName.alpha = 0
         winnerScore.alpha = 0
         secondName.alpha = 0
@@ -419,8 +505,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         secondToLastScore.alpha = 0
         lastName.alpha = 0
         lastScore.alpha = 0
-        
+        print("will rotate \(winnerName.alpha)")
     }
+    
     
     //Hide Navigation Controller Back button and special color for main screen
     override func viewWillAppear(animated: Bool) {
@@ -482,31 +569,65 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func autoScroll() {
         
-        var index = NSIndexPath(forItem: self.collectionView.indexPathsForVisibleItems()[0].row + 1, inSection: 0)
-        
-        self.collectionView.scrollToItemAtIndexPath(index, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+        if activityList != [] {
+            
+            if activityList.count > (self.collectionView.indexPathsForVisibleItems()[0].row + 1){
+                
+                let nextIndex = NSIndexPath(forItem: self.collectionView.indexPathsForVisibleItems()[0].row + 1, inSection: 0)
+                
+                self.collectionView.scrollToItemAtIndexPath(nextIndex, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+                
+            } else {
+                
+                let firstIndex = NSIndexPath(forItem: 0, inSection: 0)
+                
+                self.collectionView.scrollToItemAtIndexPath(firstIndex, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
+                
+            }
+            
+        }
         
     }
     
     //Chores Tabe
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return choreList.count
+        return choreList.count + 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let toDoCell: ToDoCell = tableView.dequeueReusableCellWithIdentifier("cell1", forIndexPath: indexPath) as! ToDoCell
+        
+        if choreList.count > indexPath.row {
+       
+            let chore = choreList[indexPath.row]
+                
+            toDoCell.setCell(chore.name, score: chore.score, lastDone: chore.lastDone)
+                
+            toDoCell.doButtonOutlet.tag = indexPath.row
             
-        let chore = choreList[indexPath.row]
+            toDoCell.doButtonOutlet.addTarget(self, action: Selector("addActivity:"), forControlEvents: UIControlEvents.TouchUpInside)
+                
+        } else {
             
-        toDoCell.setCell(chore.name, score: chore.score, lastDone: chore.lastDone)
+            toDoCell.addChoreCell()
             
-        toDoCell.doButtonOutlet.tag = indexPath.row
-            
-        toDoCell.doButtonOutlet.addTarget(self, action: Selector("addActivity:"), forControlEvents: UIControlEvents.TouchUpInside)
+            toDoCell.addChoreButton.addTarget(self, action: Selector("addChore:"), forControlEvents: UIControlEvents.TouchUpInside)
+                
+        }
         
         return toDoCell
+  
+    }
+    
+    //Add a chore
+    @IBAction func addChore (sender: UIButton) {
+        
+        addChoreMode = true
+        
+        performSegueWithIdentifier("addEditChore", sender: self)
+        
     }
     
     //Do a chore
@@ -613,11 +734,22 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Edit a chore
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        addChoreMode = false
-        
-        editedChore = choreList[indexPath.row]
-        
-        performSegueWithIdentifier("addEditChore", sender: self)
+        if choreList.count > indexPath.row {
+            
+            addChoreMode = false
+            
+            editedChore = choreList[indexPath.row]
+            
+            performSegueWithIdentifier("addEditChore", sender: self)
+            
+        } else {
+            
+            addChoreMode = true
+            
+            performSegueWithIdentifier("addEditChore", sender: self)
+
+        }
+
     }
     
     //A thinking spinner

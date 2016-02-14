@@ -277,6 +277,11 @@
                                                                         <constraint firstAttribute="width" constant="26" id="tlF-0y-XZH"/>
                                                                     </constraints>
                                                                 </imageView>
+                                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3Y-aJ-RrO">
+                                                                    <rect key="frame" x="59" y="7" width="180" height="30"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <state key="normal" title="Add a chore"/>
+                                                                </button>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstItem="9EL-Gk-3Fj" firstAttribute="centerX" secondItem="4Bm-cX-1Op" secondAttribute="centerX" id="5un-3r-DsI"/>
@@ -297,9 +302,11 @@
                                                         </tableViewCellContentView>
                                                         <color key="backgroundColor" red="0.96862745100000003" green="0.98823529409999999" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                         <connections>
+                                                            <outlet property="addChoreButton" destination="r3Y-aJ-RrO" id="dXl-uj-kkl"/>
                                                             <outlet property="choreLabel" destination="lLk-l7-Okt" id="gaB-SG-CSx"/>
                                                             <outlet property="doButtonOutlet" destination="LH9-LE-LO2" id="tM6-Hi-hGZ"/>
                                                             <outlet property="lastDoneLabel" destination="lDe-hf-SgV" id="xBJ-jx-yio"/>
+                                                            <outlet property="scoreImage" destination="pj4-EX-nbc" id="i6h-wj-JuW"/>
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
@@ -443,7 +450,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="balanceImage" destination="Kb1-ew-bQS" id="xej-DH-C9w"/>

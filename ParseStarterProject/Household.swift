@@ -81,7 +81,7 @@ class Household: PFObject, PFSubclassing {
     }
     
     //Search Parse for recent activities in household
-    func getActivities(closure: ([Activity]?, NSError?) -> Void) {
+    func getActivities(fromDate: NSDate?, closure: ([Activity]?, NSError?) -> Void) {
         
         let usersQuery = User.query()!
         
@@ -90,6 +90,12 @@ class Household: PFObject, PFSubclassing {
         let activitiesQuery = Activity.query()!
         
         activitiesQuery.whereKey("user", matchesQuery: usersQuery)
+        
+        if fromDate != nil {
+            
+            activitiesQuery.whereKey("completedAt", greaterThanOrEqualTo: fromDate!)
+            
+        }
         
         activitiesQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
             
