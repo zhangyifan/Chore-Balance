@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class InviteViewController: UIViewController {
+class InviteViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var emailField: UITextField!
     
@@ -45,11 +45,29 @@ class InviteViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.emailField.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //Add these two functions for allowing keyboard to close when you touch outside (#1) and hit return (#2)
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        sendInvite("")
+        
+        return true
+        
     }
     
 

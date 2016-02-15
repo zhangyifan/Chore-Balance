@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class ChoreViewController: UIViewController, UITableViewDelegate {
+class ChoreViewController: UIViewController, UITableViewDelegate, UITextFieldDelegate {
 
     //In the future can make the height of the table adjust with number of cells
     
@@ -31,7 +31,7 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
     
     @IBAction func doneButton(sender: AnyObject) {
         
-        if choreNameField == "" {
+        if choreNameField.text == "" {
             
             UserViewController.displayAlert("Chore name missing", message: "Please enter a name for your chore", view: self)
             
@@ -118,11 +118,18 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.choreNameField.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
         
         setLabels()
+
+        self.navigationItem.hidesBackButton = false
+        self.navigationController?.navigationBarHidden = false
+        self.navigationController!.navigationBar.barTintColor = UIColor(red: 132.0/255.0, green: 220.0/255.0, blue: 154.0/255.0, alpha: 1.0)
+        self.navigationController!.navigationBar.alpha = 1.0
+        self.navigationController?.navigationBar.clipsToBounds = false
         
     }
     
@@ -134,13 +141,12 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
             
             instructionLabel.text = "Add chores that need to be done regularly, and mark whether they are small (1), medium (3) or large (5) tasks."
             
-            choreNameField.text = "Chore name"
-            
             scoreInput.selectedSegmentIndex = 0
             
         } else {
             
             //Edit chore mode
+            
             self.title = "Edit Chore"
             
             instructionLabel.text = "Edit your chore's name or score."
@@ -164,6 +170,23 @@ class ChoreViewController: UIViewController, UITableViewDelegate {
             }
             
         }
+        
+    }
+    
+    //Add these two functions for allowing keyboard to close when you touch outside (#1) and hit return (#2)
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        doneButton("")
+        
+        return true
         
     }
     

@@ -117,9 +117,8 @@
                             <constraint firstItem="sVc-4q-5od" firstAttribute="top" secondItem="QWm-WY-bUv" secondAttribute="bottom" constant="15" id="zlZ-gW-z4v"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="65A-gF-Gmg">
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="dPK-4I-HC4"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="65A-gF-Gmg"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="mainButtonText" destination="zKg-JQ-ibP" id="4Em-RJ-FRb"/>
@@ -315,15 +314,6 @@
                                                     <outlet property="delegate" destination="1yA-ij-PFD" id="MSo-7l-wta"/>
                                                 </connections>
                                             </tableView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Geoff" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2II-t1-d1Q">
-                                                <rect key="frame" x="8" y="28" width="80" height="31"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="80" id="Z9q-dW-yaD"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                                <color key="textColor" red="0.28627450980000002" green="0.28627450980000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="34" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONu-az-8O6">
                                                 <rect key="frame" x="8" y="55" width="80" height="30"/>
                                                 <constraints>
@@ -387,10 +377,19 @@
                                                 <color key="textColor" red="0.28627450980000002" green="0.28627450980000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Geoff" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2II-t1-d1Q">
+                                                <rect key="frame" x="0.0" y="28" width="97" height="31"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="97" id="Z9q-dW-yaD"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                <color key="textColor" red="0.28627450980000002" green="0.28627450980000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" red="0.96862745100000003" green="0.98823529409999999" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstItem="Kb1-ew-bQS" firstAttribute="leading" secondItem="2II-t1-d1Q" secondAttribute="trailing" constant="-80" id="03K-Lu-Qyt"/>
+                                            <constraint firstItem="Kb1-ew-bQS" firstAttribute="leading" secondItem="2II-t1-d1Q" secondAttribute="trailing" constant="-89" id="03K-Lu-Qyt"/>
                                             <constraint firstItem="asm-Sn-Oeh" firstAttribute="top" secondItem="ETq-eY-jwp" secondAttribute="bottom" constant="8" id="0dw-RQ-5Nw"/>
                                             <constraint firstItem="ETq-eY-jwp" firstAttribute="width" secondItem="bIY-wQ-4kV" secondAttribute="width" id="1TD-WS-arT"/>
                                             <constraint firstItem="oZT-Ni-ay6" firstAttribute="top" secondItem="bIY-wQ-4kV" secondAttribute="top" constant="84" id="4rL-oS-3Li"/>
@@ -836,9 +835,7 @@
                             <constraint firstItem="AXc-Iq-549" firstAttribute="top" secondItem="lqA-M4-4CD" secondAttribute="bottom" constant="46" id="ytD-2j-Z0X"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Enter your household name" id="yqu-ek-EkM">
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="aPK-1O-DkA"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Enter your household name" id="yqu-ek-EkM"/>
                     <connections>
                         <outlet property="householdTextField" destination="ull-5l-ceC" id="yRu-eq-ax8"/>
                         <outlet property="mainButtonText" destination="7WH-h9-cV1" id="5zh-Q3-zKB"/>
@@ -945,7 +942,7 @@
                                 <color key="textColor" red="0.28627450980000002" green="0.28627450980000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Chore name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6xY-CN-3jC">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Chore name" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6xY-CN-3jC">
                                 <rect key="frame" x="28" y="175" width="226" height="30"/>
                                 <color key="textColor" red="0.28627450980000002" green="0.28627450980000002" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -994,9 +991,7 @@
                             <constraint firstItem="kxi-Lz-8nA" firstAttribute="top" secondItem="6xY-CN-3jC" secondAttribute="bottom" constant="22" id="z93-nx-Kuz"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Add Chores" id="QaJ-ex-Tbx">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="B7n-Jz-dPp"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Add Chores" id="QaJ-ex-Tbx"/>
                     <connections>
                         <outlet property="choreNameField" destination="6xY-CN-3jC" id="126-5K-Qtg"/>
                         <outlet property="instructionLabel" destination="sIC-A9-y8P" id="big-SC-inc"/>
@@ -1078,9 +1073,9 @@
         <image name="score5.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="jsl-61-4mg"/>
-        <segue reference="BkP-HA-s7V"/>
         <segue reference="05B-fO-qJf"/>
+        <segue reference="jsl-61-4mg"/>
+        <segue reference="lsS-Tr-nVC"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.26274509800000001" green="0.70196078429999997" blue="0.82745098039999998" alpha="1" colorSpace="calibratedRGB"/>
 </document>

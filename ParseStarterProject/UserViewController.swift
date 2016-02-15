@@ -10,7 +10,7 @@
 import UIKit
 import Parse
 
-class UserViewController: UIViewController {
+class UserViewController: UIViewController, UITextFieldDelegate {
     
     var signUpActive = true
     
@@ -132,6 +132,10 @@ class UserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        self.username.delegate = self
+        self.password.delegate = self
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -158,6 +162,11 @@ class UserViewController: UIViewController {
         
         setLabels()
         
+        self.navigationController?.navigationBarHidden = false
+        self.navigationController!.navigationBar.barTintColor = UIColor(red: 132.0/255.0, green: 220.0/255.0, blue: 154.0/255.0, alpha: 1.0)
+        self.navigationController!.navigationBar.alpha = 1.0
+        self.navigationController?.navigationBar.clipsToBounds = false
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -180,9 +189,28 @@ class UserViewController: UIViewController {
             mainButtonText.setTitle("Log In", forState: UIControlState.Normal)
             registeredText.text = "Don't have an account?"
             smallButtonText.setTitle("Signup", forState: UIControlState.Normal)
+            
+            self.navigationItem.hidesBackButton = true
 
             
         }
+        
+    }
+    
+    //Add these two functions for allowing keyboard to close when you touch outside (#1) and hit return (#2)
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        self.view.endEditing(true)
+        
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        textField.resignFirstResponder()
+        
+        mainButtonTap("")
+        
+        return true
         
     }
 }

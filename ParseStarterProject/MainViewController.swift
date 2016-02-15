@@ -134,7 +134,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                             self.secondName.text = names![1]
                             self.secondScore.text = String(scores![1])
                             
-                        } else {
+                        } else if names!.count > 3 {
                             
                             let lastNameIndex = names!.count - 1
                             let lastScoreIndex = scores!.count - 1
