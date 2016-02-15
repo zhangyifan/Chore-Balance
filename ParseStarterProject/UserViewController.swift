@@ -31,7 +31,7 @@ class UserViewController: UIViewController, UITextFieldDelegate {
     
     //This function used across the app
     class func displayAlert(title: String, message: String, view: UIViewController) {
-        
+
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action) -> Void in
