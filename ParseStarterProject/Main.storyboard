@@ -1005,10 +1005,10 @@
             </objects>
             <point key="canvasLocation" x="2147.5" y="338.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Launch View Controller-->
         <scene sceneID="kz6-2O-e3H">
             <objects>
-                <viewController id="tO3-Cc-SHJ" sceneMemberID="viewController">
+                <viewController id="tO3-Cc-SHJ" customClass="LaunchViewController" customModule="Chore_Balance" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lpb-Wh-r04"/>
                         <viewControllerLayoutGuide type="bottom" id="RZQ-ld-oYH"/>
@@ -1017,34 +1017,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Chore Balance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C4P-Yh-upM">
-                                <rect key="frame" x="131" y="72" width="112" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.28627450980392155" green="0.28627450980392155" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Loading screen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="noy-1x-z2m">
-                                <rect key="frame" x="129" y="133" width="117" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.28627450980392155" green="0.28627450980392155" blue="0.28627450980392155" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="laA-fz-iI5">
-                                <rect key="frame" x="152" y="442" width="72" height="30"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="launchportrait.png" translatesAutoresizingMaskIntoConstraints="NO" id="klb-fO-uq4">
+                                <rect key="frame" x="0.0" y="-3" width="375" height="670"/>
+                            </imageView>
+                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="laA-fz-iI5">
+                                <rect key="frame" x="43" y="531" width="288" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="288" id="Sa8-y8-T2o"/>
+                                    <constraint firstAttribute="height" constant="30" id="nni-dY-Jc2"/>
+                                </constraints>
                                 <state key="normal" title="Let's do it!"/>
                                 <connections>
-                                    <segue destination="el7-JM-Eov" kind="show" id="DQI-bT-RZx"/>
+                                    <segue destination="el7-JM-Eov" kind="show" identifier="letsDoIt" id="DQI-bT-RZx"/>
                                 </connections>
                             </button>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="vKF-zN-Ngm">
+                                <rect key="frame" x="35" y="161" width="305" height="163"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="305" id="Eek-HC-HZF"/>
+                                    <constraint firstAttribute="height" constant="163" id="hcV-zM-Dqc"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.51764705882352935" green="0.86274509803921573" blue="0.60392156862745094" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" red="0.96862745100000003" green="0.98823529409999999" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="RZQ-ld-oYH" firstAttribute="top" secondItem="laA-fz-iI5" secondAttribute="bottom" constant="106" id="4He-vc-LIn"/>
+                            <constraint firstItem="klb-fO-uq4" firstAttribute="height" secondItem="GDb-ML-gGe" secondAttribute="height" id="N3n-WH-0t4"/>
+                            <constraint firstItem="klb-fO-uq4" firstAttribute="width" secondItem="GDb-ML-gGe" secondAttribute="width" id="URx-fF-mIZ"/>
+                            <constraint firstItem="vKF-zN-Ngm" firstAttribute="centerX" secondItem="GDb-ML-gGe" secondAttribute="centerX" id="c8z-wL-qiJ"/>
+                            <constraint firstItem="laA-fz-iI5" firstAttribute="centerX" secondItem="GDb-ML-gGe" secondAttribute="centerX" id="dq5-ik-O8S"/>
+                            <constraint firstItem="vKF-zN-Ngm" firstAttribute="top" secondItem="lpb-Wh-r04" secondAttribute="bottom" constant="141" id="ff7-pG-Lue"/>
+                            <constraint firstItem="klb-fO-uq4" firstAttribute="centerX" secondItem="GDb-ML-gGe" secondAttribute="centerX" id="hoc-VI-ivb"/>
+                            <constraint firstItem="klb-fO-uq4" firstAttribute="centerY" secondItem="GDb-ML-gGe" secondAttribute="centerY" id="jqK-kf-b9r"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R9a-Jo-70O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="38" y="313"/>
+            <point key="canvasLocation" x="37.5" y="312.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hGL-wm-a06">
@@ -1072,6 +1085,8 @@
     <resources>
         <image name="check.png" width="20" height="15"/>
         <image name="frame13.png" width="750" height="155"/>
+        <image name="launchportrait.png" width="414" height="736"/>
+        <image name="logo.png" width="335" height="112"/>
         <image name="score5.png" width="44" height="44"/>
     </resources>
     <inferredMetricsTieBreakers>

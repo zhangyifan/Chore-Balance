@@ -16,6 +16,10 @@
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
+		E30016941C739D68003271FE /* launchbackground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30016921C739D68003271FE /* launchbackground@3x.png */; };
+		E30016951C739D68003271FE /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30016931C739D68003271FE /* logo@3x.png */; };
+		E30016971C739DB8003271FE /* launchportrait@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30016961C739DB8003271FE /* launchportrait@3x.png */; };
+		E30016991C73A12C003271FE /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30016981C73A12C003271FE /* LaunchViewController.swift */; };
 		E30520A21C5047E100FB5CBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30520A11C5047E100FB5CBB /* User.swift */; };
 		E30520A41C505E0C00FB5CBB /* Household.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30520A31C505E0C00FB5CBB /* Household.swift */; };
 		E30520A61C5063D000FB5CBB /* Chore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30520A51C5063D000FB5CBB /* Chore.swift */; };
@@ -65,6 +69,10 @@
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		81BA81801A49E10C00E65899 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		E30016921C739D68003271FE /* launchbackground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launchbackground@3x.png"; sourceTree = "<group>"; };
+		E30016931C739D68003271FE /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
+		E30016961C739DB8003271FE /* launchportrait@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launchportrait@3x.png"; sourceTree = "<group>"; };
+		E30016981C73A12C003271FE /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		E30520A11C5047E100FB5CBB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E30520A31C505E0C00FB5CBB /* Household.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Household.swift; sourceTree = "<group>"; };
 		E30520A51C5063D000FB5CBB /* Chore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chore.swift; sourceTree = "<group>"; };
@@ -123,6 +131,9 @@
 			children = (
 				814C3AC81B69877600E307BB /* Images.xcassets */,
 				814C3AC91B69877600E307BB /* Info.plist */,
+				E30016961C739DB8003271FE /* launchportrait@3x.png */,
+				E30016921C739D68003271FE /* launchbackground@3x.png */,
+				E30016931C739D68003271FE /* logo@3x.png */,
 				E33EBA8E1C66DA9200355068 /* check.png */,
 				E33EBA8F1C66DA9200355068 /* score1.png */,
 				E33EBA901C66DA9200355068 /* score3.png */,
@@ -214,6 +225,7 @@
 		E35E490F1C4FE142009EA4EA /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E30016981C73A12C003271FE /* LaunchViewController.swift */,
 				81BA814C1A49DA1800E65899 /* UserViewController.swift */,
 				E3ABFE931C4572CE0094935B /* HouseholdViewController.swift */,
 				E35658761C485E95007671E2 /* ChoreViewController.swift */,
@@ -307,8 +319,11 @@
 				E33EBAA61C66E0F700355068 /* frame4.png in Resources */,
 				E36DBEBD1C711E7C00F22C32 /* frame13.png in Resources */,
 				E33EBA921C66DA9200355068 /* check.png in Resources */,
+				E30016951C739D68003271FE /* logo@3x.png in Resources */,
 				E33EBAA51C66E0F700355068 /* frame3.png in Resources */,
 				E36DBEB01C6BE26F00F22C32 /* Main.storyboard in Resources */,
+				E30016971C739DB8003271FE /* launchportrait@3x.png in Resources */,
+				E30016941C739D68003271FE /* launchbackground@3x.png in Resources */,
 				E33EBAA71C66E0F700355068 /* frame5.png in Resources */,
 				E33EBA931C66DA9200355068 /* score1.png in Resources */,
 				E33EBAA41C66E0F700355068 /* frame2.png in Resources */,
@@ -334,6 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E30520A81C5063D900FB5CBB /* Activity.swift in Sources */,
+				E30016991C73A12C003271FE /* LaunchViewController.swift in Sources */,
 				E3D1192A1C4F20C30078BC2F /* ActivityCell.swift in Sources */,
 				E30520A41C505E0C00FB5CBB /* Household.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* UserViewController.swift in Sources */,
@@ -452,7 +468,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parse.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "Chore Balance";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -473,7 +489,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parse.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "Chore Balance";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
