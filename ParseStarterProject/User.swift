@@ -31,6 +31,8 @@ class User: PFUser {
         let query = PFUser.query()
         //2
         query!.includeKey("household")
+        //3 cache
+        query!.cachePolicy = .NetworkElseCache
         return query
     }
     
@@ -82,6 +84,8 @@ class User: PFUser {
         scoresQuery.whereKey("user", equalTo: self)
 
         scoresQuery.whereKey("completedAt", greaterThanOrEqualTo: self.household!.scoreFromDate)
+        
+        scoresQuery.cachePolicy = .NetworkElseCache
       
         scoresQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
             

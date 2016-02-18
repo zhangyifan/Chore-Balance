@@ -42,6 +42,8 @@ class Activity: PFObject, PFSubclassing {
     query.includeKey("chore")
     //4
     query.orderByDescending("completedAt")
+    //5 cache
+    query.cachePolicy = .NetworkElseCache
     return query
     }
     

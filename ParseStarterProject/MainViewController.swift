@@ -45,6 +45,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var isTie = false
     
+    //Balance section
+    
+    
     //Activities section
     var activityList = [Activity]()
     
@@ -61,7 +64,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     //Refresh function
     var lastRefreshTime = NSDate()
-    
+
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -69,6 +72,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         return refreshControl
     }()
     
+    //Refresh all data
     func handleRefresh(refreshControl: UIRefreshControl) {
         
         lastRefreshTime = NSDate()
@@ -85,7 +89,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         secondToLastScore.alpha = 0
         lastName.alpha = 0
         lastScore.alpha = 0
-        print("refresh \(winnerName.alpha)")
 
         winnerName.center.y = 42.5
         winnerScore.center.y = 69.5
@@ -110,7 +113,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     if names!.count > 0 && scores!.count > 0 {
                         
                         self.isTie = self.checkForTie(scores!)
-                        print("check for tie \(self.isTie)")
                         
                         self.winnerName.text = names![0]
                         self.winnerScore.text = String(scores![0])
@@ -158,7 +160,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     
                 } else {
                     
-                    UserViewController.displayAlert("Couldn't load household members", message: error!.localizedDescription, view: self)
+                    if error!.code != 120 {
+                        
+                        UserViewController.displayAlert("Couldn't load household members", message: error!.localizedDescription, view: self)
+                        
+                    }
                     
                     self.balanceAnimating = false
 
@@ -171,11 +177,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             if let household = User.currentUser()!.household! as? Household {
                 
                 let myCalendar = NSCalendar.currentCalendar()
-                //let yesterday =
-                let threeDaysAgo = myCalendar.dateByAddingUnit(.Day, value: -3, toDate: NSDate(), options: [])
+
+                let yesterday = myCalendar.dateByAddingUnit(.Day, value: -2, toDate: NSDate(), options: [])
                 
                 //********ACTIVITY FEED SECTION**************
-                household.getActivities(threeDaysAgo) {(activities: [Activity]?, error: NSError?)-> Void in
+                household.getActivities(yesterday) {(activities: [Activity]?, error: NSError?)-> Void in
                 
                     if error == nil {
                     
@@ -185,8 +191,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
                     } else {
                     
-                        UserViewController.displayAlert("Couldn't find activities", message: error!.localizedDescription, view: self)
-                    
+                        if error!.code != 120 {
+                            
+                            UserViewController.displayAlert("Couldn't find activities", message: error!.localizedDescription, view: self)
+                            
+                        }
+
                         refreshControl.endRefreshing()
                     
                     }
@@ -233,8 +243,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                                         
                                     } else {
                                         
-                                        UserViewController.displayAlert("Couldn't find last done date", message: error!.localizedDescription, view: self)
-                                        
+                                        if error!.code != 120 {
+                                            
+                                            UserViewController.displayAlert("Couldn't find last done date", message: error!.localizedDescription, view: self)
+                                            
+                                        }
+                      
                                         self.refreshControl.endRefreshing()
                                     }
                                     
@@ -246,8 +260,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         
                     } else {
                         
-                        UserViewController.displayAlert("Couldn't find chores", message: error!.localizedDescription, view: self)
-                        
+                        if error!.code != 120 {
+                            
+                            UserViewController.displayAlert("Couldn't find chores", message: error!.localizedDescription, view: self)
+                            
+                        }
+                    
                         self.balanceAnimating = false
                         refreshControl.endRefreshing()
     
@@ -269,6 +287,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
         //Maybe in the future have caching of data?
+        
+        
+    }
+    
+    //Load cached data from phone
+    func loadCached() {
+        
         
         
     }
@@ -331,8 +356,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
         }
-        
-        print("start animation \(animationCounter)")
+
         balanceImage.image = UIImage(named: "frame\(animationCounter).png")
     }
     
@@ -349,9 +373,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.secondToLastScore.alpha = 1
             self.lastName.alpha = 1
             self.lastScore.alpha = 1
-            print("display names")
             
-
         })
         
         if isTie {
@@ -384,7 +406,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.secondToLastScore.center.y = self.secondToLastScore.center.y-10
             self.lastName.center.y = self.lastName.center.y-30
             self.lastScore.center.y = self.lastScore.center.y-30
-            print("animate names")
             
         }
         
@@ -402,7 +423,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.secondToLastScore.center.y = self.secondToLastScore.center.y-2
             self.lastName.center.y = self.lastName.center.y-12
             self.lastScore.center.y = self.lastScore.center.y-12
-            print("animate names")
             
         }
         
@@ -426,7 +446,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             namesTimer.invalidate()
             
         }
-        print("balance down \(animationCounter)")
+
         balanceImage.image = UIImage(named: "frame\(animationCounter).png")
 
     }
@@ -522,7 +542,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         //Remove line beneath navigation bars
         self.navigationController?.navigationBar.clipsToBounds = true
         
-        //Check if data has been reloaded recently, and if so reload it. TODO
+        //Check if data has been reloaded recently, and if so reload it.
+        /*let calendar = NSCalendar.currentCalendar()
+        let refreshCutoff = calendar.dateByAddingUnit(.Day, value: -1, toDate: NSDate(), options: [])*/
+        
         handleRefresh(refreshControl)
         
         //Set up tables and stuff

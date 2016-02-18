@@ -40,6 +40,8 @@ class Chore: PFObject, PFSubclassing {
     let query = PFQuery(className: Chore.parseClassName())
     //2
     query.includeKey("household")
+    //3 cache
+    query.cachePolicy = .NetworkElseCache
     return query
     }
     

@@ -31,8 +31,12 @@ class ActivitiesTableViewController: UITableViewController {
                     
                 } else {
                     
-                    UserViewController.displayAlert("Couldn't find activities", message: error!.localizedDescription, view: self)
-                    
+                    if error!.code != 120 {
+                        
+                        UserViewController.displayAlert("Couldn't find activities", message: error!.localizedDescription, view: self)
+                        
+                    }
+             
                     self.refresher.endRefreshing()
                     
                 }

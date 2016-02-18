@@ -32,6 +32,8 @@ class Household: PFObject, PFSubclassing {
     override class func query() -> PFQuery? {
         //1
         let query = PFQuery(className: Household.parseClassName())
+        //2 cache
+        query.cachePolicy = .NetworkElseCache
         return query
     }
     
@@ -96,6 +98,8 @@ class Household: PFObject, PFSubclassing {
             activitiesQuery.whereKey("completedAt", greaterThanOrEqualTo: fromDate!)
             
         }
+        
+        activitiesQuery.cachePolicy = .NetworkElseCache
         
         activitiesQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
             
