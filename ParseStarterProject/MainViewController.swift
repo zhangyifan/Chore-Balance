@@ -538,9 +538,20 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        let collectionViewWidth = self.collectionView.bounds.size.width
+        return CGSize(width: collectionViewWidth, height: 48)
+    
+    }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell: TickerCell = collectionView.dequeueReusableCellWithReuseIdentifier("cell3", forIndexPath: indexPath) as! TickerCell
+        
+        // Set cell width to 100%
+        let collectionViewWidth = self.collectionView.bounds.size.width
+        cell.frame.size.width = collectionViewWidth
         
         let activity = activityList[indexPath.row]
         
