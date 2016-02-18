@@ -15,6 +15,8 @@ class ChoreViewController: UIViewController, UITableViewDelegate, UITextFieldDel
     
     //TODO - make Next/Done top right bar buttons do the same thing as buttons below
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
     var addChoreMode = true
     
     var editedChore = Chore()
@@ -31,11 +33,19 @@ class ChoreViewController: UIViewController, UITableViewDelegate, UITextFieldDel
     
     @IBAction func doneButton(sender: AnyObject) {
         
+        loadSpinner()
+        
         if choreNameField.text == "" {
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.sharedApplication().endIgnoringInteractionEvents()
             
             UserViewController.displayAlert("Chore name missing", message: "Please enter a name for your chore", view: self)
             
         } else if scoreInput == nil {
+            
+            self.activityIndicator.stopAnimating()
+            UIApplication.sharedApplication().endIgnoringInteractionEvents()
             
             UserViewController.displayAlert("Score missing", message: "Please choose a score for your chore", view: self)
             
@@ -63,13 +73,15 @@ class ChoreViewController: UIViewController, UITableViewDelegate, UITextFieldDel
                         
                         if error == nil {
                             
-                            /*//Add this as an activity - comment this out later if not needed.  For sample data, double to test weeding out duplicate chores.
-                            Activity(user: User.currentUser()!, chore: chore, scoreStamp: chore.score, completedAt: NSDate())
-                            Activity(user: User.currentUser()!, chore: chore, scoreStamp: chore.score, completedAt: NSDate())*/
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
                             
                             self.performSegueWithIdentifier("choreSaved", sender: self)
                             
                         } else {
+                            
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
                             
                             UserViewController.displayAlert("Chore failed to save", message: error!.localizedDescription, view: self)
                             
@@ -83,6 +95,9 @@ class ChoreViewController: UIViewController, UITableViewDelegate, UITextFieldDel
                         
                         if error == nil {
                             
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                            
                             let savedChoreAlert = UIAlertController(title: "All done!", message: "Your edits have been saved.", preferredStyle: UIAlertControllerStyle.Alert)
                             
                             savedChoreAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction!) in
@@ -95,6 +110,9 @@ class ChoreViewController: UIViewController, UITableViewDelegate, UITextFieldDel
                             
                         } else {
                             
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                            
                              UserViewController.displayAlert("Edited chore failed to save", message: error!.localizedDescription, view: self)
                             
                         }
@@ -105,6 +123,9 @@ class ChoreViewController: UIViewController, UITableViewDelegate, UITextFieldDel
                 
                 
             } else {
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
                 
                 UserViewController.displayAlert("You're not logged in", message: "Please log in to add a chore", view: self)
                 
@@ -187,6 +208,19 @@ class ChoreViewController: UIViewController, UITableViewDelegate, UITextFieldDel
         doneButton("")
         
         return true
+        
+    }
+    
+    //A thinking spinner
+    func loadSpinner() {
+        
+        self.activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0,0,50,50))
+        self.activityIndicator.center = self.view.center
+        self.activityIndicator.hidesWhenStopped = true
+        self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
     }
     

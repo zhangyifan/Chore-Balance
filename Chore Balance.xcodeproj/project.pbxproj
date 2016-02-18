@@ -16,36 +16,15 @@
 		81BA81791A49E0DB00E65899 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA81781A49E0DB00E65899 /* AudioToolbox.framework */; };
 		81BA817B1A49E0E500E65899 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */; };
 		81BA817F1A49E0F000E65899 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */; };
-		E30016941C739D68003271FE /* launchbackground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30016921C739D68003271FE /* launchbackground@3x.png */; };
-		E30016951C739D68003271FE /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30016931C739D68003271FE /* logo@3x.png */; };
-		E30016971C739DB8003271FE /* launchportrait@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E30016961C739DB8003271FE /* launchportrait@3x.png */; };
 		E30016991C73A12C003271FE /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30016981C73A12C003271FE /* LaunchViewController.swift */; };
 		E30520A21C5047E100FB5CBB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30520A11C5047E100FB5CBB /* User.swift */; };
 		E30520A41C505E0C00FB5CBB /* Household.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30520A31C505E0C00FB5CBB /* Household.swift */; };
 		E30520A61C5063D000FB5CBB /* Chore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30520A51C5063D000FB5CBB /* Chore.swift */; };
 		E30520A81C5063D900FB5CBB /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = E30520A71C5063D900FB5CBB /* Activity.swift */; };
-		E33EBA921C66DA9200355068 /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA8E1C66DA9200355068 /* check.png */; };
-		E33EBA931C66DA9200355068 /* score1.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA8F1C66DA9200355068 /* score1.png */; };
-		E33EBA941C66DA9200355068 /* score3.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA901C66DA9200355068 /* score3.png */; };
-		E33EBA951C66DA9200355068 /* score5.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA911C66DA9200355068 /* score5.png */; };
-		E33EBAA31C66E0F700355068 /* frame1.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA961C66E0F700355068 /* frame1.png */; };
-		E33EBAA41C66E0F700355068 /* frame2.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA971C66E0F700355068 /* frame2.png */; };
-		E33EBAA51C66E0F700355068 /* frame3.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA981C66E0F700355068 /* frame3.png */; };
-		E33EBAA61C66E0F700355068 /* frame4.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA991C66E0F700355068 /* frame4.png */; };
-		E33EBAA71C66E0F700355068 /* frame5.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA9A1C66E0F700355068 /* frame5.png */; };
-		E33EBAA81C66E0F700355068 /* frame6.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA9B1C66E0F700355068 /* frame6.png */; };
-		E33EBAA91C66E0F700355068 /* frame7.png in Resources */ = {isa = PBXBuildFile; fileRef = E33EBA9C1C66E0F700355068 /* frame7.png */; };
 		E35658771C485E95007671E2 /* ChoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35658761C485E95007671E2 /* ChoreViewController.swift */; };
 		E35658791C487171007671E2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35658781C487171007671E2 /* MainViewController.swift */; };
 		E36DBEAE1C6BDA9E00F22C32 /* TickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E36DBEAD1C6BDA9E00F22C32 /* TickerCell.swift */; };
 		E36DBEB01C6BE26F00F22C32 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E36DBEAF1C6BE26F00F22C32 /* Main.storyboard */; };
-		E36DBEB81C711E7C00F22C32 /* frame8.png in Resources */ = {isa = PBXBuildFile; fileRef = E36DBEB11C711E7C00F22C32 /* frame8.png */; };
-		E36DBEB91C711E7C00F22C32 /* frame9.png in Resources */ = {isa = PBXBuildFile; fileRef = E36DBEB21C711E7C00F22C32 /* frame9.png */; };
-		E36DBEBA1C711E7C00F22C32 /* frame10.png in Resources */ = {isa = PBXBuildFile; fileRef = E36DBEB31C711E7C00F22C32 /* frame10.png */; };
-		E36DBEBB1C711E7C00F22C32 /* frame11.png in Resources */ = {isa = PBXBuildFile; fileRef = E36DBEB41C711E7C00F22C32 /* frame11.png */; };
-		E36DBEBC1C711E7C00F22C32 /* frame12.png in Resources */ = {isa = PBXBuildFile; fileRef = E36DBEB51C711E7C00F22C32 /* frame12.png */; };
-		E36DBEBD1C711E7C00F22C32 /* frame13.png in Resources */ = {isa = PBXBuildFile; fileRef = E36DBEB61C711E7C00F22C32 /* frame13.png */; };
-		E36DBEBE1C711E7C00F22C32 /* frame14.png in Resources */ = {isa = PBXBuildFile; fileRef = E36DBEB71C711E7C00F22C32 /* frame14.png */; };
 		E3ABFE941C4572CE0094935B /* HouseholdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABFE931C4572CE0094935B /* HouseholdViewController.swift */; };
 		E3C209981C4C4BCA00661460 /* MembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C209971C4C4BCA00661460 /* MembersTableViewController.swift */; };
 		E3C2099A1C4E9C7E00661460 /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C209991C4E9C7E00661460 /* InviteViewController.swift */; };
@@ -68,36 +47,15 @@
 		81BA817A1A49E0E500E65899 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		81BA817E1A49E0F000E65899 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
 		81BA81801A49E10C00E65899 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
-		E30016921C739D68003271FE /* launchbackground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launchbackground@3x.png"; sourceTree = "<group>"; };
-		E30016931C739D68003271FE /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
-		E30016961C739DB8003271FE /* launchportrait@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launchportrait@3x.png"; sourceTree = "<group>"; };
 		E30016981C73A12C003271FE /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		E30520A11C5047E100FB5CBB /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E30520A31C505E0C00FB5CBB /* Household.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Household.swift; sourceTree = "<group>"; };
 		E30520A51C5063D000FB5CBB /* Chore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chore.swift; sourceTree = "<group>"; };
 		E30520A71C5063D900FB5CBB /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
-		E33EBA8E1C66DA9200355068 /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check.png; sourceTree = "<group>"; };
-		E33EBA8F1C66DA9200355068 /* score1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score1.png; sourceTree = "<group>"; };
-		E33EBA901C66DA9200355068 /* score3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score3.png; sourceTree = "<group>"; };
-		E33EBA911C66DA9200355068 /* score5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score5.png; sourceTree = "<group>"; };
-		E33EBA961C66E0F700355068 /* frame1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame1.png; sourceTree = "<group>"; };
-		E33EBA971C66E0F700355068 /* frame2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame2.png; sourceTree = "<group>"; };
-		E33EBA981C66E0F700355068 /* frame3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame3.png; sourceTree = "<group>"; };
-		E33EBA991C66E0F700355068 /* frame4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame4.png; sourceTree = "<group>"; };
-		E33EBA9A1C66E0F700355068 /* frame5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame5.png; sourceTree = "<group>"; };
-		E33EBA9B1C66E0F700355068 /* frame6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame6.png; sourceTree = "<group>"; };
-		E33EBA9C1C66E0F700355068 /* frame7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame7.png; sourceTree = "<group>"; };
 		E35658761C485E95007671E2 /* ChoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoreViewController.swift; sourceTree = "<group>"; };
 		E35658781C487171007671E2 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E36DBEAD1C6BDA9E00F22C32 /* TickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TickerCell.swift; path = ../TickerCell.swift; sourceTree = "<group>"; };
 		E36DBEAF1C6BE26F00F22C32 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		E36DBEB11C711E7C00F22C32 /* frame8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame8.png; sourceTree = "<group>"; };
-		E36DBEB21C711E7C00F22C32 /* frame9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame9.png; sourceTree = "<group>"; };
-		E36DBEB31C711E7C00F22C32 /* frame10.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame10.png; sourceTree = "<group>"; };
-		E36DBEB41C711E7C00F22C32 /* frame11.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame11.png; sourceTree = "<group>"; };
-		E36DBEB51C711E7C00F22C32 /* frame12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame12.png; sourceTree = "<group>"; };
-		E36DBEB61C711E7C00F22C32 /* frame13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame13.png; sourceTree = "<group>"; };
-		E36DBEB71C711E7C00F22C32 /* frame14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = frame14.png; sourceTree = "<group>"; };
 		E3ABFE931C4572CE0094935B /* HouseholdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseholdViewController.swift; sourceTree = "<group>"; };
 		E3C209971C4C4BCA00661460 /* MembersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembersTableViewController.swift; sourceTree = "<group>"; };
 		E3C209991C4E9C7E00661460 /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
@@ -129,27 +87,6 @@
 			children = (
 				814C3AC81B69877600E307BB /* Images.xcassets */,
 				814C3AC91B69877600E307BB /* Info.plist */,
-				E30016961C739DB8003271FE /* launchportrait@3x.png */,
-				E30016921C739D68003271FE /* launchbackground@3x.png */,
-				E30016931C739D68003271FE /* logo@3x.png */,
-				E33EBA8E1C66DA9200355068 /* check.png */,
-				E33EBA8F1C66DA9200355068 /* score1.png */,
-				E33EBA901C66DA9200355068 /* score3.png */,
-				E33EBA911C66DA9200355068 /* score5.png */,
-				E33EBA961C66E0F700355068 /* frame1.png */,
-				E33EBA971C66E0F700355068 /* frame2.png */,
-				E33EBA981C66E0F700355068 /* frame3.png */,
-				E33EBA991C66E0F700355068 /* frame4.png */,
-				E33EBA9A1C66E0F700355068 /* frame5.png */,
-				E33EBA9B1C66E0F700355068 /* frame6.png */,
-				E33EBA9C1C66E0F700355068 /* frame7.png */,
-				E36DBEB11C711E7C00F22C32 /* frame8.png */,
-				E36DBEB21C711E7C00F22C32 /* frame9.png */,
-				E36DBEB31C711E7C00F22C32 /* frame10.png */,
-				E36DBEB41C711E7C00F22C32 /* frame11.png */,
-				E36DBEB51C711E7C00F22C32 /* frame12.png */,
-				E36DBEB61C711E7C00F22C32 /* frame13.png */,
-				E36DBEB71C711E7C00F22C32 /* frame14.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -312,29 +249,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E33EBAA91C66E0F700355068 /* frame7.png in Resources */,
-				E33EBAA61C66E0F700355068 /* frame4.png in Resources */,
-				E36DBEBD1C711E7C00F22C32 /* frame13.png in Resources */,
-				E33EBA921C66DA9200355068 /* check.png in Resources */,
-				E30016951C739D68003271FE /* logo@3x.png in Resources */,
-				E33EBAA51C66E0F700355068 /* frame3.png in Resources */,
 				E36DBEB01C6BE26F00F22C32 /* Main.storyboard in Resources */,
-				E30016971C739DB8003271FE /* launchportrait@3x.png in Resources */,
-				E30016941C739D68003271FE /* launchbackground@3x.png in Resources */,
-				E33EBAA71C66E0F700355068 /* frame5.png in Resources */,
-				E33EBA931C66DA9200355068 /* score1.png in Resources */,
-				E33EBAA41C66E0F700355068 /* frame2.png in Resources */,
-				E33EBA941C66DA9200355068 /* score3.png in Resources */,
-				E33EBA951C66DA9200355068 /* score5.png in Resources */,
-				E36DBEBA1C711E7C00F22C32 /* frame10.png in Resources */,
-				E36DBEB91C711E7C00F22C32 /* frame9.png in Resources */,
-				E33EBAA31C66E0F700355068 /* frame1.png in Resources */,
-				E36DBEBE1C711E7C00F22C32 /* frame14.png in Resources */,
-				E33EBAA81C66E0F700355068 /* frame6.png in Resources */,
-				E36DBEB81C711E7C00F22C32 /* frame8.png in Resources */,
 				814C3ACB1B69877600E307BB /* Images.xcassets in Resources */,
-				E36DBEBC1C711E7C00F22C32 /* frame12.png in Resources */,
-				E36DBEBB1C711E7C00F22C32 /* frame11.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,7 +380,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parse.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "Chore Balance";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -485,7 +401,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.parse.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "Chore Balance";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

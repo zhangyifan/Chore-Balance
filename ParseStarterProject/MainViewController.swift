@@ -357,7 +357,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
 
-        balanceImage.image = UIImage(named: "frame\(animationCounter).png")
+        balanceImage.image = UIImage(named: "frame\(animationCounter)")
     }
     
     //Names appear with fade-in
@@ -447,7 +447,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
         }
 
-        balanceImage.image = UIImage(named: "frame\(animationCounter).png")
+        balanceImage.image = UIImage(named: "frame\(animationCounter)")
 
     }
     
@@ -462,8 +462,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             namesTimer.invalidate()
             
         }
-        print("balance tied \(animationCounter)")
-        balanceImage.image = UIImage(named: "frame\(animationCounter).png")
+
+        balanceImage.image = UIImage(named: "frame\(animationCounter)")
         
     }
     
@@ -479,9 +479,29 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         addActivityAlert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { (action: UIAlertAction!) in
             
-            PFUser.logOut()
+            self.loadSpinner()
             
-            self.performSegueWithIdentifier("logoutFromMain", sender: nil)
+            PFUser.logOutInBackgroundWithBlock({ (error) -> Void in
+                
+                if error == nil {
+                    
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    
+                    self.performSegueWithIdentifier("logoutFromMain", sender: nil)
+                    
+                } else {
+                    
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    
+                    UserViewController.displayAlert("Could not log you out", message: error!.localizedDescription, view: self)
+                    
+                }
+                
+            })
+            
+            
             
         }))
         
@@ -758,6 +778,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                         
                     } else {
+                        
+                        self.activityIndicator.stopAnimating()
+                        UIApplication.sharedApplication().endIgnoringInteractionEvents()
                         
                         UserViewController.displayAlert("Couldn't delete chore", message: error!.localizedDescription, view: self)
                         

@@ -84,9 +84,9 @@ class Household: PFObject, PFSubclassing {
     
     //Search Parse for recent activities in household
     func getActivities(fromDate: NSDate?, closure: ([Activity]?, NSError?) -> Void) {
-        
+
         let usersQuery = User.query()!
-        
+
         usersQuery.whereKey("household", equalTo: self)
         
         usersQuery.cachePolicy = .NetworkElseCache
@@ -95,9 +95,23 @@ class Household: PFObject, PFSubclassing {
             
             if error == nil {
                 
-                let activitiesQuery = Activity.query()!
+                /*let mutableArray = NSMutableArray()
                 
-                print(users)
+                for user in users! {
+                    
+                    mutableArray.addObject(user)
+                }
+                
+                let userArray = mutableArray as! NSArray
+                
+                NSUserDefaults.standardUserDefaults().set
+                    //setObject(userArray, forKey: "householdUsers")
+                
+                let savedUsers = NSUserDefaults.standardUserDefaults().objectForKey("householdUsers") as! [User]
+                
+                print("Saved users are: \(savedUsers)")*/
+                
+                let activitiesQuery = Activity.query()!
                 
                 activitiesQuery.whereKey("user", containedIn: users!)
                 
@@ -112,7 +126,7 @@ class Household: PFObject, PFSubclassing {
                 activitiesQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
                     
                     if error == nil {
-                        
+                
                         if let foundActivities = activities as? [Activity] {
                             
                             closure(foundActivities, nil)

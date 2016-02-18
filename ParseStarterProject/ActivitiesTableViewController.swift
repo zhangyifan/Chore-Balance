@@ -11,6 +11,8 @@ import Parse
 
 class ActivitiesTableViewController: UITableViewController {
 
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
     var activityList = [Activity]()
     
     var refresher: UIRefreshControl!
@@ -49,6 +51,19 @@ class ActivitiesTableViewController: UITableViewController {
             print("User has no household")
             
         }
+        
+    }
+    
+    //A thinking spinner
+    func loadSpinner() {
+        
+        self.activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0,0,50,50))
+        self.activityIndicator.center = self.view.center
+        self.activityIndicator.hidesWhenStopped = true
+        self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
         
     }
     
@@ -147,27 +162,44 @@ class ActivitiesTableViewController: UITableViewController {
             
             deleteActivityAlert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: { (action: UIAlertAction!) in
                 
-                // Delete the row from the data source
-                self.activityList[indexPath.row].deleteInBackgroundWithBlock({ (success, error) -> Void in
-                    
-                    if success == true {
-                        
-                        self.activityList.removeAtIndex(indexPath.row)
-                        
-                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-                        
-                    } else if self.activityList[indexPath.row].user != User.currentUser() {
-                        
-                        //Can't edit another user's activity
-                        UserViewController.displayAlert("You can't edit someone else's activity", message: "This activity was not done by you.  Please ask them to edit it.", view: self)
-                        
-                    } else {
-                        
-                        UserViewController.displayAlert("Couldn't delete activity", message: error!.localizedDescription, view: self)
-                        
-                    }
-                })
+                self.loadSpinner()
                 
+                if self.activityList[indexPath.row].user.objectId != User.currentUser()!.objectId {
+                    
+                    print(self.activityList[indexPath.row].user.objectId)
+                    print(User.currentUser()!.objectId)
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    
+                    //Can't edit another user's activity
+                    UserViewController.displayAlert("You can't edit someone else's activity", message: "This activity was not done by you.  Please ask them to edit it.", view: self)
+                    
+                } else {
+                    
+                    // Delete the row from the data source
+                    self.activityList[indexPath.row].deleteInBackgroundWithBlock({ (success, error) -> Void in
+                        
+                        if success == true {
+                            
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                            
+                            self.activityList.removeAtIndex(indexPath.row)
+                            
+                            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                            
+                        } else {
+                            
+                            self.activityIndicator.stopAnimating()
+                            UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                            
+                            UserViewController.displayAlert("Couldn't delete activity", message: error!.localizedDescription, view: self)
+                            
+                        }
+                    })
+                    
+                }
+
             }))
             
             presentViewController(deleteActivityAlert, animated: true, completion: nil)

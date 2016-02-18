@@ -44,7 +44,7 @@ class ToDoCell: UITableViewCell {
         doButtonOutlet.hidden = false
         addChoreButton.hidden = true
         
-        scoreImage.image = UIImage(named: "score\(score).png")
+        scoreImage.image = UIImage(named: "score\(score)")
             
         choreLabel.text = description
         
