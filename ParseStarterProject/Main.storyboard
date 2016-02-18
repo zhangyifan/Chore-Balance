@@ -266,10 +266,10 @@
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LH9-LE-LO2">
-                                                                    <rect key="frame" x="340" y="-4" width="35" height="51"/>
+                                                                    <rect key="frame" x="335" y="-4" width="40" height="51"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="51" id="knd-KJ-G6r"/>
-                                                                        <constraint firstAttribute="width" constant="35" id="odZ-kE-6xL"/>
+                                                                        <constraint firstAttribute="width" constant="40" id="odZ-kE-6xL"/>
                                                                     </constraints>
                                                                     <state key="normal" image="check.png"/>
                                                                     <connections>

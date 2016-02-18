@@ -49,7 +49,6 @@
 		E3ABFE941C4572CE0094935B /* HouseholdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ABFE931C4572CE0094935B /* HouseholdViewController.swift */; };
 		E3C209981C4C4BCA00661460 /* MembersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C209971C4C4BCA00661460 /* MembersTableViewController.swift */; };
 		E3C2099A1C4E9C7E00661460 /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C209991C4E9C7E00661460 /* InviteViewController.swift */; };
-		E3C2099C1C4EA34100661460 /* ChoresTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C2099B1C4EA34100661460 /* ChoresTableViewController.swift */; };
 		E3C2099E1C4EA38200661460 /* ActivitiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C2099D1C4EA38200661460 /* ActivitiesTableViewController.swift */; };
 		E3C209A21C4F169400661460 /* ToDoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C209A11C4F169400661460 /* ToDoCell.swift */; };
 		E3D1192A1C4F20C30078BC2F /* ActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D119291C4F20C30078BC2F /* ActivityCell.swift */; };
@@ -102,7 +101,6 @@
 		E3ABFE931C4572CE0094935B /* HouseholdViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HouseholdViewController.swift; sourceTree = "<group>"; };
 		E3C209971C4C4BCA00661460 /* MembersTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MembersTableViewController.swift; sourceTree = "<group>"; };
 		E3C209991C4E9C7E00661460 /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
-		E3C2099B1C4EA34100661460 /* ChoresTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoresTableViewController.swift; sourceTree = "<group>"; };
 		E3C2099D1C4EA38200661460 /* ActivitiesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivitiesTableViewController.swift; sourceTree = "<group>"; };
 		E3C209A11C4F169400661460 /* ToDoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoCell.swift; sourceTree = "<group>"; };
 		E3CC055A1C53EE7E00AEC89C /* Chore-Balance-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Chore-Balance-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 				E35658781C487171007671E2 /* MainViewController.swift */,
 				E3C209971C4C4BCA00661460 /* MembersTableViewController.swift */,
 				E3C209991C4E9C7E00661460 /* InviteViewController.swift */,
-				E3C2099B1C4EA34100661460 /* ChoresTableViewController.swift */,
 				E3C2099D1C4EA38200661460 /* ActivitiesTableViewController.swift */,
 			);
 			name = Controller;
@@ -358,7 +355,6 @@
 				E3C209A21C4F169400661460 /* ToDoCell.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				E3C209981C4C4BCA00661460 /* MembersTableViewController.swift in Sources */,
-				E3C2099C1C4EA34100661460 /* ChoresTableViewController.swift in Sources */,
 				E30520A21C5047E100FB5CBB /* User.swift in Sources */,
 				E3C2099E1C4EA38200661460 /* ActivitiesTableViewController.swift in Sources */,
 				E30520A61C5063D000FB5CBB /* Chore.swift in Sources */,
