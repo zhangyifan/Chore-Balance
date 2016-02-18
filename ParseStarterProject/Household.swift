@@ -89,39 +89,58 @@ class Household: PFObject, PFSubclassing {
         
         usersQuery.whereKey("household", equalTo: self)
         
-        let activitiesQuery = Activity.query()!
+        usersQuery.cachePolicy = .NetworkElseCache
         
-        activitiesQuery.whereKey("user", matchesQuery: usersQuery)
-        
-        if fromDate != nil {
-            
-            activitiesQuery.whereKey("completedAt", greaterThanOrEqualTo: fromDate!)
-            
-        }
-        
-        activitiesQuery.cachePolicy = .NetworkElseCache
-        
-        activitiesQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
+        usersQuery.findObjectsInBackgroundWithBlock { (users, error) -> Void in
             
             if error == nil {
                 
-                if let foundActivities = activities as? [Activity] {
+                let activitiesQuery = Activity.query()!
+                
+                print(users)
+                
+                activitiesQuery.whereKey("user", containedIn: users!)
+                
+                if fromDate != nil {
                     
-                    closure(foundActivities, nil)
+                    activitiesQuery.whereKey("completedAt", greaterThanOrEqualTo: fromDate!)
                     
-                } else {
-                    
-                    print("Couldn't downcast activities")
                 }
+                
+                activitiesQuery.cachePolicy = .NetworkElseCache
+                
+                activitiesQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
+                    
+                    if error == nil {
+                        
+                        if let foundActivities = activities as? [Activity] {
+                            
+                            closure(foundActivities, nil)
+                            
+                        } else {
+                            
+                            print("Couldn't downcast activities")
+                        }
+                        
+                    } else {
+                        
+                        print(error)
+                        closure(nil, error)
+                        
+                    }
+                    
+                    
+                })
                 
             } else {
                 
+                print(error)
                 closure(nil, error)
                 
             }
             
-            
-        })
+        }
+        
     }
     
     //Query for all chores in current household

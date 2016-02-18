@@ -542,12 +542,23 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         //Remove line beneath navigation bars
         self.navigationController?.navigationBar.clipsToBounds = true
         
-        //Check if data has been reloaded recently, and if so reload it.
-        /*let calendar = NSCalendar.currentCalendar()
-        let refreshCutoff = calendar.dateByAddingUnit(.Day, value: -1, toDate: NSDate(), options: [])*/
+        /*Check if data has been reloaded recently, and if so reload it. Leave for now
+        let calendar = NSCalendar.currentCalendar()
+        let refreshCutoff = calendar.dateByAddingUnit(.Day, value: -1, toDate: NSDate(), options: [])
+        
+        print(lastRefreshTime)
+        print(refreshCutoff!)
+        
+        if lastRefreshTime.compare(refreshCutoff!) == NSComparisonResult.OrderedAscending {
+            
+            print("yes")
+            
+            
+            
+        }*/
         
         handleRefresh(refreshControl)
-        
+
         //Set up tables and stuff
         toDoTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "toDoCell")
         //###########activityTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "activityCell")
