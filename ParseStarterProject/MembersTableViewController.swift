@@ -14,6 +14,8 @@ class MembersTableViewController: UITableViewController {
     var sortedNames = [String]()
     var sortedScores = [Int]()
     
+    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
     var refresher: UIRefreshControl!
     
     func refresh() {
@@ -30,12 +32,18 @@ class MembersTableViewController: UITableViewController {
                 self.sortedNames = names!
                 
                 self.sortedScores = scores!
-                
+
                 self.tableView.reloadData()
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
                 
                 self.refresher.endRefreshing()
                 
             } else {
+                
+                self.activityIndicator.stopAnimating()
+                UIApplication.sharedApplication().endIgnoringInteractionEvents()
                 
                 if error!.code != 120 {
                     
@@ -160,6 +168,8 @@ class MembersTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadSpinner()
+        
         refresher = UIRefreshControl()
         //refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refresher.addTarget(self, action: "refresh", forControlEvents: UIControlEvents.ValueChanged)
@@ -209,6 +219,19 @@ class MembersTableViewController: UITableViewController {
         cell.detailTextLabel?.text = "\(score!)"
 
         return cell
+    }
+    
+    //A thinking spinner
+    func loadSpinner() {
+        
+        self.activityIndicator = UIActivityIndicatorView(frame: CGRectMake(0,0,50,50))
+        self.activityIndicator.center = self.view.center
+        self.activityIndicator.hidesWhenStopped = true
+        self.activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+        self.view.addSubview(self.activityIndicator)
+        self.activityIndicator.startAnimating()
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
     }
 
     /*

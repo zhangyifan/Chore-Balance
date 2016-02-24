@@ -1026,7 +1026,7 @@
     </scenes>
     <resources>
         <image name="check" width="20" height="15"/>
-        <image name="frame13" width="375" height="77"/>
+        <image name="frame13" width="640" height="132"/>
         <image name="launch" width="640" height="1136"/>
         <image name="score1" width="44" height="44"/>
     </resources>

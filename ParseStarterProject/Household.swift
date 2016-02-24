@@ -83,7 +83,7 @@ class Household: PFObject, PFSubclassing {
     }
     
     //Search Parse for recent activities in household
-    func getActivities(fromDate: NSDate?, closure: ([Activity]?, NSError?) -> Void) {
+    func getActivities(limit: Int?, closure: ([Activity]?, NSError?) -> Void) {
 
         let usersQuery = User.query()!
 
@@ -115,13 +115,13 @@ class Household: PFObject, PFSubclassing {
                 
                 activitiesQuery.whereKey("user", containedIn: users!)
                 
-                if fromDate != nil {
-                    
-                    activitiesQuery.whereKey("completedAt", greaterThanOrEqualTo: fromDate!)
-                    
-                }
-                
                 activitiesQuery.cachePolicy = .NetworkElseCache
+                
+                if limit != nil {
+                    
+                    activitiesQuery.limit = 4
+                    
+                } 
                 
                 activitiesQuery.findObjectsInBackgroundWithBlock({ (activities, error) -> Void in
                     

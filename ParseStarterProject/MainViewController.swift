@@ -176,15 +176,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             if let household = User.currentUser()!.household! as? Household {
                 
-                let myCalendar = NSCalendar.currentCalendar()
-
-                let yesterday = myCalendar.dateByAddingUnit(.Day, value: -2, toDate: NSDate(), options: [])
-                
                 //********ACTIVITY FEED SECTION**************
-                household.getActivities(yesterday) {(activities: [Activity]?, error: NSError?)-> Void in
+                household.getActivities(4) {(activities: [Activity]?, error: NSError?)-> Void in
                 
                     if error == nil {
-                    
+                
                         self.activityList = activities!
                     
                         self.collectionView.reloadData()
@@ -607,20 +603,24 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         let collectionViewWidth = self.collectionView.bounds.size.width
         cell.frame.size.width = collectionViewWidth
         
-        let activity = activityList[indexPath.row]
-        
-        let completedDate = activity.completedAt
-        
-        let choreName = activity.chore["name"] as! String
-        
-        let userName = activity.user["username"] as! String
-        
-        let description = userName + " did " + choreName
-        
-        let score = activity.scoreStamp
-        
-        cell.setCell(completedDate, description: description, score: score)
-        
+        if activityList.count > 0 {
+            
+            let activity = activityList[indexPath.row]
+            
+            let completedDate = activity.completedAt
+            
+            let choreName = activity.chore["name"] as! String
+            
+            let userName = activity.user["username"] as! String
+            
+            let description = userName + " did " + choreName
+            
+            let score = activity.scoreStamp
+            
+            cell.setCell(completedDate, description: description, score: score)
+            
+        }
+     
         return cell
         
     }

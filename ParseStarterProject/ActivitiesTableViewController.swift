@@ -29,9 +29,15 @@ class ActivitiesTableViewController: UITableViewController {
                     
                     self.tableView.reloadData()
                     
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                    
                     self.refresher.endRefreshing()
                     
                 } else {
+                    
+                    self.activityIndicator.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
                     
                     if error!.code != 120 {
                         
@@ -69,6 +75,8 @@ class ActivitiesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loadSpinner()
 
         refresher = UIRefreshControl()
         //refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -108,26 +116,31 @@ class ActivitiesTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        
         return activityList.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell: ActivityCell = tableView.dequeueReusableCellWithIdentifier("cell2", forIndexPath: indexPath) as! ActivityCell
-        
-        let activity = activityList[indexPath.row]
-        
-        let completedDate = activity.completedAt
-        
-        let choreName = activity.chore["name"] as! String
-        
-        let userName = activity.user["username"] as! String
-        
-        let description = userName + " did " + choreName
-        
-        let score = activity.scoreStamp
-        
-        cell.setTableCell(completedDate, description: description, score: score)
+    
+        if activityList.count > 0 {
+            
+            let activity = activityList[indexPath.row]
+            
+            let completedDate = activity.completedAt
+            
+            let choreName = activity.chore["name"] as! String
+            
+            let userName = activity.user["username"] as! String
+            
+            let description = userName + " did " + choreName
+            
+            let score = activity.scoreStamp
+            
+            cell.setTableCell(completedDate, description: description, score: score)
+            
+        }
         
         return cell
     
