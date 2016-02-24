@@ -154,12 +154,12 @@
                   moduleName = "Chore Balance"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yifanzhang/Dropbox/On%20Yifan&apos;s%20Computer/Personal/Apple%20iPhone%20Development/Chore%20Balance/ParseStarterProject/MainViewController.swift"
-                  timestampString = "478045332.227483"
+                  timestampString = "478046948.63289"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "180"
                   endingLineNumber = "180"
-                  offsetFromSymbolStart = "4410">
+                  offsetFromSymbolStart = "4188">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -169,12 +169,12 @@
                   moduleName = "Chore Balance"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/yifanzhang/Dropbox/On%20Yifan&apos;s%20Computer/Personal/Apple%20iPhone%20Development/Chore%20Balance/ParseStarterProject/MainViewController.swift"
-                  timestampString = "478045332.228021"
+                  timestampString = "478046948.633208"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "182"
                   endingLineNumber = "182"
-                  offsetFromSymbolStart = "28">
+                  offsetFromSymbolStart = "32">
                </Location>
             </Locations>
          </BreakpointContent>

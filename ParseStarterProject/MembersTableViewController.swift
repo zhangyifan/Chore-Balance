@@ -212,11 +212,15 @@ class MembersTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("memberCell", forIndexPath: indexPath)
 
-        cell.textLabel?.text = sortedNames[indexPath.row]
-        
-        let score: Int? = sortedScores[indexPath.row]
-        
-        cell.detailTextLabel?.text = "\(score!)"
+        if sortedNames.count > indexPath.row && sortedScores.count > indexPath.row {
+            
+            cell.textLabel?.text = sortedNames[indexPath.row]
+            
+            let score: Int? = sortedScores[indexPath.row]
+            
+            cell.detailTextLabel?.text = "\(score!)"
+            
+        }   
 
         return cell
     }

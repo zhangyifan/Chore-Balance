@@ -13,29 +13,44 @@ class InviteViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet var emailField: UITextField!
     
-    let shareText = "I think this Chore Balance app can help us get chores done without nagging.  Can you download it and join the household I made - \(User.currentUser()!.household!.name)?"
+    var shareText = ""
     
-    let shareURL = NSURL(string: "http://bit.ly/areallink")
+    //let shareURL = NSURL(string: "http://bit.ly/areallink")
     
     @IBAction func sendInvite(sender: AnyObject) {
         
-        if emailField.text != "" {
+        User.currentUser()!.household!.fetchIfNeededInBackgroundWithBlock { (household, error) -> Void in
             
-            let newShareText = "Hey \(emailField.text!), " + shareText
+            if let householdName = (User.currentUser()!.household!.name) as? String {
+                
+                self.shareText = "I think this Chore Balance app can help us get chores done without nagging.  Can you download it and join the household I made - \(householdName)?"
+                
+            }
+     
+            if self.emailField.text != "" {
+                
+                let newShareText = "Hey \(self.emailField.text!), " + self.shareText
+                
+                let activityViewController = UIActivityViewController(activityItems: [newShareText], applicationActivities: nil)
+                
+                //let activityViewController = UIActivityViewController(activityItems: [newShareText, self.shareURL!], applicationActivities: nil)
+                
+                activityViewController.excludedActivityTypes = [UIActivityTypePostToFacebook, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypePostToFlickr, UIActivityTypePostToVimeo]
+                
+                self.presentViewController(activityViewController, animated: true, completion: nil)
+                
+            } else {
+                
+                //let activityViewController = UIActivityViewController(activityItems: [self.shareText, self.shareURL!], applicationActivities: nil)
+                
+                let activityViewController = UIActivityViewController(activityItems: [self.shareText], applicationActivities: nil)
+                
+                activityViewController.excludedActivityTypes = [UIActivityTypePostToFacebook, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypePostToFlickr, UIActivityTypePostToVimeo]
+                
+                self.presentViewController(activityViewController, animated: true, completion: nil)
+                
+            }
             
-            let activityViewController = UIActivityViewController(activityItems: [newShareText, shareURL!], applicationActivities: nil)
-            
-            activityViewController.excludedActivityTypes = [UIActivityTypePostToFacebook, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypePostToFlickr, UIActivityTypePostToVimeo]
-            
-            presentViewController(activityViewController, animated: true, completion: nil)
-            
-        } else {
-            
-            let activityViewController = UIActivityViewController(activityItems: [shareText, shareURL!], applicationActivities: nil)
-            
-            activityViewController.excludedActivityTypes = [UIActivityTypePostToFacebook, UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypeAddToReadingList, UIActivityTypeAirDrop, UIActivityTypePostToFlickr, UIActivityTypePostToVimeo]
-            
-            presentViewController(activityViewController, animated: true, completion: nil)
             
         }
        
